@@ -1,20 +1,30 @@
 div#header.true.clearfix
 	div.container.clearfix
 		span#logo
-			a.site-logo(href="https://how2read.me/")= title
+			a.site-logo(href="https://how2read.me/", title="Universal readings across the world")= title
 		div#userbox
 			div#user
 				span Welcome 
-				a.name user
+					a.name user
 				
-div#main
+div#content
 	div.container.clearfix
 		div#allApproved
 			div.term
-				div.title Apache
-					span.correct [ə'pætʃi]
-					ul
-						li.correct 阿帕奇
+				div.title
+					span.name Apache
+					span.reading 
+						a(href="") [ə'pætʃi]
+					span.statistics 75% correct
+				div.body
+					div.correct	
+						ul.readings
+							li(title="Chinese")
+								span 阿帕奇 
+					div.incorrect 
+						ul.readings
+							li(title="Chinese")
+							span 阿帕奇
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded
