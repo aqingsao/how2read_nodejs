@@ -34,7 +34,7 @@ ul span{
 	box-shadow: 0 1px 0 rgba(255,255,255,0.4),0 0 10px rgba(0,0,0,0.1);
 }
 .container{
-	width: 920px;
+	width: 960px;
 	margin: 0 auto;
 }
 
@@ -81,24 +81,62 @@ ul span{
 }
 
 /*For body*/
-#content #allApproved{
+#content{
+	min-height: 450px;
+}
+
+#content #mainbar{
 	float: left;
-	margin-top: 15px;
-	width: 620px;
+	margin-bottom: 40px;
+	width: 735px;
 }
 #content .term{
-	background: url('../images/term.png') no-repeat;
 	height: auto;
-	padding: 0 0 1em 2em;
+	padding: 11px 0;
 	overflow: hidden;
-	border-bottom: 1px solid #CCC;
+	border-bottom: 1px dotted #999;
 }
 
 /*For a term*/
-.term .name{
+.term .statscontainer{
+	width: 86px;
+	float: left;
+	margin-right: 8px;
+}
+.term .stats{
+	background: #EEE;
+	margin: 0 0 0 7px;
+	padding: 4px 7px 6px 7px;
+	width: 58px;
+}
+.term .status{
+	margin-top: -3px;
+	padding: 4px 0 4px;
+	text-align: center;
+}
+.term .stats .votes{
+	color: #555;
+	padding: 0 0 7px 0;
+	text-align: center;
+}
+.term .stats .votes span{
+	display: block;
+	color: #808185;
+	font-weight: bold;
+	font-size: 2em;
+}
+.term .stats .status span{
+	display: block;
+	font-weight: bold;
 	font-size: 1.5em;
 }
-.title span{
+
+.term .summary{
+	float: left;
+	width: 635px;
+}
+.summary h3{
+	display: inline-block;
 	margin-right: 15px;
 }
 ul.readings{
@@ -107,4 +145,16 @@ ul.readings{
 }
 ul.readings li{
 	display: inline-block;
+}
+a.tags{
+	color: #3E6D8E;
+	background-color: #E0EAF1;
+	border-bottom: 1px solid #3E6D8E;
+	border-right: 1px solid #7F9FB6;
+	padding: 3px 4px 3px 4px;
+	margin: 2px 2px 2px 0;
+	text-decoration: none;
+	font-size: 90%;
+	line-height: 2.4;
+	white-space: nowrap;
 }

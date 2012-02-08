@@ -1,7 +1,7 @@
 div#header.true.clearfix
 	div.container.clearfix
 		span#logo
-			a.site-logo(href="https://how2read.me/", title="Universal readings across the world")= title
+			a.site-logo(href="https://how2read.me/", title="Make readings really universal")= title
 		div#userbox
 			div#user
 				span Welcome 
@@ -9,14 +9,20 @@ div#header.true.clearfix
 				
 div#content
 	div.container.clearfix
-		div#allApproved
+		div#mainbar
 			div.term
-				div.title
-					span.name Apache
+				div.statscontainer
+					div.stats
+						div.votes
+							span 100 
+							div votes
+						div.status.approved
+							span 75 
+							div incorrect
+				div.summary
+					h3 Apache
 					span.reading 
 						a(href="") [ə'pætʃi]
-					span.statistics 75% correct
-				div.body
 					div.correct	
 						ul.readings
 							li(title="Chinese")
@@ -25,6 +31,9 @@ div#content
 						ul.readings
 							li(title="Chinese")
 							span 阿帕奇
+					div.tags
+							a.tags(href="/tags") web-server
+							a.tags(href="/tags") Unix
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded
