@@ -10,35 +10,31 @@ div#header.true.clearfix
 div#content
 	div.container.clearfix
 		div#mainbar
-			div.term
-				div.statscontainer
-					div.stats
-						div.votes
-							span 100 
-							div votes
-						div.status.approved
-							span 75 
+			- for(var i in terms)
+				div.term
+					div.statscontainer
+						div.stats
+							div.votes
+								span 100 
+								div votes
+							div.status.approved
+								span 75 
 							div incorrect
-				div.summary
-					h3 Apache
-					span.reading 
-						a(href="") [ə'pætʃi]
-					div.correct	
-						ul.readings
-							li(title="Chinese")
-								span 阿帕奇 
-					div.incorrect 
-						ul.readings
-							li(title="Chinese")
-							span 阿帕奇
-					div.tags
-							a.tags(href="/tags") web-server
-							a.tags(href="/tags") Unix
+					div.summary
+						h3= terms[i].name
+						span.reading 
+							a(href="")= terms[i].reading
+						div.incorrect 
+							ul.readings
+								li(title="Chinese")
+								span 阿帕奇
+							div.tags
+								a.tags(href="/tags") web-server
+								a.tags(href="/tags") Unix
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded
 			div#notApproved
-		
 div#footer
 	div.container.clearfix
 		div#legal
