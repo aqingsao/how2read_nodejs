@@ -1,20 +1,32 @@
-var $ = require('mongous').Mongous, 
-util = require('util');
+var Sequelize = require("sequelize");
+var sequelize = new Sequelize('h2r', 'h2r', 'H0w@read', {
+	dialect: 'sqlite', 
+	storage: 'data/h2r.sqlite', 
+	define: {timestamp: true, charset: 'utf8'}, 
+	logging: true
+}); 
 
-var dbname = "h2r";
-var terms = [
-	{name: 'Apache', reading: "ə'pætʃi", from: "http://apache.com", otherReadings: ["'阿帕奇"]}, 
-	{name: 'Maven', reading: "'meiven", from: "http://apache.com", otherReadings: ["马雯"]}
-];
+var Terms = sequelize.define('Terms', {
+  name: {type: Sequelize.STRING, unique: true}, 
+  reading: {type: Sequelize.STRING, allowNull: false}, 
+  from: {type: Sequelize.STRING, allowNull: false}, 
+  description: Sequelize.TEXT, 
+});
+var apache = Terms.build({name: 'Apache', reading: "ə'pætʃi", from: "http://apache.com"})
+var maven = Terms.build({name: 'Maven', reading: "'meiven", from: "http://apache.com"});
+var terms = [apache, maven];
 
-var things = [
-{name: 'terms', value: terms}
-];
-
-for(var key in things){
-	console.log("Begin to migrate " + dbname + "." + things[key].name + ", count: " + things[key].value.length);
-	var objects = things[key].value;
-	for(var i in objects){
-		$(dbname + "." + things[key].name).save(objects[i]);	
+sequelize.sync().success(function(){
+	console.log("Create table Terms");
+	for(var key in terms){
+		var term = terms[key];
+		term.save().success(function(){
+			console.log("insert " + term);
+		}).error(function(err){
+			throw err;
+		});
 	}
-}
+}).error(function(error){
+	throw error;
+});
+
