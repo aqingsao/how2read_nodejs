@@ -5,6 +5,7 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , util = require('util')
 
 var app = module.exports = express.createServer();
 
@@ -31,5 +32,6 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 
-app.listen(3000);
+var port = process.env.PORT || 3000;
+app.listen(port);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
