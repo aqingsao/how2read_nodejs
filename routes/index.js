@@ -1,4 +1,3 @@
-var $ = require('mongous').Mongous;
 var util = require('util');
 
 /*
@@ -6,8 +5,6 @@ var util = require('util');
  */
 
 exports.index = function(req, res){	
-	$("h2r.terms").find(function(reply){
-		console.log("Terms: " + util.inspect(reply.documents));
-		res.render('index', { title: 'How to read me', terms: reply.documents})
-	});
+	var terms = [{name: 'Apache', reading: "ə'pætʃi", from: "http://apache.com"}, {name: 'Maven', reading: "'meiven", from: "http://apache.com"}];
+	res.render('index', { title: 'How to read me', terms: terms})
 };
