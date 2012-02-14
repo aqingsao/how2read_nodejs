@@ -1,6 +1,9 @@
 var util = require('util');
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(':memory:', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, function(error){
+var config = require('../config');
+
+console.log("db: " + config.db)
+var db = new sqlite3.Database(":memory:", sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, function(error){
 	if(error){
 		throw error;
 	}
