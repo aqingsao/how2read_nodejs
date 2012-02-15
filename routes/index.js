@@ -2,8 +2,8 @@ var util = require('util');
 var sqlite3 = require('sqlite3').verbose();
 var config = require('../config');
 
-console.log("db: " + config.db)
-var db = new sqlite3.Database(":memory:", sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, function(error){
+console.log("will use db: " + config[process.env.NODE_ENV].db)
+var db = new sqlite3.Database(config[process.env.NODE_ENV].db, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, function(error){
 	if(error){
 		throw error;
 	}
@@ -12,18 +12,18 @@ var db = new sqlite3.Database(":memory:", sqlite3.OPEN_READWRITE | sqlite3.OPEN_
 	}
 });
 db.serialize(function(){
-	db.run("CREATE TABLE Terms(id LONG, name TEXT, reading TEXT, source TEXT)", function(error){
-		if(error){
-			throw error;
-		}
-		else{
-			console.log("Table terms is created.");
-		}
-	});
-	var stmt = db.prepare("insert into Terms(name, reading, source) values(?, ?, ?)");
-	stmt.run('Apache', "ə'pætʃi", "http://apache.com");
-	stmt.run('Maven', "'meiven", "http://apache.com");
-	stmt.finalize();
+	// db.run("CREATE TABLE Terms(id LONG, name TEXT, reading TEXT, source TEXT)", function(error){
+	// 	if(error){
+	// 		throw error;
+	// 	}
+	// 	else{
+	// 		console.log("Table terms is created.");
+	// 	}
+	// });
+	// var stmt = db.prepare("insert into Terms(name, reading, source) values(?, ?, ?)");
+	// stmt.run('Apache', "ə'pætʃi", "http://apache.com");
+	// stmt.run('Maven', "'meiven", "http://apache.com");
+	// stmt.finalize();
 });
 
 /*
