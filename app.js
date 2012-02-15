@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , util = require('util')
+  , reloader = require('reloader');
 
 var app = module.exports = express.createServer();
 
@@ -32,5 +33,8 @@ app.configure('production', function(){
 app.get('/', routes.index);
 
 var port = process.env.PORT || 3000;
-app.listen(port);
+reloader({
+    onReload: function () {
+        app.listen(port);
+}});
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

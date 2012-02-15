@@ -30,34 +30,46 @@ var migration = function(){
 	}
 
 	function _migrateFiles(dir){
-		fs.readdir(dir, function(err, files){
-			if(err){
-				throw err;
-			}
-			for(var i in files){
-				var file = files[i];
-				console.log("Begin to migrate file: " + file)
-				fs.readFile(dir + '/' + file, "utf-8", function(err, data){
+		fs.stat(dir, function(err, stats){
+			if(stats.isDirectory()){
+				fs.readdir(dir, function(err, files){
 					if(err){
 						throw err;
 					}
-					_runSql(data);
-				});
-			};
-		});	
-	}
-	function _runSql(sql){
-		db.run(sql, function(error){
-			if(error){
-				throw error;
+					var sortedFiles = _sort(files);
+					for(var i in sortedFiles){
+						_migrateFile(dir + "/" + sortedFiles[i]);
+					};
+				});	
 			}
-			else{
-				console.log("migrate successfully.");
+			else if(stats.isFile()){
+				_migrateFile(dir);
 			}
 		});
+	}
+	function _migrateFile(file){
+		console.log("Begin to migrate file: " + file)
+		fs.readFile(file, "utf-8", function(err, data){
+			if(err){
+				throw err;
+			}
+			db.run(data, function(error){
+				if(error){
+					throw error;
+				}
+				else{
+					console.log("migrate successfully.");
+				}
+			});
+		});
+	}
+	function _sort(files){
+		for(var i in files){
+			files[i].
+		}
 	}
 	
 	return {migrate: migrate, rollback: rollback};
 }();
 
-migration.rollback();
+migration.migrate();
