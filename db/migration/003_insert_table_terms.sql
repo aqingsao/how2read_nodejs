@@ -1,0 +1,2 @@
+insert into Terms(name, reading, source, description) values('apache', "ə'pætʃi", "http://apache.com", "A well known web server running on *nix operation system.");
+insert into Terms(name, reading, source, description) values('maven', "'meiven", "http://maven.com", "A Java written build tool and dependency management tool.");
