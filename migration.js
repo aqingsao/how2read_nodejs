@@ -19,54 +19,63 @@ var migration = function(){
 
 	function migrate(){
 		db.serialize(function(){
-			_migrateFiles("db/migration");
+			_migrateDirectory("db/migration", function(a, b){a.order - b.order});
 		});
 	}
 
 	function rollback(){
 		db.serialize(function(){
-			_migrateFiles("db/rollback");
+			_migrateDirectory("db/rollback", function(a, b){b.order - a.order});
 		});
 	}
 
-	function _migrateFiles(dir){
+	function _migrateDirectory(dir, sortby){
 		fs.stat(dir, function(err, stats){
 			if(stats.isDirectory()){
 				fs.readdir(dir, function(err, files){
 					if(err){
 						throw err;
 					}
-					var sortedFiles = _sort(files);
-					for(var i in sortedFiles){
-						_migrateFile(dir + "/" + sortedFiles[i]);
-					};
+					_migrateFiles(dir, files, sortby);
 				});	
 			}
 			else if(stats.isFile()){
-				_migrateFile(dir);
+				_migrateFiles(null, [dir], sortby);
+			}
+			else{
+				throw "Illegal file or directory " + dir;
 			}
 		});
 	}
-	function _migrateFile(file){
-		console.log("Begin to migrate file: " + file)
-		fs.readFile(file, "utf-8", function(err, data){
+	function _migrateFiles(dir, files, sortby){
+		var count = files.length;
+		var fileContents = [];
+		var pattern = /^(\d+)_*/;
+		for(var i in files){
+			var file = dir ? dir + "/" + files[i] : files[i];
+			fs.readFile(file, "utf-8", function(err, data){
+				if(err){
+					throw err;
+				}
+				count--;
+				fileContents.push({order: files[i].match(pattern)[1], content: data});
+				console.log("Prepare to migrate " + file);
+				if(count <= 0){
+					fileContents.sort(sortby);
+					for(var key in fileContents){
+						console.log("Begin to migrate: " + fileContents[key].order)
+						_runSql(fileContents[key].content);
+					}					
+				}
+			});
+		};
+	}
+	function _runSql(sql){
+		db.run(sql, function(err){
 			if(err){
 				throw err;
 			}
-			db.run(data, function(error){
-				if(error){
-					throw error;
-				}
-				else{
-					console.log("migrate successfully.");
-				}
-			});
 		});
-	}
-	function _sort(files){
-		for(var i in files){
-			files[i].
-		}
 	}
 	
 	return {migrate: migrate, rollback: rollback};
