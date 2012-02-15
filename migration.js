@@ -1,8 +1,7 @@
 var util = require('util')
 , sqlite3 = require('sqlite3').verbose()
 , config = require('./config')
-,fs = require('fs')
-,migration = require('./migration'); 
+,fs = require('fs');
 
 var migration = function(){
 	var env = process.env.NODE_ENV || "development";
@@ -50,7 +49,7 @@ var migration = function(){
 	function _migrateFiles(dir, files, sortby){
 		var count = files.length;
 		var fileContents = [];
-		var pattern = /^(\d+)_*/;
+		var pattern = /.*\/(\d+)_*/;
 		for(var i in files){
 			var file = dir ? dir + "/" + files[i] : files[i];
 			fs.readFile(file, "utf-8", function(err, data){
@@ -58,7 +57,7 @@ var migration = function(){
 					throw err;
 				}
 				count--;
-				fileContents.push({order: files[i].match(pattern)[1], content: data});
+				fileContents.push({order: file.match(pattern)[1], content: data});
 				console.log("Prepare to migrate " + file);
 				if(count <= 0){
 					fileContents.sort(sortby);
