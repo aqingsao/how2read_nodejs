@@ -4,6 +4,7 @@ var util = require('util')
 ,fs = require('fs');
 
 var migration = function(){
+	var pattern = /.*\/?(\d+)_*/;
 	var env = process.env.NODE_ENV || "development";
 	console.log("Currently we are in env " + env + " on " + config[env].db)
 	var db = new sqlite3.Database(config[env].db, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, function(error){
@@ -17,15 +18,13 @@ var migration = function(){
 	});
 
 	function migrate(){
-		db.serialize(function(){
-			_migrateDirectory("db/migration", function(a, b){a.order - b.order});
-		});
+		var dir = arguments.length > 0 ? "db/migration/" + arguments[0] : "db/migration";
+		_migrateDirectory(dir, function(a, b){return a.match(pattern)[1] - b.match(pattern)[1]});
 	}
 
 	function rollback(){
-		db.serialize(function(){
-			_migrateDirectory("db/rollback", function(a, b){b.order - a.order});
-		});
+		var dir = arguments.length > 0 ? "db/rollback/" + arguments[0] : "db/rollback";
+		_migrateDirectory(dir, function(a, b){return b.match(pattern)[1] - a.match(pattern)[1]});
 	}
 
 	function _migrateDirectory(dir, sortby){
@@ -35,44 +34,29 @@ var migration = function(){
 					if(err){
 						throw err;
 					}
-					_migrateFiles(dir, files, sortby);
+					files.sort(sortby);
+					_migrateFiles(dir, files);
 				});	
 			}
 			else if(stats.isFile()){
-				_migrateFiles(null, [dir], sortby);
+				_migrateFiles(null, [dir]);
 			}
 			else{
-				throw "Illegal file or directory " + dir;
+				throw "Illegal directory " + dir;
 			}
 		});
 	}
-	function _migrateFiles(dir, files, sortby){
-		var count = files.length;
-		var fileContents = [];
-		var pattern = /.*\/(\d+)_*/;
-		for(var i in files){
-			var file = dir ? dir + "/" + files[i] : files[i];
-			fs.readFile(file, "utf-8", function(err, data){
-				if(err){
-					throw err;
-				}
-				count--;
-				fileContents.push({order: file.match(pattern)[1], content: data});
-				console.log("Prepare to migrate " + file);
-				if(count <= 0){
-					fileContents.sort(sortby);
-					for(var key in fileContents){
-						console.log("Begin to migrate: " + fileContents[key].order)
-						_runSql(fileContents[key].content);
-					}					
-				}
-			});
-		};
-	}
-	function _runSql(sql){
-		db.run(sql, function(err){
-			if(err){
-				throw err;
+	function _migrateFiles(dir, files){
+		db.serialize(function(){
+			for(var i in files){
+				var file = dir ? dir + "/" + files[i] : files[i];
+				var content = fs.readFileSync(file, "utf-8");
+				console.log("Begin to migrate " + files[i] + ": " + content)
+				db.run(content, function(err){
+					if(err){
+						throw err;
+					}
+				});
 			}
 		});
 	}
@@ -80,4 +64,4 @@ var migration = function(){
 	return {migrate: migrate, rollback: rollback};
 }();
 
-migration.migrate();
+migration.rollback();
