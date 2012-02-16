@@ -16,3 +16,10 @@ exports.index = function(req, res){
 		res.render('index', { title: 'How to read me', terms: rows})
 	});
 };
+
+/*
+ * POST term report right
+ */
+exports.term = function(req, res){	    	
+	res.send('投票成功！');
+};

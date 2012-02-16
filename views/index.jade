@@ -31,6 +31,8 @@ div#content
 							div.tags
 								a.tags(href="/tags") web-server
 								a.tags(href="/tags") Unix
+							div.report
+								input#reportRight(type="button", value="我读对了", url="/term/"+terms[i].id+"/right") 	
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded
@@ -43,6 +45,8 @@ div#footer
 			span website: 
 				a(href="http://xiaoqing.me") http://xiaoqing.me  
 			span weibo(@aqingsao)  
+script(src="/js/jquery.min.js")			
+script(src="/js/term.js")			
 script(src="/js/rgraph/RGraph.common.core.js")
 script(src="/js/rgraph/RGraph.common.tooltips.js")
 script(src="/js/rgraph/RGraph.common.effects.js")

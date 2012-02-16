@@ -38,8 +38,8 @@ if('development' == app.settings.env){
 }
 
 // Routes
-
 app.get('/', routes.index);
+app.post('/term/:id/right', routes.term);
 
 var port = process.env.PORT || 3000;
 // reloader({
