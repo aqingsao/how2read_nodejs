@@ -64,4 +64,4 @@ var migration = function(){
 	return {migrate: migrate, rollback: rollback};
 }();
 
-migration.rollback();
+migration.migrate();
