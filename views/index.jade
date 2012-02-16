@@ -13,13 +13,8 @@ div#content
 			- for(var i in terms)
 				div.term
 					div.statscontainer
-						div.stats
-							div.votes
-								span 100 
-								div votes
-							div.status.approved
-								span 75 
-							div incorrect
+						- var name = 'term' + terms[i].id
+						canvas(id=name)
 					div.summary
 						h3= terms[i].name
 						span.reading 
@@ -53,3 +48,6 @@ script(src="/js/rgraph/RGraph.common.tooltips.js")
 script(src="/js/rgraph/RGraph.common.effects.js")
 script(src="/js/rgraph/RGraph.pie.js")
 script(src="/js/rgraph/RGraph.common.key.js")
+script(src="/js/main.js")
+script
+	stats.drawPie("term1", [18, 75]);

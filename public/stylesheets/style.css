@@ -88,7 +88,7 @@ ul span{
 #content #mainbar{
 	float: left;
 	margin-bottom: 40px;
-	width: 735px;
+/*	width: 735px;*/
 }
 #content .term{
 	height: auto;
@@ -99,41 +99,18 @@ ul span{
 
 /*For a term*/
 .term .statscontainer{
-	width: 86px;
+	width: 186px;
 	float: left;
 	margin-right: 8px;
 }
-.term .stats{
-	background: #EEE;
-	margin: 0 0 0 7px;
-	padding: 4px 7px 6px 7px;
-	width: 58px;
-}
-.term .status{
-	margin-top: -3px;
-	padding: 4px 0 4px;
-	text-align: center;
-}
-.term .stats .votes{
-	color: #555;
-	padding: 0 0 7px 0;
-	text-align: center;
-}
-.term .stats .votes span{
-	display: block;
-	color: #808185;
-	font-weight: bold;
-	font-size: 2em;
-}
-.term .stats .status span{
-	display: block;
-	font-weight: bold;
-	font-size: 1.5em;
+.term canvas{
+	width: 180px;
+	height: 150px;
 }
 
 .term .summary{
 	float: left;
-	width: 635px;
+	width: 735px;
 }
 .summary h3{
 	display: inline-block;
