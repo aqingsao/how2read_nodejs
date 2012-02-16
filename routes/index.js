@@ -20,25 +20,22 @@ exports.index = function(req, res){
 /*
  * POST term report right
  */
-exports.term = function(req, res){	 
-	var db = process.h2r.db;
-	var isCorrect = Boolean(req.body.isCorrect);
-	
-	if(isCorrect) {
-		db.run("UPDATE terms SET right_count = right_count + 1 WHERE id = ?", req.params.id, function(err){
-			if(err){
-				throw err;
-			}
-				
-			res.send('我读对了，投票成功！');
-		});
-	} else{
-		db.run("UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?", req.params.id, function(err){
-			if(err){
-				throw err;
-			}
-				
-			res.send('我读错了，投票成功！');
-		});
-	}
+exports.term = function(req, res){	 	
+	if(Boolean(req.body.isCorrect)) {
+		_updatePronunciationCount("UPDATE terms SET right_count = right_count + 1 WHERE id = ?", "我读对了，投票成功！", req, res);
+		return;
+	} 
+		
+	_updatePronunciationCount("UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?", "我读错了，投票成功！", req, res);
 };
+
+function _updatePronunciationCount(sql, resbody, req, res){
+	var db = process.h2r.db;
+	db.run(sql, req.params.id, function(err){
+		if(err){
+			throw err;
+		}
+			
+		res.send(resbody);
+	});
+}
