@@ -2,7 +2,7 @@ CREATE TABLE Terms(
 	id INTEGER, 
 	name varchar(50), 
 	reading varchar(50) NOT NULL,
-	right_count INTEGER default 0, 
+	right_count INTEGER default 1, 
 	wrong_count INTEGER default 0,
 	source varchar(100), 
 	description TEXT,

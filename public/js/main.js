@@ -1,10 +1,13 @@
 stats = function(){
 	// dataset:{correct: 29, wrong: 75}
 	function drawPie(id, data){
-		var total = 0, percentage = [];
+		var total = 0;
+		var percentage = [];
 		for(var i in data){
+			data[i] = data[i] ? parseInt(data[i]) : 0;
 			total += data[i];
 		}
+		total = total == 0 ? 1 : total;
 		for(var i in data){
 			percentage[i] = Math.round(data[i]/total*10000)/100.00+"%"; 
 		}
@@ -32,3 +35,9 @@ stats = function(){
 		drawPie: drawPie
 	}
 }();
+
+$(function(){
+	$("div.term canvas").each(function(){
+		stats.drawPie($(this).attr('id'), [$(this).attr('wrongcount'), $(this).attr('rightcount')]);
+	})
+});
