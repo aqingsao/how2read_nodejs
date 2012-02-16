@@ -3,6 +3,6 @@ config.production = {
 	db: '../h2r.sqlite'
 };
 config.development = {
-	db: ':memory:'
+	db: '../h2r.sqlite'
 };
 module.exports = config;
