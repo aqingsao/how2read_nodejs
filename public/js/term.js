@@ -1,5 +1,5 @@
-$("input#reportRight").click(function(){
-	var url = $("input#reportRight").attr("url");
+$("input.report-right").bind('click', function(){
+	var url = $(this).attr("url");
 	$.post(url, function(data) {
 	   alert(data);
 	 });

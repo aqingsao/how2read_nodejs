@@ -20,6 +20,13 @@ exports.index = function(req, res){
 /*
  * POST term report right
  */
-exports.term = function(req, res){	    	
-	res.send('投票成功！');
+exports.term = function(req, res){	    
+	var db = process.h2r.db;
+	db.run("UPDATE terms SET right_count = right_count + 1 WHERE id = ?", req.params.id, function(err){
+		if(err){
+			throw err;
+		}
+		
+		res.send('投票成功！');
+	});
 };
