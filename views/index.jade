@@ -32,7 +32,8 @@ div#content
 								a.tags(href="/tags") web-server
 								a.tags(href="/tags") Unix
 							div.report
-								input.report-right(type="button", value="我读对了", url="/term/"+terms[i].id+"/right") 	
+								input.report-right(type="button", value="我读对了", url="/term/"+terms[i].id) 
+								input.report-wrong(type="button", value="我读错了", url="/term/"+terms[i].id) 	
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded

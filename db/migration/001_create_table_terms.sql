@@ -3,6 +3,7 @@ CREATE TABLE Terms(
 	name varchar(50), 
 	reading varchar(50) NOT NULL,
 	right_count INTEGER default 0, 
+	wrong_count INTEGER default 0,
 	source varchar(100), 
 	description TEXT,
 	created_at timestamp, 
