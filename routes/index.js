@@ -2,22 +2,17 @@ var util = require('util');
 var sqlite3 = require('sqlite3').verbose();
 var config = require('../config');
 
-var db = config[process.env.NODE_ENV || 'development'].db;
-console.log("will use db: " + db)
-var db = new sqlite3.Database(db, sqlite3.OPEN_READONLY, function(error){
-	if(error){
-		console.log("Cannot open database " + db);
-		throw error;
-	}
-});
-
 /*
  * GET home page.
  */
 
-exports.index = function(req, res){	
+exports.index = function(req, res){
+	var db = process.h2r.db;
 	db.all("SELECT * FROM Terms", function(err, rows) {
-    	console.log("Found " + rows.length + " terms.");
+		if(err){
+			throw err;
+		}
+    	console.log("Found terms: " + util.inspect(rows));
 		res.render('index', { title: 'How to read me', terms: rows})
 	});
 };

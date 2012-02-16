@@ -6,7 +6,9 @@
 var express = require('express')
   , routes = require('./routes')
   , util = require('util')
-  , reloader = require('reloader');
+  , reloader = require('reloader')
+  , migration = require('./migration')
+  , config = require('./config');
 
 var app = module.exports = express.createServer();
 
@@ -28,13 +30,20 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+// prepare data for dev env
+process.h2r = {db: migration.createdb(config[app.settings.env].db)};
+if('development' == app.settings.env){
+  console.log("Start to migrate db " + config[app.settings.env].db + " on " + app.settings.env + " env.");
+  migration.migrate(process.h2r.db);
+}
+
 // Routes
 
 app.get('/', routes.index);
 
 var port = process.env.PORT || 3000;
-reloader({
-    onReload: function () {
+// reloader({
+    // onReload: function () {
         app.listen(port);
-}});
+// }});
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
