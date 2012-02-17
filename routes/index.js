@@ -18,7 +18,7 @@ exports.index = function(req, res){
 };
 
 /*
- * POST term report right
+ * POST term report pronunciation
  */
 exports.term = function(req, res){
 	if('true' === req.body.isCorrect) {
@@ -27,6 +27,22 @@ exports.term = function(req, res){
 	else{
 		_updatePronunciationCount("UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?", "我读错了，投票成功！", req, res);	
 	}		
+};
+
+function _getClientIp(req) {
+  var ipAddress;
+  
+  var forwardedIps = req.header('x-forwarded-for'); 
+  if (forwardedIps) {
+    var forwardedIps = forwardedIps.split(',');
+    ipAddress = forwardedIps[0];
+  }
+
+  if (!ipAddress) {  
+    ipAddress = req.connection.remoteAddress;
+  }
+
+  return ipAddress;
 };
 
 function _updatePronunciationCount(sql, resbody, req, res){
