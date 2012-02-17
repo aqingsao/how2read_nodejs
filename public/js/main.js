@@ -38,10 +38,24 @@ stats = function(){
 
 $(function(){
 	$("div.term canvas").each(function(){
-		stats.drawPie($(this).attr('id'), [$(this).attr('wrongcount'), $(this).attr('rightcount')]);
+		_drawPie($(this));
 	});
-	$("div.term form.report input[type='submit']").click(function(){
-		var url = $(this).attr("url");
-		var body = {isCorrect : "true"};
+	$("div.term form.report").submit(function(){
+		var that = $(this);
+		$.post(that.attr('action'), that.serialize(), function(){
+			_updateTerm(that.parents("div.term"));
+		})
+		return false;
 	});
+	
+	function _drawPie(canvas){
+		stats.drawPie(canvas.attr('id'), [canvas.attr('wrongcount'), canvas.attr('rightcount')]);	
+	};
+	function _updateTerm(term){
+		term.find("input[type='submit']").attr('disabled', true);
+		var canvas = term.find("canvas");
+		canvas.attr("wrongCount", parseInt(canvas.attr("wrongCount")) + 1);
+		canvas.attr("wrongCount", parseInt(canvas.attr("wrongCount")) + 1);
+		_drawPie(term.find("canvas"));
+	}
 });

@@ -21,15 +21,7 @@ exports.index = function(req, res){
  * POST term report right
  */
 exports.term = function(req, res){
-	if('true' === req.body.isCorrect) {
-		_updatePronunciationCount("UPDATE terms SET right_count = right_count + 1 WHERE id = ?", "我读对了，投票成功！", req, res);
-	} 
-	else{
-		_updatePronunciationCount("UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?", "我读错了，投票成功！", req, res);	
-	}		
-};
-
-function _updatePronunciationCount(sql, resbody, req, res){
+	var sql = 'true' === req.body.isCorrect? "UPDATE terms SET right_count = right_count + 1 WHERE id = ?" : "UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?";
 	var db = process.h2r.db;
 	db.run(sql, req.params.id, function(err){
 		if(err){
@@ -37,5 +29,5 @@ function _updatePronunciationCount(sql, resbody, req, res){
 		}
 			
 		res.redirect('back');
-	});
-}
+	});	
+};

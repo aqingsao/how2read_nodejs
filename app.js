@@ -34,7 +34,7 @@ app.configure('production', function(){
 process.h2r = {db: migration.createdb(config[app.settings.env].db)};
 if('development' == app.settings.env){
   console.log("Start to migrate db " + config[app.settings.env].db + " on " + app.settings.env + " env.");
-  migration.rollback(process.h2r.db, "db");
+  // migration.rollback(process.h2r.db, "db");
   migration.migrate(process.h2r.db, "db");
 }
 
@@ -43,8 +43,5 @@ app.get('/', routes.index);
 app.post('/term/:id', routes.term);
 
 var port = process.env.PORT || 3000;
-// reloader({
-    // onReload: function () {
-        app.listen(port);
-// }});
+app.listen(port);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
