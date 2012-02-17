@@ -1,7 +1,7 @@
 var util = require('util')
 , sqlite3 = require('sqlite3').verbose()
 , config = require('./config')
-,fs = require('fs');
+, fs = require('fs');
 
 var filePattern = /.*\/?(\d+)_*/;
 var sqlPattern = /\w+/;
@@ -30,6 +30,9 @@ exports.createdb = function(dbname){
 }
 function _migrateDirectory(db, dir, sortby){
 	fs.stat(dir, function(err, stats){
+		if(err){
+			throw err;
+		}
 		if(stats.isDirectory()){
 			fs.readdir(dir, function(err, files){
 				if(err){
