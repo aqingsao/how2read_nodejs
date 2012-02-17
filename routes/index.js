@@ -31,6 +31,18 @@ exports.term = function(req, res){
 		res.redirect('back');
 	});	
 };
+// GET term detail
+exports.termDetail = function(req, res){
+	var id = req.params.id;
+	var db = process.h2r.db;
+	db.get("SELECT * FROM Terms where id = ?", req.params.id, function(err, row){
+		if(err){
+			throw err;
+		}
+			
+		res.send(row);
+	});	
+};
 
 function _getClientIp(req) {
   var ipAddress;

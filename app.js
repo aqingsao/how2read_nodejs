@@ -41,6 +41,7 @@ if('development' == app.settings.env){
 // Routes
 app.get('/', routes.index);
 app.post('/term/:id', routes.term);
+app.get('/term/:id', routes.termDetail);
 
 var port = process.env.PORT || 3000;
 app.listen(port);

@@ -54,8 +54,11 @@ $(function(){
 	function _updateTerm(term){
 		term.find("input[type='submit']").attr('disabled', true);
 		var canvas = term.find("canvas");
-		canvas.attr("wrongCount", parseInt(canvas.attr("wrongCount")) + 1);
-		canvas.attr("wrongCount", parseInt(canvas.attr("wrongCount")) + 1);
-		_drawPie(term.find("canvas"));
+		var id = term.find("input[name='id']").val();
+		$.getJSON("/term/" + id, function(data){
+			canvas.attr("wrongCount", data.wrong_count);
+			canvas.attr("rightcount", data.right_count);
+			_drawPie(term.find("canvas"));
+		});
 	}
 });
