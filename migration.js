@@ -13,6 +13,9 @@ exports.migrate = function(dbname, dir){
 
 exports.rollback = function(dbname, dir){
 	var db = typeof(dbname) == "string" ? _createdb(dbname) : dbname;
+	
+	console.log("the dir is: "+dir);
+	
 	_migrateDirectory(db, dir + "/rollback/", function(a, b){return b.match(filePattern)[1] - a.match(filePattern)[1]});
 }
 

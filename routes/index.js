@@ -18,7 +18,7 @@ exports.index = function(req, res){
 };
 
 /*
- * POST term report right
+ * POST term report pronunciation
  */
 exports.term = function(req, res){
 	var sql = 'true' === req.body.isCorrect? "UPDATE terms SET right_count = right_count + 1 WHERE id = ?" : "UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?";
@@ -30,4 +30,20 @@ exports.term = function(req, res){
 			
 		res.redirect('back');
 	});	
+};
+
+function _getClientIp(req) {
+  var ipAddress;
+  
+  var forwardedIps = req.header('x-forwarded-for'); 
+  if (forwardedIps) {
+    var forwardedIps = forwardedIps.split(',');
+    ipAddress = forwardedIps[0];
+  }
+
+  if (!ipAddress) {  
+    ipAddress = req.connection.remoteAddress;
+  }
+
+  return ipAddress;
 };

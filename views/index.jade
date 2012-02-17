@@ -22,10 +22,8 @@ div#content
 						div.incorrect 
 							ul.readings
 								li(title="Chinese")
-								span 阿帕奇
-							div.tags
-								a.tags(href="/tags") web-server
-								a.tags(href="/tags") Unix
+							div.description
+								span= terms[i].description
 							div.report
 								form.report(method="POST", action="/term/#{id}")
 									input(type="hidden", value="true", name="isCorrect") 

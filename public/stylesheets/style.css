@@ -123,7 +123,7 @@ ul.readings{
 ul.readings li{
 	display: inline-block;
 }
-a.tags{
+input.right, input.wrong{
 	color: #3E6D8E;
 	background-color: #E0EAF1;
 	border-bottom: 1px solid #3E6D8E;
@@ -131,7 +131,7 @@ a.tags{
 	padding: 3px 4px 3px 4px;
 	margin: 2px 2px 2px 0;
 	text-decoration: none;
-	font-size: 90%;
+	font-size: 100%;
 	line-height: 2.4;
 	white-space: nowrap;
 }
