@@ -11,6 +11,7 @@ stats = function(){
 		for(var i in data){
 			percentage[i] = Math.round(data[i]/total*10000)/100.00+"%"; 
 		}
+		var tooltips = "Total: " + total + "\n" + "Wrong: " + data[0];
 		
 		var pie2 = new RGraph.Pie(id, data); // Create the pie object
 		pie2.Set('chart.gutter.left', 10);
@@ -18,8 +19,6 @@ stats = function(){
 		pie2.Set('chart.gutter.top', 10);
 		pie2.Set('chart.gutter.bottom', 10);
 		pie2.Set('chart.colors', ['red', '#6f6']);
-		// pie2.Set('chart.key', ['Wrong(' + data[0] + ', ' +percentage[0] + ')', 'Correct(' + data[1] + ', ' + percentage[1] + ')']);
-		// pie2.Set('chart.key.background', 'white');
 		pie2.Set('chart.strokestyle', 'white');
 		pie2.Set('chart.linewidth', 3);
 		pie2.Set('chart.shadow', true);
@@ -27,8 +26,12 @@ stats = function(){
 		pie2.Set('chart.shadow.offsety', 0);
 		pie2.Set('chart.shadow.blur', 25);
 		pie2.Set('chart.labels', ['Wrong(' + percentage[0] + ')', 'Correct(' + percentage [1]+ ')'])
-
-		return pie2;
+		pie2.Set('chart.tooltips', [tooltips, tooltips])
+		pie2.Set('chart.tooltips.event', 'onmousemove')
+		pie2.Set('chart.labels.sticks', true);
+		
+		RGraph.Clear(pie2.canvas);
+		pie2.Draw();
 	}
 	return {
 		drawPie: drawPie
@@ -48,9 +51,7 @@ $(function(){
 	});
 	
 	function _drawPie(canvas){
-		var pie = stats.drawPie(canvas.attr('id'), [canvas.attr('wrongcount'), canvas.attr('rightcount')]);	
-		RGraph.Clear(pie.canvas);
-		pie.Draw();
+		stats.drawPie(canvas.attr('id'), [canvas.attr('wrongcount'), canvas.attr('rightcount')]);	
 	};
 	function _updateTerm(term){
 		term.find("input[type='submit']").attr('disabled', true);

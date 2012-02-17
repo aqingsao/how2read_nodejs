@@ -14,7 +14,7 @@ div#content
 				- var id= terms[i].id, name = 'term' + id, rightCount = terms[i].right_count, wrongCount = terms[i].wrong_count;
 				div.term
 					div.statscontainer
-						canvas(id=name, rightCount=rightCount, wrongCount = wrongCount)
+						canvas(id=name, rightCount=rightCount, wrongCount = wrongCount) [No canvas support]
 					div.summary
 						h3= terms[i].name
 						span.reading 
