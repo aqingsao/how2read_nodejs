@@ -28,8 +28,7 @@ stats = function(){
 		pie2.Set('chart.shadow.blur', 25);
 		pie2.Set('chart.labels', ['Wrong(' + percentage[0] + ')', 'Correct(' + percentage [1]+ ')'])
 
-		pie2.Draw();
-		// RGraph.Effects.Pie.Grow(pie2);
+		return pie2;
 	}
 	return {
 		drawPie: drawPie
@@ -49,7 +48,9 @@ $(function(){
 	});
 	
 	function _drawPie(canvas){
-		stats.drawPie(canvas.attr('id'), [canvas.attr('wrongcount'), canvas.attr('rightcount')]);	
+		var pie = stats.drawPie(canvas.attr('id'), [canvas.attr('wrongcount'), canvas.attr('rightcount')]);	
+		RGraph.Clear(pie.canvas);
+		pie.Draw();
 	};
 	function _updateTerm(term){
 		term.find("input[type='submit']").attr('disabled', true);
@@ -58,7 +59,7 @@ $(function(){
 		$.getJSON("/term/" + id, function(data){
 			canvas.attr("wrongCount", data.wrong_count);
 			canvas.attr("rightcount", data.right_count);
-			_drawPie(term.find("canvas"));
+			_drawPie(canvas);
 		});
 	}
 });
