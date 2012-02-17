@@ -11,9 +11,9 @@ div#content
 	div.container.clearfix
 		div#mainbar
 			- for(var i in terms)
+				- var id= terms[i].id, name = 'term' + id, rightCount = terms[i].right_count, wrongCount = terms[i].wrong_count;
 				div.term
 					div.statscontainer
-						- var name = 'term' + terms[i].id, rightCount = terms[i].right_count, wrongCount = terms[i].wrong_count;
 						canvas(id=name, rightCount=rightCount, wrongCount = wrongCount)
 					div.summary
 						h3= terms[i].name
@@ -27,8 +27,12 @@ div#content
 								a.tags(href="/tags") web-server
 								a.tags(href="/tags") Unix
 							div.report
-								input.report-right(type="button", value="我读对了", url="/term/"+terms[i].id) 
-								input.report-wrong(type="button", value="我读错了", url="/term/"+terms[i].id) 	
+								form.report(method="POST", action="/term/#{id}")
+									input(type="hidden", value="true", name="isCorrect") 
+									input.right(type="submit", value="我读对了") 
+								form.report(method="POST", action="/term/#{id}")
+									input(type="hidden", value="false", name="isCorrect") 
+									input.wrong(type="submit", value="我读错了") 	
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded

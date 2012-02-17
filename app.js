@@ -34,8 +34,8 @@ app.configure('production', function(){
 process.h2r = {db: migration.createdb(config[app.settings.env].db)};
 if('development' == app.settings.env){
   console.log("Start to migrate db " + config[app.settings.env].db + " on " + app.settings.env + " env.");
-  migration.rollback(process.h2r.db, "db/rollback/");
-  migration.migrate(process.h2r.db, "db/migration/");
+  migration.rollback(process.h2r.db, "db");
+  migration.migrate(process.h2r.db, "db");
 }
 
 // Routes

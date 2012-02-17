@@ -20,13 +20,13 @@ exports.index = function(req, res){
 /*
  * POST term report right
  */
-exports.term = function(req, res){	 	
-	if(Boolean(req.body.isCorrect)) {
+exports.term = function(req, res){
+	if('true' === req.body.isCorrect) {
 		_updatePronunciationCount("UPDATE terms SET right_count = right_count + 1 WHERE id = ?", "我读对了，投票成功！", req, res);
-		return;
 	} 
-		
-	_updatePronunciationCount("UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?", "我读错了，投票成功！", req, res);
+	else{
+		_updatePronunciationCount("UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?", "我读错了，投票成功！", req, res);	
+	}		
 };
 
 function _updatePronunciationCount(sql, resbody, req, res){
@@ -36,6 +36,6 @@ function _updatePronunciationCount(sql, resbody, req, res){
 			throw err;
 		}
 			
-		res.send(resbody);
+		res.redirect('back');
 	});
 }

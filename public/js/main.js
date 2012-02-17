@@ -39,5 +39,9 @@ stats = function(){
 $(function(){
 	$("div.term canvas").each(function(){
 		stats.drawPie($(this).attr('id'), [$(this).attr('wrongcount'), $(this).attr('rightcount')]);
-	})
+	});
+	$("div.term form.report input[type='submit']").click(function(){
+		var url = $(this).attr("url");
+		var body = {isCorrect : "true"};
+	});
 });
