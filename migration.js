@@ -7,18 +7,20 @@ var scriptPath = "";
 var filePattern = /.*\/?(\d+)_*/;
 var sqlPattern = /\w+/;
 exports.migrate = function(dbname){
-	var db = typeof(dbname) == "string" ? createdb(dbname) : dbname;
+	var db = typeof(dbname) == "string" ? _createdb(dbname) : dbname;
 	var dir = arguments.length > 1 ? "db/migration/" + arguments[1] : "db/migration";
 	_migrateDirectory(db, dir, function(a, b){return a.match(filePattern)[1] - b.match(filePattern)[1]});
 }
 
 exports.rollback = function(dbname){
-	var db = typeof(dbname) == "string" ? createdb(dbname) : dbname;
+	var db = typeof(dbname) == "string" ? _createdb(dbname) : dbname;
 	var dir = arguments.length > 1 ? "db/rollback/" + arguments[1] : "db/rollback";
 	_migrateDirectory(db, dir, function(a, b){return b.match(filePattern)[1] - a.match(filePattern)[1]});
 }
 
-exports.createdb = function(dbname){
+exports.createdb = _createdb;
+
+function _createdb(dbname){
 	return new sqlite3.Database(dbname, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, function(error){
 		if(error){
 			console.log("Could not open db " + dbname);
