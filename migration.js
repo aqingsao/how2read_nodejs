@@ -6,16 +6,14 @@ var util = require('util')
 var scriptPath = "";
 var filePattern = /.*\/?(\d+)_*/;
 var sqlPattern = /\w+/;
-exports.migrate = function(dbname){
+exports.migrate = function(dbname, dir){
 	var db = typeof(dbname) == "string" ? _createdb(dbname) : dbname;
-	var dir = arguments.length > 1 ? "db/migration/" + arguments[1] : "db/migration";
-	_migrateDirectory(db, dir, function(a, b){return a.match(filePattern)[1] - b.match(filePattern)[1]});
+	_migrateDirectory(db, dir + "migration/", function(a, b){return a.match(filePattern)[1] - b.match(filePattern)[1]});
 }
 
-exports.rollback = function(dbname){
+exports.rollback = function(dbname, dir){
 	var db = typeof(dbname) == "string" ? _createdb(dbname) : dbname;
-	var dir = arguments.length > 1 ? "db/rollback/" + arguments[1] : "db/rollback";
-	_migrateDirectory(db, dir, function(a, b){return b.match(filePattern)[1] - a.match(filePattern)[1]});
+	_migrateDirectory(db, dir + "rollback/", function(a, b){return b.match(filePattern)[1] - a.match(filePattern)[1]});
 }
 
 exports.createdb = _createdb;
