@@ -3,6 +3,7 @@ var util = require('util')
 , config = require('./config')
 , fs = require('fs');
 
+var scriptPath = "";
 var filePattern = /.*\/?(\d+)_*/;
 var sqlPattern = /\w+/;
 exports.migrate = function(dbname){
