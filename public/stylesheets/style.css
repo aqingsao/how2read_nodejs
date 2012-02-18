@@ -100,10 +100,6 @@ visibility: hidden;
 	float: left;
 	margin-right: 8px;
 }
-.term canvas{
-	width: 200px;
-	height: 150px;
-}
 
 .term .summary{
 	float: left;
