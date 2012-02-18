@@ -12,28 +12,28 @@ div#content
 		div#mainbar
 			- for(var i in terms)
 				- var id= terms[i].id, name = 'term' + id, rightCount = terms[i].right_count, wrongCount = terms[i].wrong_count;
-				div.term
+				div.term(id=terms[i].id)
 					div.statscontainer
-						canvas(id=name, rightCount=rightCount, wrongCount = wrongCount) [No canvas support]
+						label Correct: 
+							span.right= terms[i].right_count
+						br
+						label Wrong:
+							span.wrong= terms[i].wrong_count
 					div.summary
 						h2= terms[i].name
 						span.reading 
 							a(href="")= '[' + terms[i].reading + ']'
 							audio(src="http://audio.dict.cn/mp3.php?q=8xZwT", type="audio/mpeg")
-						div.incorrect
-							ul.readings
-								li(title="Chinese")
-							div.description
-								span= terms[i].description
-							div.report
-								form.report(method="POST", action="/term/#{id}")
-									input(type="hidden", value="#{id}", name="id") 
-									input(type="hidden", value="true", name="isCorrect") 
-									input.right(type="submit", value="我读对了") 
-								form.report(method="POST", action="/term/#{id}")
-									input(type="hidden", value="#{id}", name="id") 
-									input(type="hidden", value="false", name="isCorrect") 
-									input.wrong(type="submit", value="我读错了") 	
+						div.description= terms[i].description
+						div.report
+							form.report(method="POST", action="/term/#{id}")
+								input(type="hidden", value="#{id}", name="id") 
+								input(type="hidden", value="true", name="isCorrect") 
+								input.right(type="submit", value="我读对了") 
+							form.report(method="POST", action="/term/#{id}")
+								input(type="hidden", value="#{id}", name="id") 
+								input(type="hidden", value="false", name="isCorrect") 
+								input.wrong(type="submit", value="我读错了") 	
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded

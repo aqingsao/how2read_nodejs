@@ -19,9 +19,6 @@ height: 0;
 clear: both;
 visibility: hidden;
 }
-ul span{
-	margin: 0 15px;
-}
 /*For headers*/
 #header{
 	background: -webkit-linear-gradient(#FAFAFA,#EAEAEA);
@@ -122,13 +119,6 @@ form.report input{
 .summary h2{
 	display: inline-block;
 	margin-right: 15px;
-}
-ul.readings{
-	list-style-type: none;
-	display: inline-block;
-}
-ul.readings li{
-	display: inline-block;
 }
 input.right, input.wrong{
 	color: #3E6D8E;
