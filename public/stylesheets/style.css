@@ -112,7 +112,14 @@ ul span{
 	float: left;
 	width: 735px;
 }
-.summary h3{
+form.report{
+	display: inline-block;
+	margin: 5px 15px;
+}
+form.report input{
+	display: inline-block;
+}
+.summary h2{
 	display: inline-block;
 	margin-right: 15px;
 }

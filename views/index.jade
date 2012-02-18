@@ -16,10 +16,11 @@ div#content
 					div.statscontainer
 						canvas(id=name, rightCount=rightCount, wrongCount = wrongCount) [No canvas support]
 					div.summary
-						h3= terms[i].name
+						h2= terms[i].name
 						span.reading 
-							a(href="")= terms[i].reading
-						div.incorrect 
+							a(href="")= '[' + terms[i].reading + ']'
+							audio(src="http://audio.dict.cn/mp3.php?q=8xZwT", type="audio/mpeg")
+						div.incorrect
 							ul.readings
 								li(title="Chinese")
 							div.description
