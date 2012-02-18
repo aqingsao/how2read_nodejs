@@ -1,1 +1,1 @@
-drop table IPSTERMS;
+DROP TABLE IPSTERMS;

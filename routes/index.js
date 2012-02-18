@@ -18,18 +18,22 @@ exports.index = function(req, res){
 };
 
 /*
- * POST term report pronunciation
+ * POST report term pronunciation
  */
 exports.term = function(req, res){
-	var sql = 'true' === req.body.isCorrect? "UPDATE terms SET right_count = right_count + 1 WHERE id = ?" : "UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?";
 	var db = process.h2r.db;
-	db.run(sql, req.params.id, function(err){
+	db.get("SELECT * FROM IPSTERMS WHERE ip = ? AND term = ?", _getClientIp(req), req.params.id, function(err, row) {
 		if(err){
 			throw err;
 		}
-			
-		res.redirect('back');
-	});	
+		 
+		if(row){
+			res.send("您的IP地址已经投过票了，请勿重复投票！", 403);
+			return;
+		}
+		
+		_updateTermCount(req, res, db);
+	});
 };
 // GET term detail
 exports.termDetail = function(req, res){
@@ -44,18 +48,24 @@ exports.termDetail = function(req, res){
 	});	
 };
 
+function _updateTermCount(req, res, db){
+	var termId = req.params.id;
+	var sql = 'true' === req.body.isCorrect? "UPDATE terms SET right_count = right_count + 1 WHERE id = ?" : "UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?";	
+	db.run(sql, termId, function(err){
+		if(err){
+			throw err;
+		}
+		
+		db.run("INSERT INTO IPSTERMS (ip, term) VALUES (?, ?)", _getClientIp(req), termId, function(err){
+			if(err){
+				throw err;
+			}
+			
+			res.redirect('back');
+		});
+	});
+}
+
 function _getClientIp(req) {
-  var ipAddress;
-  
-  var forwardedIps = req.header('x-forwarded-for'); 
-  if (forwardedIps) {
-    var forwardedIps = forwardedIps.split(',');
-    ipAddress = forwardedIps[0];
-  }
-
-  if (!ipAddress) {  
-    ipAddress = req.connection.remoteAddress;
-  }
-
-  return ipAddress;
+	return req.header('x-forwarded-for') ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
 };

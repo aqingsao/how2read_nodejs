@@ -46,7 +46,10 @@ $(function(){
 		var that = $(this);
 		$.post(that.attr('action'), that.serialize(), function(){
 			_updateTerm(that.parents("div.term"));
-		})
+		}).error(function(data){
+			alert(data.responseText);
+		});
+		
 		return false;
 	});
 	
