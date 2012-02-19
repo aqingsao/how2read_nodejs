@@ -26,6 +26,9 @@ div#content
 							audio(src="http://audio.dict.cn/mp3.php?q=8xZwT", type="audio/mpeg")
 						div.description= terms[i].description
 						div.report
+							label.wrongRate
+								span= wrongCount
+								的人读错这个单词
 							form.report(method="POST", action="/term/#{id}")
 								input(type="hidden", value="#{id}", name="id") 
 								input(type="hidden", value="true", name="isCorrect") 

@@ -2,6 +2,7 @@ $(function(){
 	$("div.term").each(function(){
 		var rightCount = $(this).find("label span.right").text();
 		var wrongCount = $(this).find("label span.wrong").text();		
+		$(this).find("label.wrongRate span").text(_toPercent(wrongCount, rightCount));
 		var statsContainer = $(this).find("div.statscontainer");
 		var id = "term" + $(this).attr('id');
 		statsContainer.empty();
@@ -25,8 +26,8 @@ $(function(){
 			_drawPie(canvas.attr("id"), parseInt(data.wrong_count), parseInt(data.right_count));
 		});
 	}
-	function _toPercent(data, total){
-		return Math.round(data/total*10000)/100.00+"%";
+	function _toPercent(wrongCount, rightCount){
+		return Math.round(wrongCount/(rightCount + wrongCount)*10000)/100.00+"%";
 	}
 	function _drawPie(id, wrongCount, rightCount){
 		var total = Math.max(wrongCount + rightCount, 1);
@@ -52,3 +53,7 @@ $(function(){
 		pie2.Draw();
 	}
 });
+function getRate(wrongCount, rightCount){
+	var total = wrongCount + rightCount;
+	return Math.round(wrongCount/total*10000)/100.00+"%";
+}

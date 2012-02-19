@@ -116,6 +116,14 @@ form.report input{
 	display: inline-block;
 	margin-right: 15px;
 }
+.term .wrongRate{
+	margin: 10px 0;
+}
+.term .wrongRate span{
+	font-weight: bold;
+	font-size: 15px;
+	color: red;
+}
 input.right, input.wrong{
 	color: #3E6D8E;
 	background-color: #E0EAF1;
