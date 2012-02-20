@@ -13,7 +13,6 @@ exports.index = function(req, res){
 			console.log("Failed to query db: " + err);
 			throw err;
 		}
-    	console.log("Found terms: " + util.inspect(rows));
 		res.render('index', { title: 'How to read me', terms: rows})
 	});
 };
@@ -44,7 +43,6 @@ exports.termDetail = function(req, res){
 	db.get("SELECT * FROM Terms where id = ?", req.params.id, function(err, row){
 		if(err){
 			console.log("Failed to query term: " + err);
-			throw err;
 			throw err;
 		}
 			
