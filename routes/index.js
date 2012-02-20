@@ -71,5 +71,6 @@ function _updateTermCount(req, res, db){
 }
 
 function _getClientIp(req) {
-	return req.header('x-forwarded-for') ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
+	var forwardedIps = req.header('x-forwarded-for');
+	return forwardedIps ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
 };
