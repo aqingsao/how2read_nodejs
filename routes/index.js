@@ -10,6 +10,7 @@ exports.index = function(req, res){
 	var db = process.h2r.db;
 	db.all("SELECT * FROM Terms", function(err, rows) {
 		if(err){
+			console.log("Failed to query db: " + err);
 			throw err;
 		}
     	console.log("Found terms: " + util.inspect(rows));
@@ -24,6 +25,7 @@ exports.term = function(req, res){
 	var db = process.h2r.db;
 	db.get("SELECT * FROM IPSTERMS WHERE ip = ? AND term = ?", _getClientIp(req), req.params.id, function(err, row) {
 		if(err){
+			console.log("Failed to query term: " + err);
 			throw err;
 		}
 		 
@@ -41,6 +43,8 @@ exports.termDetail = function(req, res){
 	var db = process.h2r.db;
 	db.get("SELECT * FROM Terms where id = ?", req.params.id, function(err, row){
 		if(err){
+			console.log("Failed to query term: " + err);
+			throw err;
 			throw err;
 		}
 			
