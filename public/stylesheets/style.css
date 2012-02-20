@@ -19,6 +19,9 @@ height: 0;
 clear: both;
 visibility: hidden;
 }
+.hide{
+	display:none;
+}
 /*For headers*/
 #header{
 	background: -webkit-linear-gradient(#FAFAFA,#EAEAEA);
@@ -119,7 +122,7 @@ form.report input{
 .term .rate{
 	margin: 10px 0;
 }
-.term .wrongRate span{
+.term .rate span{
 	font-weight: bold;
 	font-size: 15px;
 	color: red;

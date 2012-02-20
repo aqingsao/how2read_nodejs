@@ -27,8 +27,7 @@ div#content
 						div.description= terms[i].description
 						div.report
 							label.rate
-								span= wrongCount
-								的人读错这个单词
+								您还没有投票
 							form.report(method="POST", action="/term/#{id}")
 								input(type="hidden", value="#{id}", name="id") 
 								input(type="hidden", value="true", name="isCorrect") 
