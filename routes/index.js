@@ -69,8 +69,15 @@ function _updateTermCount(req, res, db){
 }
 
 function _getClientIp(req) {
-	var forwardedIps = req.header('x-forwarded-for');
-	console.log("The content of x-forwarded-for is: " + forwardedIps);
 	
+	console.log("The first content of x-forwarded-for is: " + req.header('x-forwarded-for'));
+	console.log("The second content of x-forwarded-for is: " + req.headers['x-forwarded-for']);
+	console.log("The first content of proxy-client-ip is: " + req.header('Proxy-Client-IP'));
+	console.log("The second content of proxy-client-ip is: " + req.headers['Proxy-Client-IP']);
+	console.log("The first content of WL-Proxy-Client-IP is: " + req.header('WL-Proxy-Client-IP'));
+	console.log("The second content of WL-Proxy-Client-IP is: " + req.headers['WL-Proxy-Client-IP']);
+	
+	
+	var forwardedIps = req.header('x-forwarded-for');
 	return forwardedIps ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
 };
