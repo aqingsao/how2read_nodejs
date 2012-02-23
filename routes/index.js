@@ -1,7 +1,8 @@
 var util = require('util');
 var sqlite3 = require('sqlite3').verbose();
-var config = require('../config');
+var config = require('../config'), utils = require("../utils");
 
+var oneYear = 365 * 24 * 3600 * 1000;
 /*
  * GET home page.
  */
@@ -13,7 +14,7 @@ exports.index = function(req, res){
 			console.log("Failed to query db: " + err);
 			throw err;
 		}
-		res.render('index', { title: 'How to read me', terms: rows})
+		res.render('index', { title: 'How to read me', terms: rows, cookies: utils.toCookies(req.headers.cookie)})
 	});
 };
 
@@ -27,7 +28,7 @@ exports.term = function(req, res){
 	var sql = correct ? "UPDATE terms SET right_count = right_count + 1 WHERE id = ?" : "UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?";	
 	var ip = _getClientIp(req);
 	
-	if(_alreadyVoted(req.headers.cookie, termId)){
+	if(utils.toCookies(req.headers.cookie).hasKey(termId)){
 		console.log("Duplicate vote from " + ip + " for " + termId + ": " + correct);
 		res.redirect('back');
 		return;
@@ -44,9 +45,7 @@ exports.term = function(req, res){
 				throw err;
 			}
 			
-			var expireDate = new Date();
-			expireDate.setFullYear(expireDate.getFullYear() + 1);
-			res.cookie(termId, correct, {expires: expireDate, path: '/'});	
+			res.cookie(termId, correct, {maxAge: oneYear, path: '/'});	
 			res.redirect('back');
 		});
 	});
@@ -70,19 +69,3 @@ function _getClientIp(req) {
 	var forwardedIps = req.header('x-forwarded-for');
 	return forwardedIps ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
 };
-
-function _alreadyVoted(cookies, termId){
-	console.log("cookie: " + util.inspect(cookies));
-	if(!cookies){
-		return false;
-	}
-	var splittedCookies = cookies.split(";");
-	for(var i in splittedCookies){
-		var match = splittedCookies[i].match(/(\d+)=\w+/);
-		if(match && match[1] == termId){
-			return true;
-		}
-	}
-	
-	return false;
-}

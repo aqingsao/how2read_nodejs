@@ -172,7 +172,7 @@ form.report{
 }
 .vote input.result{
 	border: 0;
-	display: none;
+/*	display: none;*/
 }
 .term .vote{
 	padding: 5px 15px;

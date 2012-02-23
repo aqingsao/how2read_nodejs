@@ -14,7 +14,7 @@ div#content
 						img.stats(src='images/stats.png', wrong=terms[i].wrong_count, right=terms[i].right_count, )
 						canvas(width=132, height=132, id='term' + terms[i].id)
 					div.summary
-						h2= terms[i].name
+						h2= terms[i].name 
 						span.pronunciation 
 							span.text
 								a(href="")= '[' + terms[i].pronunciation + ']'
@@ -30,15 +30,20 @@ div#content
 							label.rate
 								span= '0%'
 								的人读错了，您呢？
-							form.report(method="POST", action="/term/#{terms[i].id}")
-								input(type="hidden", value="#{terms[i].id}", name="id") 
-								input(type="hidden", value="true", name="isCorrect") 
-								input.right(type="submit", value="我读对了") 
-							form.report(method="POST", action="/term/#{terms[i].id}")
-								input(type="hidden", value="#{terms[i].id}", name="id") 
-								input(type="hidden", value="false", name="isCorrect") 
-								input.wrong(type="submit", value="我读错了") 	
-							input.result(disabled='disabled')
+							-if (cookies.hasKey(terms[i].id))
+								-if (cookies.getValue(terms[i].id) == 'true')
+									input.result.right(disabled='disabled', value='您读对了')
+								-else
+									input.result.wrong(disabled='disabled', value='您读错了')
+							-else
+								form.report(method="POST", action="/term/#{terms[i].id}")
+									input(type="hidden", value="#{terms[i].id}", name="id") 
+									input(type="hidden", value="true", name="isCorrect") 
+									input.right(type="submit", value="我读对了") 
+								form.report(method="POST", action="/term/#{terms[i].id}")
+									input(type="hidden", value="#{terms[i].id}", name="id") 
+									input(type="hidden", value="false", name="isCorrect") 
+									input.wrong(type="submit", value="我读错了") 
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded

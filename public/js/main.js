@@ -29,10 +29,10 @@ $(function(){
 	function _updateTerm(term, voteResult){
 		term.find(".vote input[type='submit']").hide();
 		if(voteResult == 'true'){
-			term.find(".vote .result").removeClass("wrong error").addClass("right").val("您读对了").show();
+			term.find(".vote").append("<input class='result right' disabled='disabled' value='您读对了'></input>");
 		}
 		else{
-			term.find(".vote .result").removeClass("right error").addClass("wrong").val("您读错了").show();
+			term.find(".vote").append("<input class='result wrong' disabled='disabled' value='您读错了'></input>");
 		}
 		
 		var canvas = term.find("canvas");
