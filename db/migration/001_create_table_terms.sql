@@ -6,8 +6,8 @@ CREATE TABLE Terms(
 	wrong_count INTEGER default 0,
 	source varchar(100), 
 	description TEXT,
-	created_at timestamp, 
-	updated_at timestamp,
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP, 
+	updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT PK_TERMS_ID PRIMARY KEY(ID),
 	CONSTRAINT UN_TERMS_NAME UNIQUE(NAME)
 );

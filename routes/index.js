@@ -21,44 +21,19 @@ exports.index = function(req, res){
  * POST report term pronunciation
  */
 exports.term = function(req, res){
-	var db = process.h2r.db;
-	db.get("SELECT * FROM IPSTERMS WHERE ip = ? AND term = ?", _getClientIp(req), req.params.id, function(err, row) {
-		if(err){
-			console.log("Failed to query term: " + err);
-			throw err;
-		}
-		 
-		if(row){
-			res.send("您的IP地址已经投过票了，请勿重复投票！", 403);
-			return;
-		}
-		
-		_updateTermCount(req, res, db);
-	});
-};
-// GET term detail
-exports.termDetail = function(req, res){
-	var id = req.params.id;
-	var db = process.h2r.db;
-	db.get("SELECT * FROM Terms where id = ?", req.params.id, function(err, row){
-		if(err){
-			console.log("Failed to query term: " + err);
-			throw err;
-		}
-			
-		res.send(row);
-	});	
-};
-
-function _updateTermCount(req, res, db){
+	var db = process.h2r.db;		
 	var termId = req.params.id;
-	var sql = 'true' === req.body.isCorrect? "UPDATE terms SET right_count = right_count + 1 WHERE id = ?" : "UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?";	
+	var correct = 'true' === req.body.isCorrect;
+	var sql = correct ? "UPDATE terms SET right_count = right_count + 1 WHERE id = ?" : "UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?";	
+	var ip = _getClientIp(req);
+	console.log("Votes from " + ip + " for " + termId + ": " + correct);
+	
 	db.run(sql, termId, function(err){
 		if(err){
 			throw err;
 		}
 		
-		db.run("INSERT INTO IPSTERMS (ip, term) VALUES (?, ?)", _getClientIp(req), termId, function(err){
+		db.run("INSERT INTO IPSTERMS (ip, term, result) VALUES (?, ?, ?)", ip, termId, correct ? 1 : 0, function(err){
 			if(err){
 				throw err;
 			}
@@ -66,18 +41,23 @@ function _updateTermCount(req, res, db){
 			res.redirect('back');
 		});
 	});
-}
+};
 
-function _getClientIp(req) {
-	
-	console.log("The first content of x-forwarded-for is: " + req.header('x-forwarded-for'));
-	console.log("The second content of x-forwarded-for is: " + req.headers['x-forwarded-for']);
-	console.log("The first content of proxy-client-ip is: " + req.header('Proxy-Client-IP'));
-	console.log("The second content of proxy-client-ip is: " + req.headers['Proxy-Client-IP']);
-	console.log("The first content of WL-Proxy-Client-IP is: " + req.header('WL-Proxy-Client-IP'));
-	console.log("The second content of WL-Proxy-Client-IP is: " + req.headers['WL-Proxy-Client-IP']);
-	
-	
+// GET term detail
+exports.termDetail = function(req, res){
+	var id = req.params.id;
+	var db = process.h2r.db;
+	db.get("SELECT * FROM Terms where id = ?", req.params.id, function(err, row){
+		if(err){
+			console.log("Failed to query term " + req.params.id + ": " + err);
+			throw err;
+		}
+			
+		res.send(row);
+	});	
+};
+
+function _getClientIp(req) {	
 	var forwardedIps = req.header('x-forwarded-for');
 	return forwardedIps ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
 };

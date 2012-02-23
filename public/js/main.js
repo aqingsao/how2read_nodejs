@@ -45,7 +45,7 @@ $(function(){
 		pie2.Set('chart.gutter.right', 10);
 		pie2.Set('chart.gutter.top', 25);
 		pie2.Set('chart.gutter.bottom', 10);
-		pie2.Set('chart.colors', ['red', '#6f6']);
+		pie2.Set('chart.colors', ['red', '#E0EAF1']);
 		pie2.Set('chart.strokestyle', 'white');
 		pie2.Set('chart.linewidth', 3);
 		pie2.Set('chart.shadow', true);
