@@ -1,7 +1,7 @@
 div#header.true.clearfix
 	div.container.clearfix
 		span#logo
-			a.site-logo(href="https://how2read.me/", title="Make readings really universal")= title
+			a.site-logo(href="https://how2read.me/", title="Make pronunciation really universal")= title
 		div#userbox
 			div#user
 				span Welcome 
@@ -21,9 +21,9 @@ div#content
 							span.wrong= terms[i].wrong_count
 					div.summary
 						h2= terms[i].name
-						span.reading 
+						span.pronunciation 
 							span.text
-								a(href="")= '[' + terms[i].reading + ']'
+								a(href="")= '[' + terms[i].pronunciation + ']'
 							span.speaker
 								img(src="/images/speaker.png", title="播放读音")
 								audio
