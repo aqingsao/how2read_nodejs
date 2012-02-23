@@ -104,7 +104,7 @@ img{
 
 /*For a term*/
 .term .statscontainer{
-	width: 186px;
+	width: 150px;
 	float: left;
 	margin-right: 8px;
 }
@@ -123,7 +123,11 @@ form.report{
 	display: inline-block;
 	margin-right: 15px;
 }
-.term .rate span{
+.vote .rate{
+	display: inline-block;
+	width: 135px;
+}
+.vote .rate span{
 	font-weight: bold;
 	font-size: 15px;
 	color: red;
