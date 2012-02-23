@@ -11,14 +11,10 @@ div#content
 	div.container.clearfix
 		div#mainbar
 			- for(var i in terms)
-				- var id= terms[i].id, name = 'term' + id, rightCount = terms[i].right_count, wrongCount = terms[i].wrong_count;
 				div.term(id=terms[i].id)
 					div.statscontainer
-						label Correct: 
-							span.right= terms[i].right_count
-						br
-						label Wrong:
-							span.wrong= terms[i].wrong_count
+						img.stats(src='images/stats.png', wrong=terms[i].wrong_count, right=terms[i].right_count, )
+						canvas(width=132, height=132, id='term' + terms[i].id)
 					div.summary
 						h2= terms[i].name
 						span.pronunciation 
@@ -33,14 +29,14 @@ div#content
 								img(src="/images/external_link.jpg", title="去官方网站")
 						div.vote
 							label.rate
-								span= 0%
+								span= '0%'
 								的人读错了
-							form.report(method="POST", action="/term/#{id}")
-								input(type="hidden", value="#{id}", name="id") 
+							form.report(method="POST", action="/term/#{terms[i].id}")
+								input(type="hidden", value="#{terms[i].id}", name="id") 
 								input(type="hidden", value="true", name="isCorrect") 
 								input.right(type="submit", value="我读对了") 
-							form.report(method="POST", action="/term/#{id}")
-								input(type="hidden", value="#{id}", name="id") 
+							form.report(method="POST", action="/term/#{terms[i].id}")
+								input(type="hidden", value="#{terms[i].id}", name="id") 
 								input(type="hidden", value="false", name="isCorrect") 
 								input.wrong(type="submit", value="我读错了") 	
 							input.result(disabled='disabled')

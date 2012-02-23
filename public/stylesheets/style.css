@@ -113,6 +113,9 @@ img{
 	float: left;
 	width: 735px;
 }
+.term canvas{
+	display: none;
+}
 form.report{
 	display: inline-block;
 }

@@ -1,16 +1,16 @@
 $(function(){
 	$("div.term").each(function(){
+		var img = $(this).find("img.stats");
+		var rightCount = parseInt(img.attr('right'));
+		var wrongCount = parseInt(img.attr('wrong'));
+
+		$(this).find("label.rate span").text(_toPercent(wrongCount, rightCount));
+		img.detach();		
 		var id = "term" + $(this).attr('id');
-		var rightCount = parseInt($(this).find("label span.right").text());
-		var wrongCount = parseInt($(this).find("label span.wrong").text());
-		var statsContainer = $(this).find("div.statscontainer");
-		statsContainer.empty();
-		statsContainer.append("<canvas width=132 height=132 id=" + id + "></canvas>");
-		
-		$(this).find("label.rate").html("<span>" + _toPercent(wrongCount, rightCount) + "</span>的人读错了：");
-		_drawPie(id, parseInt(wrongCount), parseInt(rightCount));
+		$("#" + id).show();
+		_drawPie(id, wrongCount, rightCount);
 	});
-	
+		
 	$(".speaker").click(function(){
 		$(this).find("audio").get(0).play();
 	});
@@ -38,7 +38,7 @@ $(function(){
 		var canvas = term.find("canvas");
 		var id = term.attr('id');
 		$.getJSON("/term/" + id, function(data){
-			term.find("label.rate").html("<span>" + _toPercent(data.wrong_count, data.right_count) + "</span>的人读错了：");
+			term.find("label.rate span").text(_toPercent(data.wrong_count, data.right_count));
 			_drawPie(canvas.attr("id"), parseInt(data.wrong_count), parseInt(data.right_count));
 		});
 	}
