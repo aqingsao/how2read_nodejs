@@ -30,20 +30,23 @@ div#content
 							label.rate
 								span= '0%'
 								的人读错了，您呢？
+							form.report(method="POST", action="/term/#{terms[i].id}")
+								input(type="hidden", value="#{terms[i].id}", name="id") 
 							-if (cookies.hasKey(terms[i].id))
 								-if (cookies.getValue(terms[i].id) == 'true')
 									input.result.right(disabled='disabled', value='您读对了')
 								-else
 									input.result.wrong(disabled='disabled', value='您读错了')
 							-else
-								form.report(method="POST", action="/term/#{terms[i].id}")
-									input(type="hidden", value="#{terms[i].id}", name="id") 
-									input(type="hidden", value="true", name="isCorrect") 
+								span.votable
 									input.right(type="submit", value="我读对了") 
-								form.report(method="POST", action="/term/#{terms[i].id}")
-									input(type="hidden", value="#{terms[i].id}", name="id") 
-									input(type="hidden", value="false", name="isCorrect") 
+									audio
+										source(type="audio/mpeg", src="audio/"+terms[i].audio)
+								span.votable			
 									input.wrong(type="submit", value="我读错了") 
+									audio
+										source(type="audio/mpeg", src="audio/"+terms[i].audio)
+									
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded

@@ -11,11 +11,11 @@ $(function(){
 		_drawPie(id, wrongCount, rightCount);
 	});
 		
-	$(".speaker").click(function(){
+	$(".votable").mousemove(function(){
 		$(this).find("audio").get(0).play();
 	});
 	
-	$("div.term .vote form").submit(function(){
+	$("div.term .vote input[type='submit']").click(function(){
 		var term = $(this).parents("div.term")
 		var that = $(this);
 		$.post(that.attr('action'), that.serialize(), function(){
