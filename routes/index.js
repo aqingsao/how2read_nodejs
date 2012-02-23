@@ -8,7 +8,7 @@ var config = require('../config');
 
 exports.index = function(req, res){
 	var db = process.h2r.db;
-	db.all("SELECT * FROM Terms", function(err, rows) {
+	db.all("SELECT * FROM Terms order by name", function(err, rows) {
 		if(err){
 			console.log("Failed to query db: " + err);
 			throw err;
