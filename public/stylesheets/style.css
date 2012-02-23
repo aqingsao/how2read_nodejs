@@ -43,20 +43,31 @@ img{
 	margin: 0 auto;
 }
 
-#logo a{
+#logo{
 	float: left;
 	position: relative;
-	font-size: 2em;
+	width: 24%;
+	height: 100%;
+}
+
+#logo a{
+	font-size: 1.5em;
 	font-weight: bold;
 	text-decoration: none;
 	color: #000000;
 	padding: 9px 0 0 0;
+}
+#logo p{
+	text-align: center;
+	font-style: italic;
 }
 
 #userbox{
 	float: right;
 	line-height: 20px;
 	padding: 7px 0;
+	width: 20%;
+	height: 100%;
 }
 #userbox a{
 	color: #222;
@@ -122,6 +133,8 @@ form.report{
 .summary h2{
 	display: inline-block;
 	margin-right: 15px;
+	font-weight: normal;
+	font-size: 2.0em;
 }
 .vote .rate{
 	display: inline-block;

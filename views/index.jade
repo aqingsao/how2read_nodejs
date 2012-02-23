@@ -1,7 +1,9 @@
 div#header.true.clearfix
 	div.container.clearfix
-		span#logo
-			a.site-logo(href="https://how2read.me/", title="Make pronunciation really universal")= title
+		div#logo
+			h2
+				a.site-logo(href="https://how2read.me/", title="Make pronunciation really universal")= title
+			p 程序员最容易读错的单词
 		div#userbox
 			div#user
 				span Welcome 
@@ -30,7 +32,7 @@ div#content
 						div.vote
 							label.rate
 								span= '0%'
-								的人读错了
+								的人读错了：
 							form.report(method="POST", action="/term/#{terms[i].id}")
 								input(type="hidden", value="#{terms[i].id}", name="id") 
 								input(type="hidden", value="true", name="isCorrect") 
