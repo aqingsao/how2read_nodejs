@@ -10,23 +10,31 @@ $(function(){
 		$(this).find("label.rate").html("<span>" + _toPercent(wrongCount, rightCount) + "</span>的人读错了：");
 		_drawPie(id, parseInt(wrongCount), parseInt(rightCount));
 	});
-	$("div.term form.report").submit(function(){
-		var term = $(this).parents("div.term")
-		var that = $(this);
-		$.post(that.attr('action'), that.serialize(), function(){
-			_updateTerm(term);
-		}).error(function(data){
-			alert(data.responseText);
-		});
-		
-		return false;
-	});
+	
 	$(".speaker").click(function(){
 		$(this).find("audio").get(0).play();
 	});
 	
-	function _updateTerm(term){
-		term.find("input[type='submit']").attr('disabled', true);
+	$("div.term .vote form").submit(function(){
+		var term = $(this).parents("div.term")
+		var that = $(this);
+		$.post(that.attr('action'), that.serialize(), function(){
+			_updateTerm(term, that.find("input[name='isCorrect']").val());
+		}).error(function(data){
+			term.find(".vote .result").removeClass("right wrong error").addClass("error").val("对不起，投票出现错误");
+		});
+		
+		return false;
+	});
+	function _updateTerm(term, voteResult){
+		term.find(".vote input[type='submit']").hide();
+		if(voteResult == 'true'){
+			term.find(".vote .result").removeClass("wrong error").addClass("right").val("您读对了").show();
+		}
+		else{
+			term.find(".vote .result").removeClass("right error").addClass("wrong").val("您读错了").show();
+		}
+		
 		var canvas = term.find("canvas");
 		var id = term.attr('id');
 		$.getJSON("/term/" + id, function(data){
@@ -45,7 +53,7 @@ $(function(){
 		pie2.Set('chart.gutter.right', 10);
 		pie2.Set('chart.gutter.top', 25);
 		pie2.Set('chart.gutter.bottom', 10);
-		pie2.Set('chart.colors', ['red', '#E0EAF1']);
+		pie2.Set('chart.colors', ['#FFAA52', '#3E6D8E']);
 		pie2.Set('chart.strokestyle', 'white');
 		pie2.Set('chart.linewidth', 3);
 		pie2.Set('chart.shadow', true);

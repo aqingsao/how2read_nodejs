@@ -115,17 +115,10 @@ img{
 }
 form.report{
 	display: inline-block;
-	margin: 5px 15px;
-}
-form.report input{
-	display: inline-block;
 }
 .summary h2{
 	display: inline-block;
 	margin-right: 15px;
-}
-.term .rate{
-	margin: 10px 0;
 }
 .term .rate span{
 	font-weight: bold;
@@ -135,15 +128,32 @@ form.report input{
 .term .speaker{
 	padding-left: 25px;
 }
-input.right, input.wrong{
-	color: #3E6D8E;
+.vote input{
 	background-color: #E0EAF1;
 	border-bottom: 1px solid #3E6D8E;
 	border-right: 1px solid #7F9FB6;
-	padding: 3px 4px 3px 4px;
-	margin: 2px 2px 2px 0;
-	text-decoration: none;
+	padding: 3px 4px;
+	margin: 0 2px;
 	font-size: 100%;
+	font-weight: bold;
 	line-height: 2.4;
 	white-space: nowrap;
+	width: 80px;
+	text-align: center;
+}
+.vote input.right{
+	color: #3E6D8E;
+}
+.vote input.wrong{
+	color:#FFAA52;
+}
+.vote input.error{
+	color:red;
+}
+.vote input.result{
+	border: 0;
+	display: none;
+}
+.term .vote{
+	padding: 5px 15px;
 }
