@@ -26,7 +26,13 @@ exports.term = function(req, res){
 	var correct = 'true' === req.body.isCorrect;
 	var sql = correct ? "UPDATE terms SET right_count = right_count + 1 WHERE id = ?" : "UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?";	
 	var ip = _getClientIp(req);
-	console.log("Votes from " + ip + " for " + termId + ": " + correct);
+	
+	if(_alreadyVoted(req.headers.cookie, termId)){
+		console.log("Duplicate vote from " + ip + " for " + termId + ": " + correct);
+		res.redirect('back');
+		return;
+	}
+	console.log("Vote from " + ip + " for " + termId + ": " + correct);
 	
 	db.run(sql, termId, function(err){
 		if(err){
@@ -38,6 +44,9 @@ exports.term = function(req, res){
 				throw err;
 			}
 			
+			var expireDate = new Date();
+			expireDate.setFullYear(expireDate.getFullYear() + 1);
+			res.cookie(termId, correct, {expires: expireDate, path: '/'});	
 			res.redirect('back');
 		});
 	});
@@ -61,3 +70,19 @@ function _getClientIp(req) {
 	var forwardedIps = req.header('x-forwarded-for');
 	return forwardedIps ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
 };
+
+function _alreadyVoted(cookies, termId){
+	console.log("cookie: " + util.inspect(cookies));
+	if(!cookies){
+		return false;
+	}
+	var splittedCookies = cookies.split(";");
+	for(var i in splittedCookies){
+		var match = splittedCookies[i].match(/(\d+)=\w+/);
+		if(match && match[1] == termId){
+			return true;
+		}
+	}
+	
+	return false;
+}

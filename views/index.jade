@@ -29,7 +29,7 @@ div#content
 						div.vote
 							label.rate
 								span= '0%'
-								的人读错了：
+								的人读错了，您呢？
 							form.report(method="POST", action="/term/#{terms[i].id}")
 								input(type="hidden", value="#{terms[i].id}", name="id") 
 								input(type="hidden", value="true", name="isCorrect") 
