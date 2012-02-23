@@ -21,6 +21,9 @@ $(function(){
 		
 		return false;
 	});
+	$(".speaker").click(function(){
+		$(this).find("audio").get(0).play();
+	});
 	
 	function _updateTerm(term){
 		term.find("input[type='submit']").attr('disabled', true);

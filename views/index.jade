@@ -22,8 +22,12 @@ div#content
 					div.summary
 						h2= terms[i].name
 						span.reading 
-							a(href="")= '[' + terms[i].reading + ']'
-							audio(src="http://audio.dict.cn/mp3.php?q=8xZwT", type="audio/mpeg")
+							span.text
+								a(href="")= '[' + terms[i].reading + ']'
+							span.speaker
+								img(src="/images/speaker.png", title="播放读音")
+								audio
+									source(type="audio/mpeg", src="audio/apache.mp3")
 						div.description= terms[i].description
 						div.report
 							label.rate

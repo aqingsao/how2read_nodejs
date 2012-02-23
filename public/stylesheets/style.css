@@ -22,6 +22,11 @@ visibility: hidden;
 .hide{
 	display:none;
 }
+img{
+	border: 0;
+	vertical-align: middle;
+	cursor: pointer;
+}
 /*For headers*/
 #header{
 	background: -webkit-linear-gradient(#FAFAFA,#EAEAEA);
@@ -126,6 +131,9 @@ form.report input{
 	font-weight: bold;
 	font-size: 15px;
 	color: red;
+}
+.term .speaker{
+	padding-left: 25px;
 }
 input.right, input.wrong{
 	color: #3E6D8E;
