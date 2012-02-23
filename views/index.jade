@@ -4,10 +4,6 @@ div#header.true.clearfix
 			h2
 				a.site-logo(href="https://how2read.me/", title="Make pronunciation really universal")= title
 			p 程序员最容易读错的单词
-		div#userbox
-			div#user
-				span Welcome 
-					a.name user
 				
 div#content
 	div.container.clearfix
@@ -27,8 +23,9 @@ div#content
 								audio
 									source(type="audio/mpeg", src="audio/apache.mp3")
 						div.description= terms[i].description
-							a(href=terms[i].source)
-								img(src="/images/external_link.jpg", title="去官方网站")
+							if(terms[i].source)
+								a(href=terms[i].source)
+									img(src="/images/external_link.jpg", title="去官方网站")
 						div.vote
 							label.rate
 								span= '0%'
