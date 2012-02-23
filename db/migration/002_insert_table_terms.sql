@@ -1,2 +1,2 @@
-insert into Terms(name, pronunciation, source, description) values('apache', "ə'pætʃi", "http://apache.com", "A well known web server running on *nix operation system.");
-insert into Terms(name, pronunciation, source, description) values('maven', "'meiven", "http://maven.com", "A Java written build tool and dependency management tool.");
+insert into Terms(name, pronunciation, audio, source, description) values('apache', "ə'pætʃi", 'apache.mp3', "http://www.apache.org", 'Apache is a freely available Web server that is distributed under an "open source" license.');
+insert into Terms(name, pronunciation, audio, source, description) values('maven', "'meiven", 'maven.mp3', "http://maven.apache.org/", "Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project's build, reporting and documentation from a central piece of information.");
