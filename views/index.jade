@@ -21,7 +21,7 @@ div#content
 							span.speaker
 								img(src="/images/speaker.png", title="播放读音")
 								audio
-									source(type="audio/mpeg", src="audio/apache.mp3")
+									source(type="audio/mpeg", src="audio/"+terms[i].audio)
 						div.description= terms[i].description
 							if(terms[i].source)
 								a(href=terms[i].source)
