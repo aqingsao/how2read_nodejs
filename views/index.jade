@@ -18,12 +18,8 @@ div#content
 						span.pronunciation 
 							span.text
 								a(href="")= '[' + terms[i].pronunciation + ']'
-							span.speaker
-								img(src="/images/speaker.png", title="播放读音")
-								audio
-									source(type="audio/mpeg", src="audio/"+terms[i].audio)
 						div.description= terms[i].description
-							if(terms[i].source)
+							-if(terms[i].source)
 								a(href=terms[i].source)
 									img(src="/images/external_link.jpg", title="去官方网站")
 						div.vote
