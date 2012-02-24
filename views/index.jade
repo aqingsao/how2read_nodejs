@@ -11,12 +11,10 @@ div#content
 			- for(var i in terms)
 				div.term(id=terms[i].id)
 					div.statscontainer
-						img.stats(src='images/stats.png', wrong=terms[i].wrong_count, right=terms[i].right_count, )
+						img.stats(src='images/stats.png', wrong=terms[i].wrong, right=terms[i].right)
 						canvas(width=132, height=132, id='term' + terms[i].id)
 					div.summary
 						h2= terms[i].name 
-						span.pronunciation 
-								a(href="")= '[' + terms[i].pronunciation + ']'
 						div.description= terms[i].description
 							-if(terms[i].source)
 								a(href=terms[i].source)
@@ -33,23 +31,17 @@ div#content
 								-else
 									input.result.wrong(disabled='disabled', value='您读错了')
 							-else
-								span.votable
-									input.right(type="submit", value="我读对了") 
-									audio
-										source(type="audio/mpeg", src="audio/"+terms[i].audio)
-								span.votable			
-									input.wrong(type="submit", value="我读错了") 
-									audio
-										source(type="audio/mpeg", src="audio/"+terms[i].audio)
+								-for(var j in terms[i].readings)
+									span.votable
+										input.right(type="submit", value="我读对了") 
+										audio
+											source(type="audio/mpeg", src="audio/"+terms[i].readings[j].audio)
 						div#ckepop.share
 							span.jiathis_txt 分享到
 							a.jiathis_button_tsina 新浪微博
 							a.jiathis_button_tqq 腾讯微薄
 							
 		div#sidebar
-			div#newlyApproved
-			div#newlyAdded
-			div#notApproved
 div#footer
 	div.container.clearfix
 		div#legal

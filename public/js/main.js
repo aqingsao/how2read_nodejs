@@ -10,14 +10,15 @@ var jiathis_config = {
 $(function(){
 	$("div.term").each(function(){
 		var img = $(this).find("img.stats");
-		var rightCount = parseInt(img.attr('right'));
+		var rightCount = Math.max(parseInt(img.attr('right')), 1);
 		var wrongCount = parseInt(img.attr('wrong'));
 
 		$(this).find("label.rate span").text(_toPercent(wrongCount, rightCount));
-		img.detach();		
 		var id = "term" + $(this).attr('id');
-		$("#" + id).show();
 		_drawPie(id, wrongCount, rightCount);
+
+		img.detach();		
+		$("#" + id).show();
 	});
 		
 	$(".votable").mousemove(function(){
@@ -47,12 +48,10 @@ $(function(){
 		var canvas = term.find("canvas");
 		var id = term.attr('id');
 		$.getJSON("/term/" + id, function(data){
-			term.find("label.rate span").text(_toPercent(data.wrong_count, data.right_count));
+			var right = Math.max(data.right_count, 1);
+			term.find("label.rate span").text(_toPercent(data.wrong_count, right));
 			_drawPie(canvas.attr("id"), parseInt(data.wrong_count), parseInt(data.right_count));
 		});
-	}
-	function _toPercent(wrongCount, rightCount){
-		return Math.round(wrongCount/(rightCount + wrongCount)*10000)/100.00+"%";
 	}
 	function _drawPie(id, wrongCount, rightCount){
 		var total = Math.max(wrongCount + rightCount, 1);
@@ -95,3 +94,7 @@ function _getSummary(){
 function _getUrl(){
 	return "http://how2read.me#" + "maven";
 }
+function _toPercent(wrong, right){
+	return Math.round(wrong/(wrong+right)*10000)/100.00+"%";
+}
+

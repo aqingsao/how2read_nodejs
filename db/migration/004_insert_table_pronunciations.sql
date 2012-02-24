@@ -55,9 +55,6 @@ insert into pronunciations(symbol, audio, is_correct, term) values("'linəks, 'l
 insert into pronunciations(symbol, audio, is_correct, term) values("ʊ:bʊ:ntʊ:", 'ubuntu_wrong1.mp3', 'false', (select id from terms where name='ubuntu'));
 insert into pronunciations(symbol, audio, is_correct, term) values("ʃef", 'chef_wrong1.mp3', 'false', (select id from terms where name='chef'));
 insert into pronunciations(symbol, audio, is_correct, term) values("æk'ʃuə", 'axure_wrong1.mp3', 'false', (select id from terms where name='axure'));
-		
-
-
 
 
 
