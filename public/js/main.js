@@ -1,3 +1,12 @@
+var jiathis_config = {
+    title:"程序员最容易读错的单词：",
+	siteNum:5, 
+	sm:"tqq, renren, kaixin001, douban, tsina", 
+    ralateuid:{
+        "tsina":"1566959347"
+    }
+};
+
 $(function(){
 	$("div.term").each(function(){
 		var img = $(this).find("img.stats");
@@ -67,9 +76,22 @@ $(function(){
 		
 		RGraph.Clear(pie2.canvas);
 		pie2.Draw();
-	}
+	};
+	$(".share a").click(function(){
+		var term = $(this).parents('div.term');
+		var word = term.find(".summary h2").text();
+		var rate = term.find(".summary .rate span").text();
+		jiathis_config.summary = word + "，据统计，" + rate + "的人读错了这个单词，你呢？";
+		jiathis_config.url = "http://how2read.me#"+word;
+	});
 });
 function getRate(wrongCount, rightCount){
 	var total = wrongCount + rightCount;
 	return Math.round(wrongCount/total*10000)/100.00+"%";
+}
+function _getSummary(){
+	return "Maven, 据统计，有60％的人读错这个单词，你读的对吗？";
+}
+function _getUrl(){
+	return "http://how2read.me#" + "maven";
 }

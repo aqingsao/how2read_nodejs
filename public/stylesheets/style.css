@@ -189,3 +189,7 @@ form.report{
 .term .vote{
 	padding: 5px 15px;
 }
+
+.term .share{
+	float: right;
+}

@@ -41,7 +41,11 @@ div#content
 									input.wrong(type="submit", value="我读错了") 
 									audio
 										source(type="audio/mpeg", src="audio/"+terms[i].audio)
-									
+						div#ckepop.share
+							span.jiathis_txt 分享到
+							a.jiathis_button_tsina 新浪微博
+							a.jiathis_button_tqq 腾讯微薄
+							
 		div#sidebar
 			div#newlyApproved
 			div#newlyAdded
@@ -61,3 +65,4 @@ script(src="/js/rgraph/RGraph.common.effects.js")
 script(src="/js/rgraph/RGraph.pie.js")
 script(src="/js/rgraph/RGraph.common.key.js")
 script(src="/js/main.js")
+script(src="http://v2.jiathis.com/code/jia.js", charset="utf-8")
