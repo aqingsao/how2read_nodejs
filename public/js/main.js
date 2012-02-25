@@ -38,25 +38,21 @@ $(function(){
 	});
 	function _updateTerm(term, voted, data){
 		term.find(".votable input[type='submit']").each(function(){
-			$(this).removeClass("voted right wrong");
 			var reading = $(this).attr('reading');
-			$(this).val("");
-			if(reading == voted){
-				$(this).addClass("voted");
-				if(_isCorrect(reading, data.readings)){
-					$(this).val("您读对了");
-				}
-				else{
-					$(this).val("您读错了");
-				}
-			}
-			if(_isCorrect(reading, data.readings)){
-				$(this).addClass("right");
-			}
-			else{
-				$(this).addClass("wrong");				
+			if(!_isCorrect(reading, data.readings)){
+				$(this).detach();
 			}
 		});
+		for(var i in data.readings){
+			if(data.readings[i].id == voted){
+				if(data.readings[i].correct == 'true'){
+					$("<input class='message right' disabled='disabled' value='您读对了'></input>").insertAfter(term.find('label.rate'));
+				}
+				else{
+					$("<input class='message wrong' disabled='disabled' value='您读错了'></input>").insertAfter(term.find('label.rate'));
+				}
+			}
+		}
 		
 		term.find("label.rate span").text(_toPercent(data.wrong, data.right));
 		_drawPie(term.find("canvas").attr("id"), parseInt(data.wrong), parseInt(data.right));

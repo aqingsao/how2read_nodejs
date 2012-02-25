@@ -178,7 +178,7 @@ form.report{
 	font-weight: bold;
 	line-height: 2.4;
 	white-space: nowrap;
-	width: 100px;
+	width: 80px;
 	text-align: center;
 }
 .vote input.right{
@@ -187,14 +187,8 @@ form.report{
 .vote input.wrong{
 	color:#FFAA52;
 }
-.vote input.error{
-	color:red;
-}
-.vote input.result{
+.vote .message{
 	border: 0;
-}
-.vote .error{
-	display:none;
 }
 .term .vote{
 	margin: 12px 0;
