@@ -26,18 +26,42 @@ $(function(){
 	});
 	
 	$("div.term .votable").click(function(){
-		var term = $(this).parents("div.term")
 		var that = $(this);
+		if(that.hasClass('voted')){
+			return;
+		}
+		
+		var term = $(this).parents("div.term");
+		term.find(".votable").each(function(){
+			if(!$(this).hasClass('voted')){
+				$(this).addClass('voted');
+			};
+		});
+
 		$.post('/term/' + term.attr('id') + '/reading/' + that.attr('reading'), function(data){
 			_updateTerm(term, that.attr('reading'), data);
 		}).error(function(data){
-			term.find(".vote .error").show();
+			if(term.find("a.reading.error").length == 0){
+				$("<a class='reading error'>投票错误</a>").insertAfter(term.find('label.rate'));
+			}
+			term.find(".votable").each(function(){
+				if($(this).hasClass('voted')){
+					$(this).removeClass('voted');
+				};
+			});
 		});
 		
 		return false;
 	});
 	function _updateTerm(term, voted, data){
+		term.find("a.reading.error").each(function(){
+			$(this).detach();
+		});
+		
 		term.find(".votable").each(function(){
+			if($(this).hasClass('voted')){
+				$(this).removeClass('voted');
+			};
 			var reading = $(this).attr('reading');
 			if(!_isCorrect(reading, data.readings)){
 				$(this).detach();

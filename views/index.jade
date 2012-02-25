@@ -33,7 +33,7 @@ div#content
 							-for(var j in term.readings)
 								-if (voted)
 									-if (term.readings[j].correct == 'true')
-										a.reading.votable= '['+ term.readings[j].symbol + ']'
+										a.reading.votable.voted(reading="#{term.readings[j].id}")= '['+ term.readings[j].symbol + ']'
 											audio
 												source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
 								-else

@@ -185,6 +185,9 @@ form.report{
 .vote .reading.wrong{
 	color:#FFAA52;
 }
+.vote .reading.error{
+	color:red;
+}
 
 .term .vote{
 	margin: 12px 0;
