@@ -4,6 +4,8 @@ function Term(row){
 	this.source= row.tsource;
 	this.description= row.tdesc;
 	this.readings= [];
+	this.wrong = 0;
+	this.right = 0;
 };
 Term.prototype.readCorrect = function(readingId){
 	for(var i in this.readings){
@@ -15,24 +17,11 @@ Term.prototype.readCorrect = function(readingId){
 }
 Term.prototype.addReading = function(reading){
 	this.readings.push(reading);
+	if(reading.correct == 'true'){
+		this.right += reading.count;
+	}
+	else{
+		this.wrong += reading.count;
+	}
 }
-Term.prototype.right = function(){
-	var count = 0;
-	for(var i in this.readings){
-		if(this.readings[i].correct == 'true'){
-			count += this.readings[i].count;
-		}
-	}	
-	return count;
-}
-Term.prototype.wrong = function(){
-	var count = 0;
-	for(var i in this.readings){
-		if(this.readings[i].correct != 'true'){
-			count += this.readings[i].count;
-		}
-	}	
-	return count;
-}
-
 exports.Term = Term;

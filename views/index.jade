@@ -12,7 +12,7 @@ div#content
 				-var term = terms[i]
 				div.term(id=term.id)
 					div.statscontainer
-						img.stats(src='images/stats.png', wrong=term.wrong(), right=term.right())
+						img.stats(src='images/stats.png', wrong=term.wrong, right=term.right)
 						canvas(width=132, height=132, id='term' + term.id)
 					div.summary
 						h2.name= term.name 
