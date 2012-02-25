@@ -7,7 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , util = require('util')
   , reloader = require('reloader')
-  , migration = require('./migration')
+  , migration = require('./db/migration')
   , config = require('./config');
 
 var app = module.exports = express.createServer();
