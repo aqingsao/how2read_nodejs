@@ -14,7 +14,7 @@ div#content
 						img.stats(src='images/stats.png', wrong=terms[i].wrong, right=terms[i].right)
 						canvas(width=132, height=132, id='term' + terms[i].id)
 					div.summary
-						h2= terms[i].name 
+						h2.name= terms[i].name 
 						div.description= terms[i].description
 							-if(terms[i].source)
 								a(href=terms[i].source)

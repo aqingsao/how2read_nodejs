@@ -59,7 +59,6 @@ img{
 }
 #logo p{
 	text-align: center;
-	font-style: italic;
 }
 
 #userbox{
@@ -119,31 +118,37 @@ img{
 	float: left;
 	margin-right: 8px;
 }
+.term canvas{
+	display: none;
+}
 
 .term .summary{
 	float: left;
 	width: 735px;
 }
-.term canvas{
-	display: none;
+.term .name{
+	font-weight: normal;
+	font-size: 2.0em;
+	display: inline-block;
+	width: 20%;
 }
+.term .description{
+	font-size: 90%;
+	font-family: Arial;
+	color: #999;
+}
+
 form.report{
 	display: inline-block;
 }
-.summary h2{
-	display: inline-block;
-	margin-right: 15px;
-	font-weight: normal;
-	font-size: 2.0em;
-}
 .vote .rate{
 	display: inline-block;
-	width: 165px;
+	width: 190px;
 }
 .vote .rate span{
 	font-weight: bold;
-	font-size: 15px;
-	color: red;
+	font-size: 19px;
+	color: #FFAA52;
 }
 .vote .votable input{
 	cursor: pointer;
@@ -187,7 +192,8 @@ form.report{
 /*	display: none;*/
 }
 .term .vote{
-	padding: 5px 15px;
+	padding: 0px 15px;
+	margin: 12px 0;
 }
 
 .term .share{

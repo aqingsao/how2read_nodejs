@@ -1,22 +1,22 @@
-insert into Terms(name, source, description) values('chef', "http://www.opscode.com/chef", "Chef is an open-source systems integration framework built specifically for automating the cloud.");	
+insert into Terms(name, source, description) values('chef', "http://www.opscode.com/chef", "一个开源的系统集成和配置管理工具，尤其适用于云环境的自动化。");	
 insert into pronunciations(symbol, audio, is_correct, term) values("ʃef", 'chef_1.mp3', 'true', (select id from terms where name='chef'));
 insert into pronunciations(symbol, audio, is_correct, term) values("ʃef", 'chef_2.mp3', 'false', (select id from terms where name='chef'));
 
-insert into Terms(name, source, description) values('cache', "", "In computer engineering, a cache is a component that transparently stores data so that future requests for that data can be served faster.");
+insert into Terms(name, source, description) values('cache', "","一组本地存储的数据，可以提高后续访问的速度。");
 insert into pronunciations(symbol, audio, is_correct, term) values("kæʃ", 'cache_1.mp3', 'true', (select id from terms where name='cache'));
 insert into pronunciations(symbol, audio, is_correct, term) values("kætʃ", 'cache_2.mp3', 'false', (select id from terms where name='cache'));
 insert into pronunciations(symbol, audio, is_correct, term) values("keitʃ", 'cache_3.mp3', 'false', (select id from terms where name='cache'));
 insert into pronunciations(symbol, audio, is_correct, term) values("keik", 'cache_4.mp3', 'false', (select id from terms where name='cache'));
 
-insert into Terms(name, source, description) values('nginx', "http://nginx.org", "nginx is an HTTP and reverse proxy server, as well as a mail proxy server, written by Igor Sysoev.");
+insert into Terms(name, source, description) values('nginx', "http://nginx.org", "轻量级的网页服务器、反向代理服务器以及电子邮件（IMAP/POP3）代理服务器。");
 insert into pronunciations(symbol, audio, is_correct, term) values("'endʒin eks", 'nginx_1.mp3', 'true', (select id from terms where name='nginx'));
 insert into pronunciations(symbol, audio, is_correct, term) values("n'ginks", 'nginx_2.mp3', 'false', (select id from terms where name='nginx'));	
 
-insert into Terms(name, source, description) values('maven', "http://maven.apache.org", "Apache Maven is a software project management and comprehension tool. Maven can manage a project's build, reporting and documentation from a central piece of information.");
+insert into Terms(name, source, description) values('maven', "http://maven.apache.org", "一个软件（特别是Java软件）项目管理及自动构建工具。");
 insert into pronunciations(symbol, audio, is_correct, term) values("'mʌven", 'maven_1.mp3', 'false', (select id from terms where name='maven'));
 insert into pronunciations(symbol, audio, is_correct, term) values("'meiven", 'maven_2.mp3', 'true', (select id from terms where name='maven'));
 
-insert into Terms(name, source, description) values('java', "http://www.java.com", "Java is a programming language originally developed by James Gosling at Sun Microsystems and released in 1995 as a core component of Sun Microsystems' Java platform.");
+insert into Terms(name, source, description) values('java', "http://www.java.com", "一种可以撰写跨平台应用软件的面向对象的程序设计语言。");
 insert into pronunciations(symbol, audio, is_correct, term) values("'dʒɑ:və", 'java_1.mp3', 'true', (select id from terms where name='java'));
 insert into pronunciations(symbol, audio, is_correct, term) values("'jɑ:vʌ", 'java_2.mp3', 'false', (select id from terms where name='java'));	
 
