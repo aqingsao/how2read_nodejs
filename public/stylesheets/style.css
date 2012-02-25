@@ -150,6 +150,9 @@ form.report{
 	font-size: 19px;
 	color: #FFAA52;
 }
+.vote .votable{
+	margin: 0 15px;
+}
 .vote .votable input{
 	cursor: pointer;
 	background-image: url(/images/speaker.png);

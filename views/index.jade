@@ -23,17 +23,21 @@ div#content
 							label.rate
 								span= '0%'
 								的人读错了，您呢？
-							-if (cookies.hasKey(terms[i].id))
-								-if (cookies.getValue(terms[i].id) == 'true')
-									input.result.right(disabled='disabled', value='您读对了')
-								-else
-									input.result.wrong(disabled='disabled', value='您读错了')
-							-else
-								-for(var j in terms[i].readings)
-									span.votable
-										input(type="submit", value="我读对了", reading="#{terms[i].readings[j].id}") 
-										audio
-											source(type="audio/mpeg", src="audio/"+terms[i].readings[j].audio)
+							-var voted = cookies.hasKey(terms[i].id);
+							-for(var j in terms[i].readings)
+								span.votable
+									-if (voted == terms[i].readings[j].id)
+										-if (terms[i].readings[j].correct == 'true')
+											input.voted.right(type="submit", value="您读对了", reading="#{terms[i].readings[j].id}") 
+										-else
+											input.voted.wrong(type="submit", value="您读错了", reading="#{terms[i].readings[j].id}") 
+									-else
+										-if (terms[i].readings[j].correct == 'true')
+											input.voted.right(type="submit", value="", reading="#{terms[i].readings[j].id}") 
+										-else
+											input.voted.wrong(type="submit", value="", reading="#{terms[i].readings[j].id}") 
+									audio
+										source(type="audio/mpeg", src="audio/"+terms[i].readings[j].audio)
 							input.error(disabled='disabled', value='对不起，投票错误')
 						div#ckepop.share
 							span.jiathis_txt 分享到

@@ -40,8 +40,15 @@ $(function(){
 		term.find(".votable input[type='submit']").each(function(){
 			$(this).removeClass("voted right wrong");
 			var reading = $(this).attr('reading');
+			$(this).val("");
 			if(reading == voted){
 				$(this).addClass("voted");
+				if(_isCorrect(reading, data.readings)){
+					$(this).val("您读对了");
+				}
+				else{
+					$(this).val("您读错了");
+				}
 			}
 			if(_isCorrect(reading, data.readings)){
 				$(this).addClass("right");
