@@ -10,7 +10,7 @@ var jiathis_config = {
 $(function(){
 	$("div.term").each(function(){
 		var img = $(this).find("img.stats");
-		var rightCount = Math.max(parseInt(img.attr('right')), 1);
+		var rightCount = parseInt(img.attr('right'));
 		var wrongCount = parseInt(img.attr('wrong'));
 
 		$(this).find("label.rate span").text(_toPercent(wrongCount, rightCount));
@@ -25,42 +25,43 @@ $(function(){
 		$(this).find("audio").get(0).play();
 	});
 	
-	$("div.term .vote input[type='submit']").click(function(){
+	$("div.term .votable input[type='submit']").click(function(){
 		var term = $(this).parents("div.term")
 		var that = $(this);
-		$.post(that.attr('action'), that.serialize(), function(){
-			_updateTerm(term, that.find("input[name='isCorrect']").val());
+		$.post('/term/' + term.attr('id') + '/reading/' + that.attr('reading'), function(data){
+			_updateTerm(term, that.attr('reading'), data);
 		}).error(function(data){
-			term.find(".vote .result").removeClass("right wrong error").addClass("error").val("对不起，投票出现错误");
+			term.find(".vote .error").show();
 		});
 		
 		return false;
 	});
-	function _updateTerm(term, voteResult){
-		term.find(".vote input[type='submit']").hide();
-		if(voteResult == 'true'){
-			term.find(".vote").append("<input class='result right' disabled='disabled' value='您读对了'></input>");
-		}
-		else{
-			term.find(".vote").append("<input class='result wrong' disabled='disabled' value='您读错了'></input>");
-		}
-		
-		var canvas = term.find("canvas");
-		var id = term.attr('id');
-		$.getJSON("/term/" + id, function(data){
-			var right = Math.max(data.right_count, 1);
-			term.find("label.rate span").text(_toPercent(data.wrong_count, right));
-			_drawPie(canvas.attr("id"), parseInt(data.wrong_count), parseInt(data.right_count));
+	function _updateTerm(term, voted, data){
+		term.find(".votable input[type='submit']").each(function(){
+			$(this).removeClass("voted right wrong");
+			var reading = $(this).attr('reading');
+			if(reading == voted){
+				$(this).addClass("voted");
+			}
+			if(_isCorrect(reading, data.readings)){
+				$(this).addClass("right");
+			}
+			else{
+				$(this).addClass("wrong");				
+			}
 		});
+		
+		term.find("label.rate span").text(_toPercent(data.wrong, data.right));
+		_drawPie(term.find("canvas").attr("id"), parseInt(data.wrong), parseInt(data.right));
 	}
 	function _drawPie(id, wrongCount, rightCount){
 		var total = Math.max(wrongCount + rightCount, 1);
 		
 		var pie2 = new RGraph.Pie(id, [wrongCount, rightCount]); // Create the pie object
-		pie2.Set('chart.gutter.left', 10);
-		pie2.Set('chart.gutter.right', 10);
-		pie2.Set('chart.gutter.top', 25);
-		pie2.Set('chart.gutter.bottom', 10);
+		pie2.Set('chart.gutter.left', 20);
+		pie2.Set('chart.gutter.right', 20);
+		pie2.Set('chart.gutter.top', 35);
+		pie2.Set('chart.gutter.bottom', 20);
 		pie2.Set('chart.colors', ['#FFAA52', '#3E6D8E']);
 		pie2.Set('chart.strokestyle', 'white');
 		pie2.Set('chart.linewidth', 3);
@@ -95,6 +96,15 @@ function _getUrl(){
 	return "http://how2read.me#" + "maven";
 }
 function _toPercent(wrong, right){
-	return Math.round(wrong/(wrong+right)*10000)/100.00+"%";
+	var total = Math.max(wrong + right, 1);
+	return Math.round(wrong/total*10000)/100.00+"%";
+}
+function _isCorrect(reading, readings){
+	for(var i in readings){
+		if(reading == readings[i].id){
+			return readings[i]['correct'] == 'true';
+		}
+	}
+	return false;
 }
 

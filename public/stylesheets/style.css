@@ -189,10 +189,11 @@ form.report{
 }
 .vote input.result{
 	border: 0;
-/*	display: none;*/
+}
+.vote .error{
+	display:none;
 }
 .term .vote{
-	padding: 0px 15px;
 	margin: 12px 0;
 }
 

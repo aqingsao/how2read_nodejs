@@ -2,7 +2,7 @@ CREATE TABLE PRONUNCIATIONS(
 	id INTEGER,  
 	symbol varchar(50) NOT NULL,
 	audio varchar(50),
-	count INTEGER default 0,
+	count INTEGER default 1,
 	is_correct boolean NOT NULL,
 	term INTEGER NOT NULL,
 	created_at timestamp DEFAULT CURRENT_TIMESTAMP, 

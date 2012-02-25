@@ -14,14 +14,8 @@ exports.index = function(req, res){
 			console.log("Failed to query db: " + err);
 			throw err;
 		}
-		var terms = [];
-		for(var i in rows){
-			var row = rows[i];
-			var term = _obtainTerm(terms, row);
-			term.readings.push({id:row.pid, symbol:row.psymbol, audio:row.paudio, count:row.pcount, correct:row.pcorrect});
-			row.pcorrect == 'true'? term.right+=row.pcount : term.wrong+=row.pcount;
-		}
-		console.log(util.inspect(terms));
+		
+		var terms = _toTerms(rows);
 		res.render('index', { title: 'How to read me', terms: terms, cookies: utils.toCookies(req.headers.cookie)})
 	});
 };
@@ -29,32 +23,39 @@ exports.index = function(req, res){
 /*
  * POST report term pronunciation
  */
-exports.term = function(req, res){
+exports.reading = function(req, res){
 	var db = process.h2r.db;		
 	var termId = req.params.id;
-	var correct = 'true' === req.body.isCorrect;
-	var sql = correct ? "UPDATE terms SET right_count = right_count + 1 WHERE id = ?" : "UPDATE terms SET wrong_count = wrong_count + 1 WHERE id = ?";	
+	var readingId = req.params.rid;
 	var ip = _getClientIp(req);
 	
 	if(utils.toCookies(req.headers.cookie).hasKey(termId)){
 		console.log("Duplicate vote from " + ip + " for " + termId + ": " + correct);
-		res.redirect('back');
-		return;
+		throw {duplicated: true};
 	}
-	console.log("Vote from " + ip + " for " + termId + ": " + correct);
+	console.log("Vote from " + ip + " for " + termId + ": " + readingId);
 	
-	db.run(sql, termId, function(err){
+	db.run("UPDATE pronunciations SET count = count + 1 WHERE id = ?", readingId, function(err){
 		if(err){
+			console.log("Vote from " + ip + " for " + termId + " failed: " + util.inspect(err));
 			throw err;
 		}
 		
-		db.run("INSERT INTO IPSTERMS (ip, term, result) VALUES (?, ?, ?)", ip, termId, correct ? 1 : 0, function(err){
+		db.run("INSERT INTO IPSTERMS (ip, term, reading) VALUES (?, ?, ?)", ip, termId, readingId, function(err){
 			if(err){
 				throw err;
 			}
 			
-			res.cookie(termId, correct, {maxAge: oneYear, path: '/'});	
-			res.redirect('back');
+			res.cookie(termId, readingId, {maxAge: oneYear, path: '/'});	
+			db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from PRONUNCIATIONS p join Terms t on p.term = t.id where t.id=?", termId, function(err, rows) {
+				if(err){
+					console.log("Failed to query db: " + err);
+					throw err;
+				}
+
+				var terms = _toTerms(rows);
+				res.json(terms[0]);
+			});
 		});
 	});
 };
@@ -73,6 +74,16 @@ exports.termDetail = function(req, res){
 	});	
 };
 
+function _toTerms(rows){
+	var terms = [];
+	for(var i in rows){
+		var row = rows[i];
+		var term = _obtainTerm(terms, row);
+		term.readings.push({id:row.pid, symbol:row.psymbol, audio:row.paudio, count:row.pcount, correct:row.pcorrect});
+		row.pcorrect == 'true'? term.right+=row.pcount : term.wrong+=row.pcount;
+	}
+	return terms;
+}
 function _getClientIp(req) {	
 	var forwardedIps = req.header('x-forwarded-for');
 	return forwardedIps ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
