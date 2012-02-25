@@ -33,13 +33,11 @@ div#content
 							-for(var j in term.readings)
 								-if (voted)
 									-if (term.readings[j].correct == 'true')
-										span.votable
-											input(value="#{term.readings[j].symbol}", reading="#{term.readings[j].id}") 
+										a.votable= term.readings[j].symbol
 											audio
 												source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
 								-else
-									span.votable
-										input(type="submit", value="#{term.readings[j].symbol}", reading="#{term.readings[j].id}") 
+									a.votable(reading="#{term.readings[j].id}")= term.readings[j].symbol
 										audio
 											source(type="audio/mpeg", src="audio/"+term.readings[j].audio)								
 						div#ckepop.share
