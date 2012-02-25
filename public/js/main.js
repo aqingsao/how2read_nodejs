@@ -59,9 +59,6 @@ $(function(){
 		});
 		
 		term.find(".votable").each(function(){
-			if($(this).hasClass('voted')){
-				$(this).removeClass('voted');
-			};
 			var reading = $(this).attr('reading');
 			if(!_isCorrect(reading, data.readings)){
 				$(this).detach();
