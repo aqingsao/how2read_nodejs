@@ -41,14 +41,17 @@ $(function(){
 		$.post('/term/' + term.attr('id') + '/reading/' + that.attr('reading'), function(data){
 			_updateTerm(term, that.attr('reading'), data);
 		}).error(function(data){
-			if(term.find("a.reading.error").length == 0){
+			if(term.find("a.reading.error, a.reding.right, a.reading.wrong").length == 0){
 				$("<a class='reading error'>投票错误</a>").insertAfter(term.find('label.rate'));
 			}
-			term.find(".votable").each(function(){
-				if($(this).hasClass('voted')){
-					$(this).removeClass('voted');
-				};
-			});
+			
+			if(term.find("a.reding.right, a.reading.wrong").length == 0){
+				term.find(".votable").each(function(){
+					if($(this).hasClass('voted')){
+						$(this).removeClass('voted');
+					};
+				});
+			}
 		});
 		
 		return false;
