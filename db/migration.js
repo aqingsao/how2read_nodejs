@@ -5,7 +5,7 @@ var util = require('util')
 
 var scriptPath = "";
 var filePattern = /.*\/?(\d+)_*/;
-var sqlPattern = /\w+/;
+var sqlPattern = /^\s*\w+/;
 exports.migrate = function(dbname, dir){
 	var db = typeof(dbname) == "string" ? _createdb(dbname) : dbname;
 	_migrateDirectory(db, dir + "/migration/", function(a, b){return a.match(filePattern)[1] - b.match(filePattern)[1]});
