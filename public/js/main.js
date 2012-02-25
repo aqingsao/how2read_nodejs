@@ -25,7 +25,7 @@ $(function(){
 		$(this).find("audio").get(0).play();
 	});
 	
-	$("div.term .votable input[type='submit']").click(function(){
+	$("div.term .votable").click(function(){
 		var term = $(this).parents("div.term")
 		var that = $(this);
 		$.post('/term/' + term.attr('id') + '/reading/' + that.attr('reading'), function(data){
@@ -37,7 +37,7 @@ $(function(){
 		return false;
 	});
 	function _updateTerm(term, voted, data){
-		term.find(".votable input[type='submit']").each(function(){
+		term.find(".votable").each(function(){
 			var reading = $(this).attr('reading');
 			if(!_isCorrect(reading, data.readings)){
 				$(this).detach();
@@ -46,10 +46,10 @@ $(function(){
 		for(var i in data.readings){
 			if(data.readings[i].id == voted){
 				if(data.readings[i].correct == 'true'){
-					$("<input class='message right' disabled='disabled' value='您读对了'></input>").insertAfter(term.find('label.rate'));
+					$("<a class='message right'>您读对了</a>").insertAfter(term.find('label.rate'));
 				}
 				else{
-					$("<input class='message wrong' disabled='disabled' value='您读错了'></input>").insertAfter(term.find('label.rate'));
+					$("<a class='message wrong'>您读错了</a>").insertAfter(term.find('label.rate'));
 				}
 			}
 		}

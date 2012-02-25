@@ -27,17 +27,17 @@ div#content
 							-var voted = cookies.hasKey(term.id)
 							-if (voted)
 								-if (term.readCorrect(cookies.getValue(term.id)))
-									input.message.right(disabled='disabled', value='您读对了')
+									a.message.right='您读对了'
 								-else
-									input.message.wrong(disabled='disabled', value='您读错了')
+									a.message.wrong='您读错了'
 							-for(var j in term.readings)
 								-if (voted)
 									-if (term.readings[j].correct == 'true')
-										a.votable= term.readings[j].symbol
+										a.votable= '[' + term.readings[j].symbol + ']'
 											audio
 												source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
 								-else
-									a.votable(reading="#{term.readings[j].id}")= term.readings[j].symbol
+									a.votable(reading="[#{term.readings[j].id}]")= term.readings[j].symbol
 										audio
 											source(type="audio/mpeg", src="audio/"+term.readings[j].audio)								
 						div#ckepop.share
