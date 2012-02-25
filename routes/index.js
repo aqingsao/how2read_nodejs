@@ -30,33 +30,50 @@ exports.reading = function(req, res){
 	var termId = req.params.id;
 	var readingId = req.params.rid;
 	var ip = utils.getClientIp(req);
-	
+
 	if(utils.toCookies(req.headers.cookie).hasKey(termId)){
 		console.log("Duplicate vote from " + ip + " for " + termId + ": " + readingId);
-		throw {duplicated: true};
+		res.send('Duplicate vote', 412);
+		return;
 	}
 	console.log("Vote from " + ip + " for " + termId + ": " + readingId);
-	
-	db.run("UPDATE Readings SET count = count + 1 WHERE id = ?", readingId, function(err){
+
+	db.get("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id where p.id=?", readingId, function(err, row) {
 		if(err){
-			console.log("Vote from " + ip + " for " + termId + " failed: " + util.inspect(err));
-			throw err;
+			console.log('vote failed: ' + util.inspect(err));
+			res.send(err, 412);
+			return;
 		}
-		
-		db.run("INSERT INTO Votes (ip, term, reading) VALUES (?, ?, ?)", ip, termId, readingId, function(err){
+		if(row.tid != termId){
+			console.log('vote failed: reading does not belong to term');
+			res.send('reading does not belong to term', 412);
+			return;
+		}
+		db.run("UPDATE Readings SET count = count + 1 WHERE id = ?", readingId, function(err){
 			if(err){
-				throw err;
+				console.log('vote failed: ' + util.inspect(err));
+				res.send(err, 400);
+				return;
 			}
-			
-			res.cookie(termId, readingId, {maxAge: oneYear, path: '/'});	
-			db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id where t.id=?", termId, function(err, rows) {
+
+			db.run("INSERT INTO Votes (ip, term, reading) VALUES (?, ?, ?)", ip, termId, readingId, function(err){
 				if(err){
-					console.log("Failed to query db: " + err);
-					throw err;
+					console.log('vote failed: ' + util.inspect(err));
+					res.send(err, 500);
+					return;
 				}
 
-				var terms = _toTerms(rows);
-				res.json(terms[0]);
+				res.cookie(termId, readingId, {maxAge: oneYear, path: '/'});	
+				db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id where t.id=?", termId, function(err, rows) {
+					if(err){
+						console.log('vote failed: ' + util.inspect(err));
+						res.send(err, 500);
+						return;
+					}
+
+					var terms = _toTerms(rows);
+					res.json(terms[0]);
+				});
 			});
 		});
 	});
