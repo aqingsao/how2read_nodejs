@@ -21,7 +21,7 @@ $(function(){
 		$("#" + id).show();
 	});
 		
-	$(".votable").mousemove(function(){
+	$(".votable").mouseover(function(){
 		$(this).find("audio").get(0).play();
 	});
 	
