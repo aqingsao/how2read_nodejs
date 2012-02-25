@@ -1,6 +1,9 @@
-var util = require('util');
-var sqlite3 = require('sqlite3').verbose();
-var config = require('../config'), utils = require("../utils");
+var util = require('util'), 
+sqlite3 = require('sqlite3').verbose(), 
+config = require('../config'), 
+utils = require("../utils"),
+Term = require('../model/term.js').Term, 
+Reading = require('../model/reading.js').Reading;
 
 var oneYear = 365 * 24 * 3600 * 1000;
 /*
@@ -27,7 +30,7 @@ exports.reading = function(req, res){
 	var db = process.h2r.db;		
 	var termId = req.params.id;
 	var readingId = req.params.rid;
-	var ip = _getClientIp(req);
+	var ip = utils.getClientIp(req);
 	
 	if(utils.toCookies(req.headers.cookie).hasKey(termId)){
 		console.log("Duplicate vote from " + ip + " for " + termId + ": " + readingId);
@@ -77,26 +80,19 @@ exports.termDetail = function(req, res){
 function _toTerms(rows){
 	var terms = [];
 	for(var i in rows){
-		var row = rows[i];
-		var term = _obtainTerm(terms, row);
-		term.readings.push({id:row.pid, symbol:row.psymbol, audio:row.paudio, count:row.pcount, correct:row.pcorrect});
-		row.pcorrect == 'true'? term.right+=row.pcount : term.wrong+=row.pcount;
-	}
+		var term = _obtainTerm(terms, rows[i]);
+		term.addReading(new Reading(rows[i]));
+	}	
 	return terms;
-}
-function _getClientIp(req) {	
-	var forwardedIps = req.header('x-forwarded-for');
-	return forwardedIps ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
 };
 
 function _obtainTerm(terms, row){
 	for(var i in terms){
-		var term = terms[i];
-		if(term.id == row.tid){
-			return term;
+		if(terms[i].id == row.tid){
+			return terms[i];
 		}
 	}
-	var term = {id: row.tid, name: row.tname, source: row.tsource, description: row.tdesc, wrong: 0, right: 0, readings: []};
+	var term = new Term(row);
 	terms.push(term);
 	return term;
 }

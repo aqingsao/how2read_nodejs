@@ -22,3 +22,7 @@ exports.toCookies = function(str){
 	
 	return {hasKey: hasKey, getValue: getValue};
 };
+exports.getClientIp = function(req) {	
+	var forwardedIps = req.header('x-forwarded-for');
+	return forwardedIps ? (forwardedIps.split(','))[0] : req.connection.remoteAddress;
+};
