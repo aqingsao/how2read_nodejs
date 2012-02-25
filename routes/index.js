@@ -11,7 +11,7 @@ var oneYear = 365 * 24 * 3600 * 1000;
  */
 exports.index = function(req, res){
 	var db = process.h2r.db;
-	db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from PRONUNCIATIONS p join Terms t on p.term = t.id order by t.name", function(err, rows) {
+	db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id order by t.name", function(err, rows) {
 		if(err){
 			console.log("Failed to query db: " + err);
 			throw err;
@@ -37,19 +37,19 @@ exports.reading = function(req, res){
 	}
 	console.log("Vote from " + ip + " for " + termId + ": " + readingId);
 	
-	db.run("UPDATE pronunciations SET count = count + 1 WHERE id = ?", readingId, function(err){
+	db.run("UPDATE Readings SET count = count + 1 WHERE id = ?", readingId, function(err){
 		if(err){
 			console.log("Vote from " + ip + " for " + termId + " failed: " + util.inspect(err));
 			throw err;
 		}
 		
-		db.run("INSERT INTO IPSTERMS (ip, term, reading) VALUES (?, ?, ?)", ip, termId, readingId, function(err){
+		db.run("INSERT INTO Votes (ip, term, reading) VALUES (?, ?, ?)", ip, termId, readingId, function(err){
 			if(err){
 				throw err;
 			}
 			
 			res.cookie(termId, readingId, {maxAge: oneYear, path: '/'});	
-			db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from PRONUNCIATIONS p join Terms t on p.term = t.id where t.id=?", termId, function(err, rows) {
+			db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id where t.id=?", termId, function(err, rows) {
 				if(err){
 					console.log("Failed to query db: " + err);
 					throw err;

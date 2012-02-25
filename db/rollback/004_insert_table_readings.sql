@@ -1,0 +1,2 @@
+DELETE FROM Terms;
+DELETE FROM Readings;
