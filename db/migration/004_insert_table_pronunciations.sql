@@ -1,6 +1,6 @@
 insert into Terms(name, source, description) values('chef', "http://www.opscode.com/chef", "一个开源的系统集成和配置管理工具，尤其适用于云环境的自动化。");	
 insert into pronunciations(symbol, audio, is_correct, term) values("ʃef", 'chef_1.mp3', 'true', (select id from terms where name='chef'));
-insert into pronunciations(symbol, audio, is_correct, term) values("ʃef", 'chef_2.mp3', 'false', (select id from terms where name='chef'));
+insert into pronunciations(symbol, audio, is_correct, term) values("tʃef", 'chef_2.mp3', 'false', (select id from terms where name='chef'));
 
 insert into Terms(name, source, description) values('cache', "","一组本地存储的数据，可以提高后续访问的速度。");
 insert into pronunciations(symbol, audio, is_correct, term) values("kæʃ", 'cache_1.mp3', 'true', (select id from terms where name='cache'));

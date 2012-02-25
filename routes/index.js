@@ -30,7 +30,7 @@ exports.reading = function(req, res){
 	var ip = _getClientIp(req);
 	
 	if(utils.toCookies(req.headers.cookie).hasKey(termId)){
-		console.log("Duplicate vote from " + ip + " for " + termId + ": " + correct);
+		console.log("Duplicate vote from " + ip + " for " + termId + ": " + readingId);
 		throw {duplicated: true};
 	}
 	console.log("Vote from " + ip + " for " + termId + ": " + readingId);

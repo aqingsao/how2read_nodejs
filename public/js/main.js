@@ -67,7 +67,6 @@ $(function(){
 		pie2.Set('chart.gutter.bottom', 20);
 		pie2.Set('chart.colors', ['#FFAA52', '#3E6D8E']);
 		pie2.Set('chart.strokestyle', 'white');
-		pie2.Set('chart.linewidth', 3);
 		pie2.Set('chart.shadow', true);
 		pie2.Set('chart.shadow.offsetx', 0);
 		pie2.Set('chart.shadow.offsety', 0);
