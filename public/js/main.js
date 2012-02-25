@@ -46,10 +46,10 @@ $(function(){
 		for(var i in data.readings){
 			if(data.readings[i].id == voted){
 				if(data.readings[i].correct == 'true'){
-					$("<a class='message right'>您读对了</a>").insertAfter(term.find('label.rate'));
+					$("<a class='reading right'>您读对了</a>").insertAfter(term.find('label.rate'));
 				}
 				else{
-					$("<a class='message wrong'>您读错了</a>").insertAfter(term.find('label.rate'));
+					$("<a class='reading wrong'>您读错了</a>").insertAfter(term.find('label.rate'));
 				}
 			}
 		}

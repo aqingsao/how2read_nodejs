@@ -150,7 +150,7 @@ form.report{
 	font-size: 19px;
 	color: #FFAA52;
 }
-.vote .votable{
+.vote .reading{
 	margin: 0 15px 0 0;
 	padding: 3px 4px 3px 36px;
 	display: inline-block;
@@ -160,15 +160,18 @@ form.report{
 	text-decoration: none;
 	
 	color: #3E6D8E;
+	font-weight: bold;
+	background-color: #E0EAF1;
+}
+.vote .reading.votable{
 	background-image: url(/images/speaker.png);
 	background-position: 8px 8px;
  	background-repeat: no-repeat;	
-	background-color: #E0EAF1;
 	
 	border-bottom: 1px solid #3E6D8E;
 	border-right: 1px solid #7F9FB6;
 }
-.vote .votable:hover {
+.vote .reading.votable:hover {
 	background-color: #3E6D8E;
 	border-bottom: 1px solid #37607D;
 	border-right: 1px solid #37607D;
@@ -176,39 +179,10 @@ form.report{
 	background-image: url(/images/speaking.png);
     cursor: pointer;
 }
-.term .speaker{
-	padding-left: 25px;
-}
-.vote input{
-	background-color: #E0EAF1;
-	border-bottom: 1px solid #3E6D8E;
-	border-right: 1px solid #7F9FB6;
-	padding: 3px 4px;
-	margin: 0 2px;
-	font-size: 100%;
-	font-weight: bold;
-	line-height: 2.4;
-	white-space: nowrap;
-	width: 80px;
-	text-align: center;
-}
-.vote .message{
-	margin: 0 15px 0 0;
-	padding: 3px 4px 3px 36px;
-	display: inline-block;
-	width: 80px;
-	line-height: 2.4;
-	font-size: 90%;
-	text-decoration: none;
-	
-	color: #3E6D8E;
-	font-weight: bold;
-	background-color: #E0EAF1;
-}
-.vote .message.right{
+.vote .reading.right{
 	color: #3E6D8E;
 }
-.vote .message.wrong{
+.vote .reading.wrong{
 	color:#FFAA52;
 }
 
