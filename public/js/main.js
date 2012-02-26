@@ -8,19 +8,21 @@ var jiathis_config = {
 };
 
 $(function(){
+	var termPattern = /term(\d+)/;
 	$("div.term").each(function(){
 		var img = $(this).find("img.stats");
 		var rightCount = parseInt(img.attr('right'));
 		var wrongCount = parseInt(img.attr('wrong'));
 
 		$(this).find("label.rate span").text(_toPercent(wrongCount, rightCount));
-		var id = "term" + $(this).attr('id');
+		
+		var id = "canvas" + $(this).attr('id').match(termPattern)[1];
 		_drawPie(id, wrongCount, rightCount);
 
 		img.detach();		
 		$("#" + id).show();
 	});
-	$(".term .votable").mouseover(function(){
+	$(".term .votable").mouseenter(function(){
 		$(this).find("audio").get(0).play();
 	});
 		
@@ -29,7 +31,7 @@ $(function(){
 			return;
 		}
 		
-		var tid = $(this).parents("div.term").attr('id'), rid = $(this).attr('reading');
+		var tid = $(this).parents("div.term").attr('id').match(termPattern)[1], rid = $(this).attr('reading');
 		var voting = $("<a class='voting' href='#' onclick='_vote(this); return false;' tid='" + tid + "' rid='" + rid + "'>我就是这么读的</a>")[0];
 		$(this).poshytip({
 			className: 'tip-darkgray',
@@ -75,7 +77,7 @@ function _isCorrect(reading, readings){
 function _vote(reading){
 	var that = $(reading);
 	
-	var term = $("div#" + that.attr('tid') + ".term");
+	var term = $("div#term" + that.attr('tid') + ".term");
 	term.find(".votable").each(function(){
 		$(this).poshytip('disable');
 	});
