@@ -19,7 +19,7 @@ div#content
 						h2.name= term.name 
 						div.description= term.description
 							-if(term.source)
-								a(href=term.source)
+								a(href=term.source, target="_blank")
 									img(src="/images/external_link.jpg", title="去官方网站")
 						div.vote
 							label.rate
@@ -50,11 +50,7 @@ div#content
 div#footer
 	div.container.clearfix
 		div#legal
-			span All Rights Reserved.
-			span Email: xqzhang@thoughtworks.com  
-			span website: 
-				a(href="http://xiaoqing.me") http://xiaoqing.me  
-			span weibo(@aqingsao)  
+			p Copyright © 2012 <a href="http://weibo.com/u/1566959347" target="_blank">@aqingsao</a>. All Rights Reserved.
 script(src="/js/jquery.min.js")			
 script(src="/js/rgraph/RGraph.common.core.js")
 script(src="/js/rgraph/RGraph.common.tooltips.js")
