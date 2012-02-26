@@ -34,7 +34,7 @@ $(function(){
 		var tid = $(this).parents("div.term").attr('id').match(termPattern)[1], rid = $(this).attr('reading');
 		var voting = $("<a class='voting' href='#' onclick='_vote(this); return false;' tid='" + tid + "' rid='" + rid + "'>我就是这么读的</a>")[0];
 		$(this).poshytip({
-			className: 'tip-darkgray',
+			className: 'tip-green',
 			bgImageFrameSize: 9, 
 			showTimeout: 500,
 			alignTo: 'target',

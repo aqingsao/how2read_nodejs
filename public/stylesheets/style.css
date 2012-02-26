@@ -175,8 +175,7 @@ form.report{
 	border-bottom: 1px solid #37607D;
 	border-right: 1px solid #37607D;
 	text-decoration: none;
-	background-image: url(/images/speaking.png);
-    cursor: pointer;
+/*	background-image: url(/images/speaking.png);*/
 }
 .vote .right{
 	color: #3E6D8E;
@@ -194,4 +193,7 @@ form.report{
 
 .term .share{
 	float: right;
+}
+.term a.voting{
+	color: red;
 }
