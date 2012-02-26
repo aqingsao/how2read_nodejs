@@ -78,7 +78,7 @@ function _vote(reading){
 		$(this).poshytip('disable');
 	});
 
-	$.post('/term/' + that.attr('tid') + '/reading/' + that.attr('rid'), function(data){
+	$.post('/term/' + that.attr('tid') + '/reading/' + that.attr('rid2'), function(data){
 		_updateTerm(term, that.attr('rid'), data);
 	}).error(function(data){
 		if(term.find("a.reading.error, a.reding.right, a.reading.wrong").length == 0){

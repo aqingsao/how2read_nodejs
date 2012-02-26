@@ -5,7 +5,7 @@ utils = require("../utils"),
 Term = require('../model/term.js').Term, 
 Reading = require('../model/reading.js').Reading;
 
-var oneYear = 365 * 24 * 3600 * 1000;
+var oneYear = 365 * 24 * 3600 * 1000, idPattern = /^\d+$/;
 /*
  * GET home page.
  */
@@ -30,14 +30,20 @@ exports.reading = function(req, res){
 	var termId = req.params.id;
 	var readingId = req.params.rid;
 	var ip = utils.getClientIp(req);
+	
+	if(!termId.match(idPattern) || !readingId.match(idPattern)){
+		console.log("Invalid vote from " + ip + " for " + termId + ": " + readingId);
+		res.send('Invalid vote', 412);
+		return;
+	}
 
 	if(utils.toCookies(req.headers.cookie).hasKey(termId)){
 		console.log("Duplicate vote from " + ip + " for " + termId + ": " + readingId);
 		res.send('Duplicate vote', 412);
 		return;
 	}
-	console.log("Vote from " + ip + " for " + termId + ": " + readingId);
 
+	console.log("Vote from " + ip + " for " + termId + ": " + readingId);
 	db.get("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id where p.id=?", readingId, function(err, row) {
 		if(err){
 			console.log('vote failed: ' + util.inspect(err));
