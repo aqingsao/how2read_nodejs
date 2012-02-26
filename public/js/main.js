@@ -20,9 +20,11 @@ $(function(){
 		img.detach();		
 		$("#" + id).show();
 	});
-		
 	$(".term .votable").mouseover(function(){
 		$(this).find("audio").get(0).play();
+	});
+		
+	$(".term .votable").each(function(){
 		if($(this).hasClass('voted')){
 			return;
 		}
@@ -32,7 +34,7 @@ $(function(){
 		$(this).poshytip({
 			className: 'tip-darkgray',
 			bgImageFrameSize: 9, 
-			showTimeout: 1000,
+			showTimeout: 500,
 			alignTo: 'target',
 			alignX: 'center',
 			alignY: 'bottom', 
@@ -78,7 +80,7 @@ function _vote(reading){
 		$(this).poshytip('disable');
 	});
 
-	$.post('/term/' + that.attr('tid') + '/reading/' + that.attr('rid2'), function(data){
+	$.post('/term/' + that.attr('tid') + '/reading/' + that.attr('rid'), function(data){
 		_updateTerm(term, that.attr('rid'), data);
 	}).error(function(data){
 		if(term.find("a.reading.error, a.reding.right, a.reading.wrong").length == 0){
