@@ -110,6 +110,17 @@ $(function(){
 		jiathis_config.summary = word + "，据统计，" + rate + "的人读错了这个单词，你呢？";
 		jiathis_config.url = "http://how2read.me#"+word;
 	});
+	$(".term .votable").poshytip({
+		className: 'tip-darkgray',
+		bgImageFrameSize: 9, 
+		showTimeout: 1000,
+		alignTo: 'target',
+		alignX: 'center',
+		alignY: 'bottom', 
+		offsetY: -5,
+		content: '<a>我就是这么读的</a>'
+	});
+	$(".term .votable.voted").poshytip('destroy');
 });
 function getRate(wrongCount, rightCount){
 	var total = wrongCount + rightCount;
