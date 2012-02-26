@@ -7,6 +7,7 @@ var now = new Date();
 var src = config[env].db;
 var dst = util.format("/home/ec2-user/backup/h2r.sqlite.%d%s%s_%s%s", now.getFullYear(), _format(now.getMonth() + 1), _format(now.getDate()), _format(now.getHours()), _format(now.getMinutes()));
 
+console.log("Start to backup at " + now.toUTCString());
 console.log("Backup db files from " + src + " to " + dst);
 
 
