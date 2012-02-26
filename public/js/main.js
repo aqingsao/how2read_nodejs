@@ -85,15 +85,16 @@ function _vote(reading){
 	$.post('/term/' + that.attr('tid') + '/reading/' + that.attr('rid'), function(data){
 		_updateTerm(term, that.attr('rid'), data);
 	}).error(function(data){
-		if(term.find("a.reading.error, a.reding.right, a.reading.wrong").length == 0){
-			$("<a class='reading error'>投票错误</a>").insertAfter(term.find('label.rate'));
+		if(term.find("a.error, a.right, a.wrong").length == 0){
+			$("<a class='error'>投票错误</a>").insertAfter(term.find('label.rate'));
 		}
 		
-		if(term.find("a.reading.right, a.reading.wrong").length == 0){
+		if(term.find("a.right, a.wrong").length == 0){
 			term.find(".votable").each(function(){
 				if($(this).hasClass('voted')){
 					$(this).removeClass('voted');
 				};
+				$(this).poshytip('enable');
 			});
 		}
 	});
@@ -101,7 +102,7 @@ function _vote(reading){
 	return false;
 }
 function _updateTerm(term, voted, data){
-	term.find("a.reading.error").each(function(){
+	term.find("a.error").each(function(){
 		$(this).detach();
 	});
 	
@@ -110,14 +111,17 @@ function _updateTerm(term, voted, data){
 		if(!_isCorrect(reading, data.readings)){
 			$(this).detach();
 		}
+		else{
+			$(this).addClass("voted");
+		}
 	});
 	for(var i in data.readings){
 		if(data.readings[i].id == voted){
 			if(data.readings[i].correct == 'true'){
-				$("<a class='reading right'>您读对了</a>").insertAfter(term.find('label.rate'));
+				$("<a class='right'>您读对了</a>").insertAfter(term.find('label.rate'));
 			}
 			else{
-				$("<a class='reading wrong'>您读错了</a>").insertAfter(term.find('label.rate'));
+				$("<a class='wrong'>您读错了</a>").insertAfter(term.find('label.rate'));
 			}
 		}
 	}
