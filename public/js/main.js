@@ -23,7 +23,7 @@ $(function(){
 		$("#" + id).show();
 	});
 	$(".term .votable").mouseenter(function(){
-		$(this).find("audio").get(0).play();
+		_speak($(this));
 		if($(this).hasClass("selected")){
 			_toggleSymbol($(this));
 		}
@@ -56,6 +56,14 @@ $(function(){
 		jiathis_config.url = "http://how2read.me#"+word;
 	});
 });
+function _speak(votable){
+	if($.browser.msie || $.browser.webkit){
+		votable.find("audio").get(0).play();
+	}
+	else{
+		votable.find("audio").get(1).play();
+	}
+}
 function _toggleSymbol(votable){
 	votable.mouseenter(function(){
 		votable.find("span").text("[" + $(this).attr("symbol") + "]");
