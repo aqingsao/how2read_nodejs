@@ -167,15 +167,18 @@ form.report{
 	background-position: 8px 8px;
  	background-repeat: no-repeat;	
 	
-	border-bottom: 1px solid #3E6D8E;
-	border-right: 1px solid #7F9FB6;
+	border-bottom: 1px solid #E0EAF1;
+	border-right: 1px solid #E0EAF1;
 }
 .vote .votable:hover {
-	background-color: #3E6D8E;
+/*	background-color: #3E6D8E;*/
 	border-bottom: 1px solid #37607D;
 	border-right: 1px solid #37607D;
 	text-decoration: none;
-/*	background-image: url(/images/speaking.png);*/
+	border-bottom: 1px solid #3E6D8E;
+	border-right: 1px solid #7F9FB6;
+	cursor: pointer;
+	background-image: url(/images/speaking.gif);
 }
 .vote .right{
 	color: #3E6D8E;
