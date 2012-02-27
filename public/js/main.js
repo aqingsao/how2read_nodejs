@@ -82,10 +82,12 @@ function _updateTerm(term, voted, data){
 		if(rid == voted){
 			$(this).addClass("selected");
 			if(reading['correct'] == 'true'){
-				$(this).attr("symbol", reading['symbol']).text("您读对了");
+				$(this).attr("symbol", reading['symbol']);
+				$(this).find("span").text("您读对了");
 			}
 			else{
-				$(this).attr("symbol", reading['symbol']).text("您读错了");
+				$(this).attr("symbol", reading['symbol']);
+				$(this).find("span").text("您读错了");
 			}
 		}
 		if(reading['correct'] == 'true'){

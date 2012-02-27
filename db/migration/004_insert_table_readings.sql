@@ -1,36 +1,35 @@
 insert into Terms(name, source, description) values('chef', "http://www.opscode.com/chef", "一个开源的系统集成和配置管理工具，尤其适用于云环境的自动化。");	
-insert into readings(symbol, audio, is_correct, term) values("ʃef", 'chef_shefu.mp3', 'true', (select id from terms where name='chef'));
-insert into readings(symbol, audio, is_correct, term) values("tʃef", 'chef_chefu.mp3', 'false', (select id from terms where name='chef'));
+insert into readings(symbol, audio, is_correct, term) values("ʃef", 'chef_shaifu', 'true', (select id from terms where name='chef'));
+insert into readings(symbol, audio, is_correct, term) values("tʃef", 'chef_chaifu', 'false', (select id from terms where name='chef'));
 
 insert into Terms(name, source, description) values('cache', "","一组本地存储的数据，可以提高后续访问的速度。");
-insert into readings(symbol, audio, is_correct, term) values("kæʃ", 'cache_kaishi.mp3', 'true', (select id from terms where name='cache'));
-insert into readings(symbol, audio, is_correct, term) values("kætʃ", 'cache_kaichi.mp3', 'false', (select id from terms where name='cache'));
-insert into readings(symbol, audio, is_correct, term) values("keitʃ", 'cache_keichi.mp3', 'false', (select id from terms where name='cache'));
-insert into readings(symbol, audio, is_correct, term) values("keik", 'cache_keike.mp3', 'false', (select id from terms where name='cache'));
+insert into readings(symbol, audio, is_correct, term) values("kæʃ", 'cache_kaishi', 'true', (select id from terms where name='cache'));
+insert into readings(symbol, audio, is_correct, term) values("kætʃ", 'cache_kaichi', 'false', (select id from terms where name='cache'));
+insert into readings(symbol, audio, is_correct, term) values("keitʃ", 'cache_keichi', 'false', (select id from terms where name='cache'));
 
 insert into Terms(name, source, description) values('nginx', "http://nginx.org", "轻量级的网页服务器、反向代理服务器以及电子邮件（IMAP/POP3）代理服务器。");
-insert into readings(symbol, audio, is_correct, term) values("'endʒin eks", 'nginx_enzhenaikes.mp3', 'true', (select id from terms where name='nginx'));
-insert into readings(symbol, audio, is_correct, term) values("n'ginks", 'nginx_enzhenkes.mp3', 'false', (select id from terms where name='nginx'));	
+insert into readings(symbol, audio, is_correct, term) values("'endʒin eks", 'nginx_enzhenaikes', 'true', (select id from terms where name='nginx'));
+insert into readings(symbol, audio, is_correct, term) values("n'ginks", 'nginx_enzhenkes', 'false', (select id from terms where name='nginx'));	
 
 insert into Terms(name, source, description) values('maven', "http://maven.apache.org", "一个软件（特别是Java软件）项目管理及自动构建工具。");
-insert into readings(symbol, audio, is_correct, term) values("'mʌven", 'maven_mawen.mp3', 'false', (select id from terms where name='maven'));
-insert into readings(symbol, audio, is_correct, term) values("'meiven", 'maven_meiwen.mp3', 'true', (select id from terms where name='maven'));
+insert into readings(symbol, audio, is_correct, term) values("'mʌven", 'maven_mawen', 'false', (select id from terms where name='maven'));
+insert into readings(symbol, audio, is_correct, term) values("'meiven", 'maven_meiwen', 'true', (select id from terms where name='maven'));
 
 insert into Terms(name, source, description) values('java', "http://www.java.com", "一种可以撰写跨平台应用软件的面向对象的程序设计语言。");
-insert into readings(symbol, audio, is_correct, term) values("'dʒɑ:və", 'java_zhawa.mp3', 'true', (select id from terms where name='java'));
-insert into readings(symbol, audio, is_correct, term) values("'jɑ:vʌ", 'java_jiawa.mp3', 'false', (select id from terms where name='java'));	
+insert into readings(symbol, audio, is_correct, term) values("'dʒɑ:və", 'java_zhawa', 'true', (select id from terms where name='java'));
+insert into readings(symbol, audio, is_correct, term) values("'jɑ:vʌ", 'java_jiawa', 'false', (select id from terms where name='java'));	
 
 insert into Terms(name, source, description) values('mockito', "http://code.google.com/p/mockito", '一个Java下的开源测试框架，用于创建测试替身对象。');
-insert into readings(symbol, audio, is_correct, term) values("mɔ'kitəu", 'mockito.mp3', 'true', (select id from terms where name='mockito'));
-insert into readings(symbol, audio, is_correct, term) values("'mɔkitə", 'mockito_wrong1.mp3', 'false', (select id from terms where name='mockito'));
+insert into readings(symbol, audio, is_correct, term) values("mɔ'kitəu", 'mockito.moukitou', 'true', (select id from terms where name='mockito'));
+insert into readings(symbol, audio, is_correct, term) values("'mɔkitə", 'mockito_maokite', 'false', (select id from terms where name='mockito'));
 
 insert into Terms(name, source, description) values('skype', "www.skype.com", "一个网络电话视频电话工具。");
-insert into readings(symbol, audio, is_correct, term) values("u:bu:ntu:", 'skype_sigaipu.mp3', 'true', (select id from terms where name='skype'));
-insert into readings(symbol, audio, is_correct, term) values("u:ba:ntu:", 'skype_sgaipi.mp3', 'true', (select id from terms where name='skype'));
+insert into readings(symbol, audio, is_correct, term) values("u:bu:ntu:", 'skype_sigaipu', 'true', (select id from terms where name='skype'));
+insert into readings(symbol, audio, is_correct, term) values("u:ba:ntu:", 'skype_sigaipi', 'true', (select id from terms where name='skype'));
 
 insert into Terms(name, source, description) values('parameter', "", "一种特殊类型的变量，作为子程序的输入，子程序可以用来调用其指向的数据。");			
-insert into readings(symbol, audio, is_correct, term) values("pə'ræmitə", 'parameter_peraimite.mp3', 'true', (select id from terms where name='parameter'));			
-insert into readings(symbol, audio, is_correct, term) values("'pærəmitə", 'parameter_pairemite.mp3', 'false', (select id from terms where name='parameter'));
+insert into readings(symbol, audio, is_correct, term) values("pə'ræmitə", 'parameter_peraimite', 'true', (select id from terms where name='parameter'));			
+insert into readings(symbol, audio, is_correct, term) values("'pærəmitə", 'parameter_pairemite', 'false', (select id from terms where name='parameter'));
 
 -- insert into Terms(name, source, description) values('ubuntu', "http://www.ubuntu.com", "以桌面应用为主的GNU/Linux操作系统。");
 -- insert into readings(symbol, audio, is_correct, term) values("u:bu:ntu:", 'ubuntu_wubantu.mp3', 'true', (select id from terms where name='ubuntu'));

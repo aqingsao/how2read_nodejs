@@ -41,7 +41,8 @@ div#content
 									span= '0%'
 									的人读错了，您呢？
 								-for(var j in term.readings)
-									a.votable(reading="#{term.readings[j].id}")= '['+ term.readings[j].symbol + ']'
+									a.votable(reading="#{term.readings[j].id}")
+										span= '['+ term.readings[j].symbol + ']'
 										audio
 											source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
 						div#ckepop.share
