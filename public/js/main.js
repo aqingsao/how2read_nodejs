@@ -24,16 +24,9 @@ $(function(){
 	});
 	$(".term .votable").mouseenter(function(){
 		$(this).find("audio").get(0).play();
-	});
-	$(".term .selected.right").mouseenter(function(){
-		$(this).find("span").text("[" + $(this).attr("symbol") + "]");
-	}).mouseleave(function(){
-		$(this).find("span").text("您读对了");
-	});
-	$(".term .selected.wrong").mouseenter(function(){
-		$(this).find("span").text("[" + $(this).attr("symbol") + "]");
-	}).mouseleave(function(){
-		$(this).find("span").text("您读错了");
+		if($(this).hasClass("selected")){
+			_toggleSymbol($(this));
+		}
 	});
 		
 	$(".term .votable").click(function(){
@@ -63,6 +56,18 @@ $(function(){
 		jiathis_config.url = "http://how2read.me#"+word;
 	});
 });
+function _toggleSymbol(votable){
+	votable.mouseenter(function(){
+		votable.find("span").text("[" + $(this).attr("symbol") + "]");
+	}).mouseleave(function(){
+		if(votable.hasClass("right")){
+			votable.find("span").text("您读对了");
+		}
+		else if(votable.hasClass("wrong")){
+			votable.find("span").text("您读错了");
+		}
+	});
+}
 function _toPercent(wrong, right){
 	var total = Math.max(wrong + right, 1);
 	return Math.round(wrong/total*10000)/100.00+"%";
@@ -89,6 +94,7 @@ function _updateTerm(term, voted, data){
 				$(this).attr("symbol", reading['symbol']);
 				$(this).find("span").text("您读错了");
 			}
+			_toggleSymbol($(this));
 		}
 		if(reading['correct'] == 'true'){
 			$(this).addClass("right");

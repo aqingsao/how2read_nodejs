@@ -20,7 +20,7 @@ insert into readings(symbol, audio, is_correct, term) values("'dʒɑ:və", 'java
 insert into readings(symbol, audio, is_correct, term) values("'jɑ:vʌ", 'java_jiawa', 'false', (select id from terms where name='java'));	
 
 insert into Terms(name, source, description) values('mockito', "http://code.google.com/p/mockito", '一个Java下的开源测试框架，用于创建测试替身对象。');
-insert into readings(symbol, audio, is_correct, term) values("mɔ'ki:təu", 'mockito.moukitou', 'true', (select id from terms where name='mockito'));
+insert into readings(symbol, audio, is_correct, term) values("mɔ'ki:təu", 'mockito_moukitou', 'true', (select id from terms where name='mockito'));
 insert into readings(symbol, audio, is_correct, term) values("'mɔkitə", 'mockito_maokite', 'false', (select id from terms where name='mockito'));
 
 insert into Terms(name, source, description) values('skype', "www.skype.com", "一个网络电话视频电话工具。");
