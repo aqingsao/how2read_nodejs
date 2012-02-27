@@ -102,7 +102,6 @@ function _updateTerm(term, voted, data){
 		else{
 			$(this).addClass("wrong");
 		}
-		
 	});
 	
 	term.find("label.rate span").text(_toPercent(data.wrong, data.right));

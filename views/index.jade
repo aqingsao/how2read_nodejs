@@ -34,7 +34,8 @@ div#content
 									a(class=clz, reading="#{term.readings[j].id}", symbol="#{term.readings[j].symbol}")
 										span= symbol
 										audio
-											source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
+											source(type="audio/ogg", src="audio/"+term.readings[j].audio + ".ogg")
+											source(type="audio/mpeg", src="audio/"+term.readings[j].audio + ".mp3")
 						-else							
 							div.vote.notVoted
 								label.rate
@@ -44,7 +45,8 @@ div#content
 									a.votable(reading="#{term.readings[j].id}")
 										span= '['+ term.readings[j].symbol + ']'
 										audio
-											source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
+											source(type="audio/ogg", src="audio/"+term.readings[j].audio + ".ogg")
+											source(type="audio/mpeg", src="audio/"+term.readings[j].audio + ".mp3")
 						div#ckepop.share
 							span.jiathis_txt 分享到
 							a.jiathis_button_tsina 新浪微博
