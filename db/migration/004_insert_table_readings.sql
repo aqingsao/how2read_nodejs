@@ -8,7 +8,7 @@ insert into readings(symbol, audio, is_correct, term) values("kætʃ", 'cache_ka
 insert into readings(symbol, audio, is_correct, term) values("keitʃ", 'cache_keichi', 'false', (select id from terms where name='cache'));
 
 insert into Terms(name, source, description) values('nginx', "http://nginx.org", "轻量级的网页服务器、反向代理服务器以及电子邮件（IMAP/POP3）代理服务器。");
-insert into readings(symbol, audio, is_correct, term) values("'endʒin eks", 'nginx_enzhenaikes', 'true', (select id from terms where name='nginx'));
+insert into readings(symbol, audio, is_correct, term) values("'endʒinˌeks", 'nginx_enzhenaikes', 'true', (select id from terms where name='nginx'));
 insert into readings(symbol, audio, is_correct, term) values("n'ginks", 'nginx_enzhenkes', 'false', (select id from terms where name='nginx'));	
 
 insert into Terms(name, source, description) values('maven', "http://maven.apache.org", "一个软件（特别是Java软件）项目管理及自动构建工具。");
@@ -20,12 +20,12 @@ insert into readings(symbol, audio, is_correct, term) values("'dʒɑ:və", 'java
 insert into readings(symbol, audio, is_correct, term) values("'jɑ:vʌ", 'java_jiawa', 'false', (select id from terms where name='java'));	
 
 insert into Terms(name, source, description) values('mockito', "http://code.google.com/p/mockito", '一个Java下的开源测试框架，用于创建测试替身对象。');
-insert into readings(symbol, audio, is_correct, term) values("mɔ'kitəu", 'mockito.moukitou', 'true', (select id from terms where name='mockito'));
+insert into readings(symbol, audio, is_correct, term) values("mɔ'ki:təu", 'mockito.moukitou', 'true', (select id from terms where name='mockito'));
 insert into readings(symbol, audio, is_correct, term) values("'mɔkitə", 'mockito_maokite', 'false', (select id from terms where name='mockito'));
 
 insert into Terms(name, source, description) values('skype', "www.skype.com", "一个网络电话视频电话工具。");
-insert into readings(symbol, audio, is_correct, term) values("u:bu:ntu:", 'skype_sigaipu', 'true', (select id from terms where name='skype'));
-insert into readings(symbol, audio, is_correct, term) values("u:ba:ntu:", 'skype_sigaipi', 'true', (select id from terms where name='skype'));
+insert into readings(symbol, audio, is_correct, term) values("skaip", 'skype_sigaipu', 'true', (select id from terms where name='skype'));
+insert into readings(symbol, audio, is_correct, term) values("'skaiˌpi:", 'skype_sigaipi', 'true', (select id from terms where name='skype'));
 
 insert into Terms(name, source, description) values('parameter', "", "一种特殊类型的变量，作为子程序的输入，子程序可以用来调用其指向的数据。");			
 insert into readings(symbol, audio, is_correct, term) values("pə'ræmitə", 'parameter_peraimite', 'true', (select id from terms where name='parameter'));			
