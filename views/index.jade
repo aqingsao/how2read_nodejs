@@ -19,7 +19,7 @@ div#content
 						h2.name= term.name 
 						div.description= term.description
 							-if(term.source)
-								a(href=term.source, target="_blank")
+								a(href=term.source, target="_blank", rel="nofollow")
 									img(src="/images/external_link.jpg", title="去官方网站")
 						-var voted = cookies.hasKey(term.id)
 						-if(cookies.hasKey(term.id))
@@ -50,7 +50,7 @@ div#content
 						div#ckepop.share
 							span.jiathis_txt 分享到
 							a.jiathis_button_tsina 新浪微博
-							a.jiathis_button_tqq 腾讯微薄
+							a.jiathis_button_tqq 腾讯微博
 							
 		div#sidebar
 div#footer

@@ -1,7 +1,5 @@
 var jiathis_config = {
     title:"程序员最容易读错的单词：",
-	siteNum:5, 
-	sm:"tqq, renren, kaixin001, douban, tsina", 
     ralateuid:{
         "tsina":"1566959347"
     }

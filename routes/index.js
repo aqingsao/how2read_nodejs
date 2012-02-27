@@ -18,7 +18,7 @@ exports.index = function(req, res){
 		}
 		
 		var terms = _toTerms(rows);
-		res.render('index', { title: 'How to read me', terms: terms, cookies: utils.toCookies(req.headers.cookie)})
+		res.render('index', { title: 'How to Read Me', terms: terms, cookies: utils.toCookies(req.headers.cookie)})
 	});
 };
 

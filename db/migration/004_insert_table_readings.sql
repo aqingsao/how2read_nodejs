@@ -12,18 +12,18 @@ insert into readings(symbol, audio, is_correct, term) values("'endʒinˌeks", 'n
 insert into readings(symbol, audio, is_correct, term) values("n'ginks", 'nginx_enzhenkes', 'false', (select id from terms where name='nginx'));	
 
 insert into Terms(name, source, description) values('maven', "http://maven.apache.org", "一个软件（特别是Java软件）项目管理及自动构建工具。");
-insert into readings(symbol, audio, is_correct, term) values("'mʌven", 'maven_mawen', 'false', (select id from terms where name='maven'));
-insert into readings(symbol, audio, is_correct, term) values("'meiven", 'maven_meiwen', 'true', (select id from terms where name='maven'));
+insert into readings(symbol, audio, is_correct, term) values("'mʌvin", 'maven_mawen', 'false', (select id from terms where name='maven'));
+insert into readings(symbol, audio, is_correct, term) values("'meivin", 'maven_meiwen', 'true', (select id from terms where name='maven'));
 
-insert into Terms(name, source, description) values('java', "http://www.java.com", "一种可以撰写跨平台应用软件的面向对象的程序设计语言。");
-insert into readings(symbol, audio, is_correct, term) values("'dʒɑ:və", 'java_zhawa', 'true', (select id from terms where name='java'));
-insert into readings(symbol, audio, is_correct, term) values("'jɑ:vʌ", 'java_jiawa', 'false', (select id from terms where name='java'));	
+insert into Terms(name, source, description) values('Java', "http://www.java.com", "一种可以撰写跨平台应用软件的面向对象的程序设计语言。");
+insert into readings(symbol, audio, is_correct, term) values("'dʒɑ:və", 'java_zhawa', 'true', (select id from terms where name='Java'));
+insert into readings(symbol, audio, is_correct, term) values("'jɑ:vʌ", 'java_jiawa', 'false', (select id from terms where name='Java'));	
 
 insert into Terms(name, source, description) values('mockito', "http://code.google.com/p/mockito", '一个Java下的开源测试框架，用于创建测试替身对象。');
 insert into readings(symbol, audio, is_correct, term) values("mɔ'ki:təu", 'mockito_moukitou', 'true', (select id from terms where name='mockito'));
 insert into readings(symbol, audio, is_correct, term) values("'mɔkitə", 'mockito_maokite', 'false', (select id from terms where name='mockito'));
 
-insert into Terms(name, source, description) values('skype', "www.skype.com", "一个网络电话视频电话工具。");
+insert into Terms(name, source, description) values('skype', "www.skype.com", "网络及时语音沟通工具。");
 insert into readings(symbol, audio, is_correct, term) values("'skaiˌpi:", 'skype_sigaipi', 'false', (select id from terms where name='skype'));
 insert into readings(symbol, audio, is_correct, term) values("skaip", 'skype_sigaipu', 'true', (select id from terms where name='skype'));
 
