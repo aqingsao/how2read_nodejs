@@ -21,11 +21,15 @@ $(function(){
 		img.detach();		
 		$("#" + id).show();
 	});
-	$(".term .votable").mouseenter(function(){
-		_speaking($(this));
+	
+	$(".term .votable").each(function(){
 		if($(this).hasClass("selected")){
 			_toggleSymbol($(this));
 		}
+	});
+	
+	$(".term .votable").mouseenter(function(){
+		_speaking($(this));
 	});
 		
 	$(".term .votable").click(function(){
@@ -59,12 +63,7 @@ function _speaking(votable){
 	if(audio != undefined){
 		audio.pause();
 	}
-	if($.browser.msie || $.browser.webkit){
-		audio = votable.find("audio").get(0);
-	}
-	else{
-		audio = votable.find("audio").get(1);
-	}
+	audio = votable.find("audio").get(0);
 	audio.play();
 }
 
@@ -132,7 +131,7 @@ function _drawPie(id, wrongCount, rightCount){
 	pie2.Set('chart.shadow', true);
 	pie2.Set('chart.shadow.offsetx', 0);
 	pie2.Set('chart.shadow.offsety', 0);
-	pie2.Set('chart.shadow.blur', 25);
+	pie2.Set('chart.shadow.blur', 5);
 	pie2.Set('chart.tooltips', [wrongCount + " wrong", rightCount + " right"]);
 	pie2.Set('chart.tooltips.event', 'onmousemove');
 	pie2.Set('chart.title', total + ' votes');
