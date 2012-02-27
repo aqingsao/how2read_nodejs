@@ -4,6 +4,7 @@ var jiathis_config = {
         "tsina":"1566959347"
     }
 };
+var audio;
 
 $(function(){
 	var termPattern = /term(\d+)/;
@@ -21,7 +22,7 @@ $(function(){
 		$("#" + id).show();
 	});
 	$(".term .votable").mouseenter(function(){
-		_speak($(this));
+		_speaking($(this));
 		if($(this).hasClass("selected")){
 			_toggleSymbol($(this));
 		}
@@ -54,14 +55,19 @@ $(function(){
 		jiathis_config.url = "http://how2read.me#"+word;
 	});
 });
-function _speak(votable){
+function _speaking(votable){
+	if(audio != undefined){
+		audio.pause();
+	}
 	if($.browser.msie || $.browser.webkit){
-		votable.find("audio").get(0).play();
+		audio = votable.find("audio").get(0);
 	}
 	else{
-		votable.find("audio").get(1).play();
+		audio = votable.find("audio").get(1);
 	}
+	audio.play();
 }
+
 function _toggleSymbol(votable){
 	votable.mouseenter(function(){
 		votable.find("span").text("[" + $(this).attr("symbol") + "]");
