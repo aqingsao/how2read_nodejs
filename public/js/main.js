@@ -25,6 +25,16 @@ $(function(){
 	$(".term .votable").mouseenter(function(){
 		$(this).find("audio").get(0).play();
 	});
+	$(".term .selected.right").mouseenter(function(){
+		$(this).find("span").text("[" + $(this).attr("symbol") + "]");
+	}).mouseleave(function(){
+		$(this).find("span").text("您读对了");
+	});
+	$(".term .selected.wrong").mouseenter(function(){
+		$(this).find("span").text("[" + $(this).attr("symbol") + "]");
+	}).mouseleave(function(){
+		$(this).find("span").text("您读错了");
+	});
 		
 	$(".term .votable").click(function(){
 		var vote = $(this).parents("div.vote");
@@ -44,6 +54,7 @@ $(function(){
 			vote.removeClass('voted').addClass("notVoted");
 		});
 	});
+	
 	$(".share a").click(function(){
 		var term = $(this).parents('div.term');
 		var word = term.find(".summary h2").text();

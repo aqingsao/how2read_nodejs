@@ -31,7 +31,8 @@ div#content
 									-var selected = term.readings[j].id == cookies.getValue(term.id), right = term.readings[j].correct == 'true';
 									-var symbol = selected? (right? "您答对了" : "您答错了") : "[" + term.readings[j].symbol + "]";
 									-var clz = selected? (right? "votable selected right" : "votable selected wrong"): (right? "votable right" : "votable wrong");
-									a(class=clz, reading="#{term.readings[j].id}", symbol="#{term.readings[j].symbol}")= symbol
+									a(class=clz, reading="#{term.readings[j].id}", symbol="#{term.readings[j].symbol}")
+										span= symbol
 										audio
 											source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
 						-else							
