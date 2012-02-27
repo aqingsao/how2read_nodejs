@@ -21,26 +21,28 @@ div#content
 							-if(term.source)
 								a(href=term.source, target="_blank")
 									img(src="/images/external_link.jpg", title="去官方网站")
-						div.vote
-							label.rate
-								span= '0%'
-								的人读错了，您呢？
-							-var voted = cookies.hasKey(term.id)
-							-if (voted)
-								-if (term.readCorrect(cookies.getValue(term.id)))
-									a.right='您读对了'
-								-else
-									a.wrong='您读错了'
-							-for(var j in term.readings)
-								-if (voted)
-									-if (term.readings[j].correct == 'true')
-										a.votable.voted(reading="#{term.readings[j].id}")= '['+ term.readings[j].symbol + ']'
-											audio
-												source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
-								-else
-									a.votable(reading="#{term.readings[j].id}")= '[' + term.readings[j].symbol + ']'
+						-var voted = cookies.hasKey(term.id)
+						-if(cookies.hasKey(term.id))
+							div.vote.voted
+								label.rate
+									span= '0%'
+									的人读错了，您呢？
+								-for(var j in term.readings)
+									-var selected = term.readings[j].id == cookies.getValue(term.id), right = term.readings[j].correct == 'true';
+									-var symbol = selected? (right? "您答对了" : "您答错了") : "[" + term.readings[j].symbol + "]";
+									-var clz = selected? (right? "votable selected right" : "votable selected wrong"): (right? "votable right" : "votable wrong");
+									a(class=clz, reading="#{term.readings[j].id}", symbol="#{term.readings[j].symbol}")= symbol
 										audio
-											source(type="audio/mpeg", src="audio/"+term.readings[j].audio)								
+											source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
+						-else							
+							div.vote.notVoted
+								label.rate
+									span= '0%'
+									的人读错了，您呢？
+								-for(var j in term.readings)
+									a.votable(reading="#{term.readings[j].id}")= '['+ term.readings[j].symbol + ']'
+										audio
+											source(type="audio/mpeg", src="audio/"+term.readings[j].audio)
 						div#ckepop.share
 							span.jiathis_txt 分享到
 							a.jiathis_button_tsina 新浪微博
@@ -57,6 +59,5 @@ script(src="/js/rgraph/RGraph.common.tooltips.js")
 script(src="/js/rgraph/RGraph.common.effects.js")
 script(src="/js/rgraph/RGraph.pie.js")
 script(src="/js/rgraph/RGraph.common.key.js")
-script(src="/js/poshy/jquery.poshytip.js")
 script(src="/js/main.js")
 script(src="http://v2.jiathis.com/code/jia.js", charset="utf-8")

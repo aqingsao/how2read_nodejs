@@ -26,22 +26,25 @@ $(function(){
 		$(this).find("audio").get(0).play();
 	});
 		
-	$(".term .votable").each(function(){
+	$(".term .votable").click(function(){
 		if($(this).hasClass('voted')){
 			return;
 		}
 		
-		var tid = $(this).parents("div.term").attr('id').match(termPattern)[1], rid = $(this).attr('reading');
-		var voting = $("<a class='voting' href='#' onclick='_vote(this); return false;' tid='" + tid + "' rid='" + rid + "'>我就是这么读的</a>")[0];
-		$(this).poshytip({
-			className: 'tip-green',
-			bgImageFrameSize: 9, 
-			showTimeout: 500,
-			alignTo: 'target',
-			alignX: 'center',
-			alignY: 'bottom', 
-			offsetY: -5,
-			content: voting
+		var that = $(this);
+		var term = $(this).parents("div.term");
+		var tid = term.attr('id').match(termPattern)[1], rid = $(this).attr('reading');
+
+		term.find(".votable").each(function(){
+			$(this).addClass("voted");
+		});
+		
+		$.post('/term/' + tid + '/reading/' + rid, function(data){
+			_updateTerm(term, rid, data);
+		}).error(function(data){
+			term.find(".votable").each(function(){
+				$(this).removeClass('voted');
+			});
 		});
 	});
 	$(".share a").click(function(){
@@ -52,16 +55,6 @@ $(function(){
 		jiathis_config.url = "http://how2read.me#"+word;
 	});
 });
-function getRate(wrongCount, rightCount){
-	var total = wrongCount + rightCount;
-	return Math.round(wrongCount/total*10000)/100.00+"%";
-}
-function _getSummary(){
-	return "Maven, 据统计，有60％的人读错这个单词，你读的对吗？";
-}
-function _getUrl(){
-	return "http://how2read.me#" + "maven";
-}
 function _toPercent(wrong, right){
 	var total = Math.max(wrong + right, 1);
 	return Math.round(wrong/total*10000)/100.00+"%";
@@ -74,54 +67,14 @@ function _isCorrect(reading, readings){
 	}
 	return false;
 }
-function _vote(reading){
-	var that = $(reading);
-	
-	var term = $("div#term" + that.attr('tid') + ".term");
-	term.find(".votable").each(function(){
-		$(this).poshytip('disable');
-	});
-
-	$.post('/term/' + that.attr('tid') + '/reading/' + that.attr('rid'), function(data){
-		_updateTerm(term, that.attr('rid'), data);
-	}).error(function(data){
-		if(term.find("a.error, a.right, a.wrong").length == 0){
-			$("<a class='error'>投票错误</a>").insertAfter(term.find('label.rate'));
-		}
-		
-		if(term.find("a.right, a.wrong").length == 0){
-			term.find(".votable").each(function(){
-				if($(this).hasClass('voted')){
-					$(this).removeClass('voted');
-				};
-				$(this).poshytip('enable');
-			});
-		}
-	});
-	
-	return false;
-}
-function _updateTerm(term, voted, data){
-	term.find("a.error").each(function(){
-		$(this).detach();
-	});
-	
-	term.find(".votable").each(function(){
-		var reading = $(this).attr('reading');
-		if(!_isCorrect(reading, data.readings)){
-			$(this).detach();
-		}
-		else{
-			$(this).addClass("voted");
-		}
-	});
+function _updateTerm(term, voted, data){	
 	for(var i in data.readings){
 		if(data.readings[i].id == voted){
 			if(data.readings[i].correct == 'true'){
-				$("<a class='right'>您读对了</a>").insertAfter(term.find('label.rate'));
+				// $("<a class='right'>您读对了</a>").insertAfter(term.find('label.rate'));
 			}
 			else{
-				$("<a class='wrong'>您读错了</a>").insertAfter(term.find('label.rate'));
+				// $("<a class='wrong'>您读错了</a>").insertAfter(term.find('label.rate'));
 			}
 		}
 	}
