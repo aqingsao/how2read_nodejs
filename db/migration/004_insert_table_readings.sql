@@ -3,8 +3,8 @@ insert into readings(symbol, audio, is_correct, term) values("ʃef", 'chef_shaif
 insert into readings(symbol, audio, is_correct, term) values("tʃef", 'chef_chaifu', 'false', (select id from terms where name='chef'));
 
 insert into Terms(name, source, description) values('cache', "","一组本地存储的数据，可以提高后续访问的速度。");
-insert into readings(symbol, audio, is_correct, term) values("kæʃ", 'cache_kaishi', 'true', (select id from terms where name='cache'));
 insert into readings(symbol, audio, is_correct, term) values("kætʃ", 'cache_kaichi', 'false', (select id from terms where name='cache'));
+insert into readings(symbol, audio, is_correct, term) values("kæʃ", 'cache_kaishi', 'true', (select id from terms where name='cache'));
 insert into readings(symbol, audio, is_correct, term) values("keitʃ", 'cache_keichi', 'false', (select id from terms where name='cache'));
 
 insert into Terms(name, source, description) values('nginx', "http://nginx.org", "轻量级的网页服务器、反向代理服务器以及电子邮件（IMAP/POP3）代理服务器。");
@@ -24,8 +24,8 @@ insert into readings(symbol, audio, is_correct, term) values("mɔ'ki:təu", 'moc
 insert into readings(symbol, audio, is_correct, term) values("'mɔkitə", 'mockito_maokite', 'false', (select id from terms where name='mockito'));
 
 insert into Terms(name, source, description) values('skype', "www.skype.com", "一个网络电话视频电话工具。");
+insert into readings(symbol, audio, is_correct, term) values("'skaiˌpi:", 'skype_sigaipi', 'false', (select id from terms where name='skype'));
 insert into readings(symbol, audio, is_correct, term) values("skaip", 'skype_sigaipu', 'true', (select id from terms where name='skype'));
-insert into readings(symbol, audio, is_correct, term) values("'skaiˌpi:", 'skype_sigaipi', 'true', (select id from terms where name='skype'));
 
 insert into Terms(name, source, description) values('parameter', "", "一种特殊类型的变量，作为子程序的输入，子程序可以用来调用其指向的数据。");			
 insert into readings(symbol, audio, is_correct, term) values("pə'ræmitə", 'parameter_peraimite', 'true', (select id from terms where name='parameter'));			
