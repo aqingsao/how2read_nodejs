@@ -27,7 +27,8 @@ $(function(){
 	});
 		
 	$(".term .votable").click(function(){
-		if($(this).hasClass('voted')){
+		var vote = $(this).parents("div.vote");
+		if(vote.hasClass('voted')){
 			return;
 		}
 		
@@ -35,16 +36,12 @@ $(function(){
 		var term = $(this).parents("div.term");
 		var tid = term.attr('id').match(termPattern)[1], rid = $(this).attr('reading');
 
-		term.find(".votable").each(function(){
-			$(this).addClass("voted");
-		});
+		vote.removeClass("notVoted").addClass("voted");
 		
 		$.post('/term/' + tid + '/reading/' + rid, function(data){
 			_updateTerm(term, rid, data);
 		}).error(function(data){
-			term.find(".votable").each(function(){
-				$(this).removeClass('voted');
-			});
+			vote.removeClass('voted').addClass("notVoted");
 		});
 	});
 	$(".share a").click(function(){
@@ -59,25 +56,35 @@ function _toPercent(wrong, right){
 	var total = Math.max(wrong + right, 1);
 	return Math.round(wrong/total*10000)/100.00+"%";
 }
-function _isCorrect(reading, readings){
+function _getReading(rid, readings){
 	for(var i in readings){
-		if(reading == readings[i].id){
-			return readings[i]['correct'] == 'true';
+		if(rid == readings[i].id){
+			return readings[i];
 		}
 	}
-	return false;
+	return {};
 }
 function _updateTerm(term, voted, data){	
-	for(var i in data.readings){
-		if(data.readings[i].id == voted){
-			if(data.readings[i].correct == 'true'){
-				// $("<a class='right'>您读对了</a>").insertAfter(term.find('label.rate'));
+	term.find(".votable").each(function(){
+		var rid = $(this).attr("reading");
+		var reading = _getReading(rid, data.readings);
+		if(rid == voted){
+			$(this).addClass("selected");
+			if(reading['correct'] == 'true'){
+				$(this).attr("symbol", reading['symbol']).text("您读对了");
 			}
 			else{
-				// $("<a class='wrong'>您读错了</a>").insertAfter(term.find('label.rate'));
+				$(this).attr("symbol", reading['symbol']).text("您读错了");
 			}
 		}
-	}
+		if(reading['correct'] == 'true'){
+			$(this).addClass("right");
+		}
+		else{
+			$(this).addClass("wrong");
+		}
+		
+	});
 	
 	term.find("label.rate span").text(_toPercent(data.wrong, data.right));
 	_drawPie(term.find("canvas").attr("id"), parseInt(data.wrong), parseInt(data.right));

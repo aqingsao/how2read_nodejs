@@ -61,26 +61,6 @@ img{
 	text-align: center;
 }
 
-#userbox{
-	float: right;
-	line-height: 20px;
-	padding: 7px 0;
-	width: 20%;
-	height: 100%;
-}
-#userbox a{
-	color: #222;
-	transition: color .15s ease-in 0;
-	-moz-transition-property: color;
-	-moz-transition-timing-function: ease-in;
-	-moz-transition-duration: .15s;
-	-moz-transition-delay: 0;
-	-webkit-transition-property: color;
-	-webkit-transition-timing-function: ease-in;
-	-webkit-transition-duration: .15s;
-	-webkit-transition-delay: 0;
-}
-
 /*For footers*/
 #footer{
 	position: relative;
@@ -99,13 +79,7 @@ img{
 	min-height: 450px;
 }
 
-#content #mainbar{
-	float: left;
-	margin-bottom: 40px;
-/*	width: 735px;*/
-}
 #content .term{
-	height: auto;
 	padding: 11px 0;
 	overflow: hidden;
 	border-bottom: 1px dotted #999;
@@ -137,9 +111,6 @@ img{
 	color: #999;
 }
 
-form.report{
-	display: inline-block;
-}
 .vote .rate{
 	display: inline-block;
 	width: 190px;
@@ -149,7 +120,7 @@ form.report{
 	font-size: 19px;
 	color: #FFAA52;
 }
-.vote a{
+.vote .votable{
 	margin: 0 15px 0 0;
 	padding: 3px 4px 3px 36px;
 	display: inline-block;
@@ -161,8 +132,6 @@ form.report{
 	color: #3E6D8E;
 	font-weight: bold;
 	background-color: #E0EAF1;
-}
-.vote .votable{
 	background-image: url(/images/speaker.png);
 	background-position: 8px 8px;
  	background-repeat: no-repeat;	
@@ -170,6 +139,7 @@ form.report{
 	border-bottom: 1px solid #E0EAF1;
 	border-right: 1px solid #E0EAF1;
 }
+
 .vote .votable:hover {
 	text-decoration: none;
 	border-bottom: 1px solid #3E6D8E;
@@ -177,15 +147,15 @@ form.report{
 	cursor: pointer;
 	background-image: url(/images/speaking.gif);
 }
+.vote.voted .votable:hover{
+	cursor: default;
+}
 
 .vote .votable.right{
 	color: #3E6D8E;
 }
 .vote .votable.wrong{
 	color:#FFAA52;
-}
-.vote .error{
-	color:red;
 }
 
 .term .vote{
