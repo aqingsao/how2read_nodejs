@@ -79,6 +79,13 @@ img{
 	min-height: 450px;
 }
 
+#content .browser.warn{
+	color: red;
+	background-color: yellow;
+	font-weight: bold;
+	text-align: center;
+	display: none;
+}
 #content .term{
 	padding: 11px 0;
 	overflow: hidden;

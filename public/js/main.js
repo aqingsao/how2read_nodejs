@@ -6,6 +6,7 @@ var jiathis_config = {
 };
 var audio;
 
+_checkBrowser();
 $(function(){
 	var termPattern = /term(\d+)/;
 	$("div.term").each(function(){
@@ -140,4 +141,9 @@ function _drawPie(id, wrongCount, rightCount){
 	RGraph.Clear(pie2.canvas);
 	pie2.Draw();
 };
+function _checkBrowser(){
+	if(!document.createElement('audio').canPlayType || !document.createElement('canvas').getContext){
+		$("#content .browser.warn").text("对不起，您的浏览器版本太旧，不支持HTML5！").show();
+	}
+}
 
