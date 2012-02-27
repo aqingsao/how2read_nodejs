@@ -20,7 +20,7 @@ div#content
 						div.description= term.description
 							-if(term.source)
 								a(href=term.source, target="_blank", rel="nofollow")
-									img(src="/images/external_link.jpg", title="去官方网站")
+									img(src="/images/external_link.png", title="去官方网站")
 						-var voted = cookies.hasKey(term.id)
 						-if(cookies.hasKey(term.id))
 							div.vote.voted
