@@ -30,6 +30,7 @@ exports.reading = function(req, res){
 	var termId = req.params.id;
 	var readingId = req.params.rid;
 	var ip = utils.getClientIp(req);
+	var cookies = utils.toCookies(req.headers.cookie);
 	
 	if(!termId.match(idPattern) || !readingId.match(idPattern)){
 		console.log("Invalid vote from " + ip + " for " + termId + ": " + readingId);
@@ -37,13 +38,81 @@ exports.reading = function(req, res){
 		return;
 	}
 
-	if(utils.toCookies(req.headers.cookie).hasKey(termId)){
-		console.log("Duplicate vote from " + ip + " for " + termId + ": " + readingId);
+	if(cookies.hasKey(termId)){
+		console.log("Duplicate vote from user " + uid + " at " + ip + " for " + termId + ": " + readingId);
 		res.send('Duplicate vote', 412);
 		return;
 	}
+	
+	db.serialize(function(){
+		_obtainUidAndVote(db, cookies, termId, readingId, ip, res);	
+	});
+};
 
-	console.log("Vote from " + ip + " for " + termId + ": " + readingId);
+// GET term detail
+exports.termDetail = function(req, res){
+	var id = req.params.id;
+	var db = process.h2r.db;
+	db.get("SELECT * FROM Terms where id = ?", req.params.id, function(err, row){
+		if(err){
+			console.log("Failed to query term " + req.params.id + ": " + err);
+			throw err;
+		}
+			
+		res.send(row);
+	});	
+};
+
+// GET score 
+exports.score = function(req, res){
+	
+}
+
+function _toTerms(rows){
+	var terms = [];
+	for(var i in rows){
+		var term = _obtainTerm(terms, rows[i]);
+		term.addReading(new Reading(rows[i]));
+	}	
+	return terms;
+};
+
+function _obtainTerm(terms, row){
+	for(var i in terms){
+		if(terms[i].id == row.tid){
+			return terms[i];
+		}
+	}
+	var term = new Term(row);
+	terms.push(term);
+	return term;
+}
+
+function _obtainUidAndVote(db, cookies, termId, readingId, ip, res){
+	var uid = undefined;
+	if(cookies.hasKey('uid')){
+		uid = cookies.getValue('uid');
+	}
+	if(!uid){
+		db.run("INSERT INTO Users (ip) VALUES (?)", ip, function(err, lastID, changes){
+			if(err){
+				console.log('vote failed: ' + util.inspect(err));
+				res.send(err, 500);
+				return;
+			}
+			
+			console.log("Create a new user " + this.lastID + " to vote.");
+			res.cookie('uid', this.lastID, {maxAge: oneYear, path: '/'});
+			_voting(db, termId, readingId, ip, this.lastID, res);
+		});
+	}
+	else{
+		console.log("User " + uid + " is to vote.");
+		_voting(db, termId, readingId, ip, uid, res);
+	}
+}
+
+function _voting(db, termId, readingId, ip, uid, res){
 	db.get("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id where p.id=?", readingId, function(err, row) {
 		if(err){
 			console.log('vote failed: ' + util.inspect(err));
@@ -62,7 +131,7 @@ exports.reading = function(req, res){
 				return;
 			}
 
-			db.run("INSERT INTO Votes (ip, term, reading) VALUES (?, ?, ?)", ip, termId, readingId, function(err){
+			db.run("INSERT INTO Votes (userId, term, reading) VALUES (?, ?, ?)", uid, termId, readingId, function(err){
 				if(err){
 					console.log('vote failed: ' + util.inspect(err));
 					res.send(err, 500);
@@ -83,38 +152,4 @@ exports.reading = function(req, res){
 			});
 		});
 	});
-};
-
-// GET term detail
-exports.termDetail = function(req, res){
-	var id = req.params.id;
-	var db = process.h2r.db;
-	db.get("SELECT * FROM Terms where id = ?", req.params.id, function(err, row){
-		if(err){
-			console.log("Failed to query term " + req.params.id + ": " + err);
-			throw err;
-		}
-			
-		res.send(row);
-	});	
-};
-
-function _toTerms(rows){
-	var terms = [];
-	for(var i in rows){
-		var term = _obtainTerm(terms, rows[i]);
-		term.addReading(new Reading(rows[i]));
-	}	
-	return terms;
-};
-
-function _obtainTerm(terms, row){
-	for(var i in terms){
-		if(terms[i].id == row.tid){
-			return terms[i];
-		}
-	}
-	var term = new Term(row);
-	terms.push(term);
-	return term;
 }

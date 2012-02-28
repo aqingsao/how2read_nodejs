@@ -51,6 +51,7 @@ $(function(){
 			_updateTerm(term, rid, data);
 			term.find("label.rate span").text(_toPercent(data.wrong, data.right));
 			_drawPie(term.find("canvas").attr("id"), parseInt(data.wrong), parseInt(data.right));
+			_updateChallenge(term, rid, data);
 		}).error(function(data){
 			that.removeClass("loading");
 			vote.removeClass('voted').addClass("notVoted");
@@ -122,6 +123,14 @@ function _updateTerm(term, voted, data){
 	});
 }
 
+function _updateChallenge(term, voted, data){
+	var reading = _getReading(voted, data.readings);
+	if(reading['correct'] == 'true'){
+		$("#challenge .score .correct");
+	}
+	else{
+	}
+}
 function _drawPie(id, wrongCount, rightCount){
 	var total = Math.max(wrongCount + rightCount, 1);
 	
@@ -149,7 +158,6 @@ function _checkBrowser(){
 		$("#content .browser.warn").text("对不起，您的浏览器版本太旧，不支持HTML5！").show();
 	}
 }
-
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-29546947-1']);
