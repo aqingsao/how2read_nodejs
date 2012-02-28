@@ -38,6 +38,7 @@ process.h2r = {db: migration.createdb(config[app.settings.env].db)};
 app.get('/', routes.index);
 app.post('/term/:id/reading/:rid', routes.reading);
 app.get('/term/:id', routes.termDetail);
+app.get('/score', routes.score);
 
 var port = process.env.PORT || 3000;
 app.listen(port);

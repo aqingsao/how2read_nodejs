@@ -65,7 +65,54 @@ exports.termDetail = function(req, res){
 
 // GET score 
 exports.score = function(req, res){
+	var db = process.h2r.db;		
+	var cookies = utils.toCookies(req.headers.cookie);
+	var ip = utils.getClientIp(req);
 	
+	if(!cookies.hasKey('uid')){
+		console.log("No uid exists in cookies for " + ip);
+		res.send('no uid exists', 412);
+		return;
+	}
+	
+	var uid = cookies.getValue('uid');
+	db.all("select v.id, r.is_correct as correct from Votes v join Readings r on v.reading = r.id where v.userId=?", uid, function(err, rows) {
+		if(err){
+			console.log('view score failed: ' + util.inspect(err));
+			res.send(err, 500);
+			return;
+		}
+		
+		var correct = 0;
+		for(var i in rows){
+			if(rows[i].correct == 'true'){
+				correct ++;
+			}
+		}
+		var voted = Math.max(rows.length, 8);
+		var score = correct / voted;
+		
+		console.log('User ' + uid + ' score: ' + score);
+		db.get("select count(*) as total from users", function(err, row){
+			if(err){
+				console.log('view score failed: ' + util.inspect(err));
+				res.send(err, 500);
+				return;
+			}
+
+			var total = Math.max(row.total, 1);
+			db.get("select count(*) as higherThan from users where score <= ? ", score, function(err, row){
+				if(err){
+					console.log('view score failed: ' + util.inspect(err));
+					res.send(err, 500);
+					return;
+				}
+				var rate = row.higherThan / total;
+				console.log('User ' + uid  + ' rate: ' + rate);
+				res.json({voted: voted, correct: correct, score: rate});
+			});
+		});
+	});
 }
 
 function _toTerms(rows){
@@ -139,15 +186,39 @@ function _voting(db, termId, readingId, ip, uid, res){
 				}
 
 				res.cookie(termId, readingId, {maxAge: oneYear, path: '/'});	
-				db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id where t.id=?", termId, function(err, rows) {
+				db.all("select v.id, r.is_correct as correct from Votes v join Readings r on v.reading = r.id where v.userId=?", uid, function(err, rows) {
 					if(err){
 						console.log('vote failed: ' + util.inspect(err));
 						res.send(err, 500);
 						return;
 					}
 
-					var terms = _toTerms(rows);
-					res.json(terms[0]);
+					var correct = 0;
+					for(var i in rows){
+						if(rows[i].correct == 'true'){
+							correct ++;
+						}
+					}
+					var voted = Math.max(rows.length, 8);
+					var score = correct / voted;
+					db.run("Update users set score = ? where id=?", score, uid, function(err) {
+						if(err){
+							console.log('vote failed: ' + util.inspect(err));
+							res.send(err, 500);
+							return;
+						}
+
+						db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id where t.id=?", termId, function(err, rows) {
+							if(err){
+								console.log('vote failed: ' + util.inspect(err));
+								res.send(err, 500);
+								return;
+							}
+
+							var terms = _toTerms(rows);
+							res.json(terms[0]);
+						});
+					});
 				});
 			});
 		});

@@ -14,7 +14,7 @@ $(function(){
 		var rightCount = parseInt(img.attr('right'));
 		var wrongCount = parseInt(img.attr('wrong'));
 
-		$(this).find("label.rate span").text(_toPercent(wrongCount, rightCount));
+		$(this).find("label.rate span").text(_getRate(wrongCount, rightCount));
 		
 		var id = "canvas" + $(this).attr('id').match(termPattern)[1];
 		_drawPie(id, wrongCount, rightCount);
@@ -49,9 +49,9 @@ $(function(){
 		$.post('/term/' + tid + '/reading/' + rid, function(data){
 			that.removeClass("loading");
 			_updateTerm(term, rid, data);
-			term.find("label.rate span").text(_toPercent(data.wrong, data.right));
+			term.find("label.rate span").text(_getRate(data.wrong, data.right));
 			_drawPie(term.find("canvas").attr("id"), parseInt(data.wrong), parseInt(data.right));
-			_updateChallenge(term, rid, data);
+			_updateScore(term, rid, data);
 		}).error(function(data){
 			that.removeClass("loading");
 			vote.removeClass('voted').addClass("notVoted");
@@ -86,9 +86,12 @@ function _toggleSymbol(votable){
 		}
 	});
 }
-function _toPercent(wrong, right){
+function _getRate(wrong, right){
 	var total = Math.max(wrong + right, 1);
-	return Math.round(wrong/total*10000)/100.00+"%";
+	return _toPercent(wrong/total);
+}
+function _toPercent(num){
+	return Math.round(num*10000)/100.00+"%";
 }
 function _getReading(rid, readings){
 	for(var i in readings){
@@ -123,13 +126,11 @@ function _updateTerm(term, voted, data){
 	});
 }
 
-function _updateChallenge(term, voted, data){
-	var reading = _getReading(voted, data.readings);
-	if(reading['correct'] == 'true'){
-		$("#challenge .score .correct");
-	}
-	else{
-	}
+function _updateScore(term, voted, data){
+	$.getJSON('/score', function(data) {
+		$("#change .score .correct").text("4");
+		$("#change .score .rate").text(_toPercent(0.04));
+	});
 }
 function _drawPie(id, wrongCount, rightCount){
 	var total = Math.max(wrongCount + rightCount, 1);
