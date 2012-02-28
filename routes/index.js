@@ -89,29 +89,36 @@ exports.score = function(req, res){
 				correct ++;
 			}
 		}
-		var voted = Math.max(rows.length, 1);
-		var score = correct / voted;
+		var voted = rows.length;
+		var score = correct / Math.max(rows.length, 1);
 		
-		console.log('User ' + uid + ' score: ' + score);
-		db.get("select count(*) as total from users", function(err, row){
-			if(err){
-				console.log('view score failed: ' + util.inspect(err));
-				res.send(err, 500);
-				return;
-			}
-
-			var total = Math.max(row.total, 1);
-			db.get("select count(*) as higherThan from users where score <= ? ", score, function(err, row){
+		if(score <= 0.0){
+			res.json({voted: voted, correct: correct, rate: 0});
+		}
+		else if(score >= 1.0){
+			res.json({voted: voted, correct: correct, rate: 1});			
+		}
+		else{
+			db.get("select count(*) as total from users", function(err, row){
 				if(err){
 					console.log('view score failed: ' + util.inspect(err));
 					res.send(err, 500);
 					return;
 				}
-				var rate = row.higherThan / total;
-				console.log('User ' + uid  + ' won ' + row.higherThan + " of total " + total);
-				res.json({voted: voted, correct: correct, rate: rate});
-			});
-		});
+
+				var total = Math.max(row.total, 1);
+				db.get("select count(*) as higherThan from users where score <= ? ", score, function(err, row){
+					if(err){
+						console.log('view score failed: ' + util.inspect(err));
+						res.send(err, 500);
+						return;
+					}
+					var rate = row.higherThan / total;
+					console.log('User ' + uid  + ' won ' + row.higherThan + " of total " + total);
+					res.json({voted: voted, correct: correct, rate: rate});
+				});
+			});	
+		}
 	});
 }
 
