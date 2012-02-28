@@ -122,6 +122,7 @@ function _updateTerm(term, voted, data){
 	term.find("label.rate span").text(_toPercent(data.wrong, data.right));
 	_drawPie(term.find("canvas").attr("id"), parseInt(data.wrong), parseInt(data.right));
 }
+
 function _drawPie(id, wrongCount, rightCount){
 	var total = Math.max(wrongCount + rightCount, 1);
 	
@@ -150,3 +151,13 @@ function _checkBrowser(){
 	}
 }
 
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-29546947-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
