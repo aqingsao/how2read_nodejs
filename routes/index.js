@@ -89,7 +89,7 @@ exports.score = function(req, res){
 				correct ++;
 			}
 		}
-		var voted = Math.max(rows.length, 8);
+		var voted = Math.max(rows.length, 1);
 		var score = correct / voted;
 		
 		console.log('User ' + uid + ' score: ' + score);
@@ -108,8 +108,8 @@ exports.score = function(req, res){
 					return;
 				}
 				var rate = row.higherThan / total;
-				console.log('User ' + uid  + ' rate: ' + rate);
-				res.json({voted: voted, correct: correct, score: rate});
+				console.log('User ' + uid  + ' won ' + row.higherThan + " of total " + total);
+				res.json({voted: voted, correct: correct, rate: rate});
 			});
 		});
 	});

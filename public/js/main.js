@@ -51,7 +51,7 @@ $(function(){
 			_updateTerm(term, rid, data);
 			term.find("label.rate span").text(_getRate(data.wrong, data.right));
 			_drawPie(term.find("canvas").attr("id"), parseInt(data.wrong), parseInt(data.right));
-			_updateScore(term, rid, data);
+			_updateScore();
 		}).error(function(data){
 			that.removeClass("loading");
 			vote.removeClass('voted').addClass("notVoted");
@@ -65,6 +65,14 @@ $(function(){
 		jiathis_config.summary = word + "，据统计，" + rate + "的人读错了这个单词，你呢？";
 		jiathis_config.url = "http://how2read.me#"+word;
 	});
+	$(".rateShare a").click(function(){
+		var voted = $("#challenge .score .voted").text();
+		var correct = $("#challenge .score .correct").text();
+		var rate = $("#challenge .score .rate").text();
+		jiathis_config.summary = "您答对了" + voted + "中的" + correct + "个，战胜了" + rate + "的人";
+		jiathis_config.url = "http://how2read.me";
+	});
+	_updateScore();
 });
 function _speaking(votable){
 	if(audio != undefined){
@@ -126,10 +134,11 @@ function _updateTerm(term, voted, data){
 	});
 }
 
-function _updateScore(term, voted, data){
+function _updateScore(){
 	$.getJSON('/score', function(data) {
-		$("#change .score .correct").text("4");
-		$("#change .score .rate").text(_toPercent(0.04));
+		$("#challenge .score .voted").text(data.voted);
+		$("#challenge .score .correct").text(data.correct);
+		$("#challenge .score .rate").text(_toPercent(data.rate));
 	});
 }
 function _drawPie(id, wrongCount, rightCount){
