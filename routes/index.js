@@ -94,7 +94,7 @@ function _obtainUidAndVote(db, cookies, termId, readingId, ip, res){
 		uid = cookies.getValue('uid');
 	}
 	if(!uid){
-		db.run("INSERT INTO Users (ip) VALUES (?)", ip, function(err, lastID, changes){
+		db.run("INSERT INTO Users (ip) VALUES (?)", ip, function(err){
 			if(err){
 				console.log('vote failed: ' + util.inspect(err));
 				res.send(err, 500);

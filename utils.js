@@ -12,7 +12,7 @@ exports.toCookies = function(str){
 	if(str){
 		var splitted = str.split(";");
 		for(var i in splitted){
-			var match = splitted[i].match(/(\d+)=(\w+)/);
+			var match = splitted[i].match(/(\w+)=(\w+)/);
 			if(match){
 				var key = match[1];
 				cookies[key] = match[2];
@@ -20,7 +20,7 @@ exports.toCookies = function(str){
 		}
 	}
 	
-	return {hasKey: hasKey, getValue: getValue};
+	return {hasKey: hasKey, getValue: getValue, cookies: cookies};
 };
 exports.getClientIp = function(req) {	
 	var forwardedIps = req.header('x-forwarded-for');
