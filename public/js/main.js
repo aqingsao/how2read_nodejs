@@ -49,6 +49,8 @@ $(function(){
 		$.post('/term/' + tid + '/reading/' + rid, function(data){
 			that.removeClass("loading");
 			_updateTerm(term, rid, data);
+			term.find("label.rate span").text(_toPercent(data.wrong, data.right));
+			_drawPie(term.find("canvas").attr("id"), parseInt(data.wrong), parseInt(data.right));
 		}).error(function(data){
 			that.removeClass("loading");
 			vote.removeClass('voted').addClass("notVoted");
@@ -118,9 +120,6 @@ function _updateTerm(term, voted, data){
 			$(this).addClass("wrong");
 		}
 	});
-	
-	term.find("label.rate span").text(_toPercent(data.wrong, data.right));
-	_drawPie(term.find("canvas").attr("id"), parseInt(data.wrong), parseInt(data.right));
 }
 
 function _drawPie(id, wrongCount, rightCount){
