@@ -4,7 +4,19 @@ div#header.true.clearfix
 			h2
 				a.site-logo(href="https://how2read.me/", title="Make pronunciation really universal")= title
 			p 程序员最容易读错的单词
-				
+		div#challenge
+			div.score
+				您答对了
+				span.total= 8
+				个中的
+				span.correct= 6
+				个，战胜了
+				span.rate= '80%'
+				的人
+			div#ckepop.share
+				a.jiathis_button_tsina 
+				a.jiathis_button_tqq 
+div#report				
 div#content
 	div.browser.warn
 	div.container.clearfix
@@ -50,8 +62,8 @@ div#content
 											source(type="audio/ogg", src="audio/"+term.readings[j].audio + ".ogg")
 						div#ckepop.share
 							span.jiathis_txt 分享到
-							a.jiathis_button_tsina 新浪微博
-							a.jiathis_button_tqq 腾讯微博
+							a.jiathis_button_tsina 
+							a.jiathis_button_tqq 
 							
 		div#sidebar
 div#footer
