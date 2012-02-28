@@ -44,10 +44,13 @@ $(function(){
 		var tid = term.attr('id').match(termPattern)[1], rid = $(this).attr('reading');
 
 		vote.removeClass("notVoted").addClass("voted");
+		that.addClass("loading");
 		
 		$.post('/term/' + tid + '/reading/' + rid, function(data){
+			that.removeClass("loading");
 			_updateTerm(term, rid, data);
 		}).error(function(data){
+			that.removeClass("loading");
 			vote.removeClass('voted').addClass("notVoted");
 		});
 	});

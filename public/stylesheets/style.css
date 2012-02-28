@@ -147,6 +147,14 @@ img{
 	border-right: 1px solid #E0EAF1;
 }
 
+.vote .votable.loading:hover, .vote .votable.loading{
+	text-decoration: none;
+	border-bottom: 1px solid #3E6D8E;
+	border-right: 1px solid #7F9FB6;
+	cursor: pointer;
+	background-image: url(/images/loader.gif);
+}
+
 .vote .votable:hover {
 	text-decoration: none;
 	border-bottom: 1px solid #3E6D8E;
