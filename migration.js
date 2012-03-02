@@ -22,23 +22,23 @@ console.log("nodbdeploy runs on env %s, will use %s as base directory. ",env,  p
 
 var db = migration.createdb(config[env].db);
 if(program.rollbackTo){
-	var rollbackTo = 0;
-	try{
-		rollbackTo = parseInt(program.rollbackTo);
+	var rollbackTo = parseInt(program.rollbackTo);
+	if(isNaN(rollbackTo)){
 		console.log("Will rollback all scripts.");
-	}catch(err){
-		console.log("Will rollback all scripts.");
+		rollbackTo = 0;
+	}else{
+		console.log("Will rollback scripts to %d", rollbackTo);
 	}
   	migration.rollback(db, program.directory, rollbackTo);   
 }
 
 if(program.migrateTo){
-	var migrateTo = 999;
-	try{
-		migrateTo = parseInt(program.migrateTo);
-	  	console.log("Will migrate scripts to " + migrateTo);
-	}catch(err){
+	var migrateTo = parseInt(program.migrateTo);
+	if(isNaN(migrateTo)){
 		console.log("Will migrate scripts to newest.");
+		migrateTo = 999;
+	}else{
+	  	console.log("Will migrate scripts to " + migrateTo);
 	}
   	migration.migrate(db, program.directory, migrateTo);
 }
