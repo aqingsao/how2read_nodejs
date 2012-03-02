@@ -12,8 +12,8 @@ insert into readings(symbol, audio, is_correct, term) values("'dəbi:n", 'debian
 insert into readings(symbol, audio, is_correct, term) values("'dεbi:n", 'debian_daibin', 'true', (select id from terms where name='Debian'));
 
 insert into Terms(name, source, description) values('WSDL', "", "一门基于XML 的语言，用于描述Web Services 以及如何对它们进行访问。");
-insert into readings(symbol, audio, is_correct, term) values("'weisˌdəu:", 'wsdl_weisidou', 'true', (select id from terms where name='GUI'));
-insert into readings(symbol, audio, is_correct, term) values("W-S-D-L", 'wsdl_wsdl', 'false', (select id from terms where name='GUI'));
+insert into readings(symbol, audio, is_correct, term) values("'weisˌdəu:", 'wsdl_weisidou', 'true', (select id from terms where name='WSDL'));
+insert into readings(symbol, audio, is_correct, term) values("W-S-D-L", 'wsdl_wsdl', 'false', (select id from terms where name='WSDL'));
 
 insert into Terms(name, source, description) values('Adobe', "", "图形用户界面，是指采用图形方式显示的计算机操作用户界面。");
 insert into readings(symbol, audio, is_correct, term) values("ə'dəubi", 'adobe_edoubi', 'true', (select id from terms where name='Adobe'));

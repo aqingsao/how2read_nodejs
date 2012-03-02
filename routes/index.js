@@ -11,7 +11,7 @@ var oneYear = 365 * 24 * 3600 * 1000, idPattern = /^\d+$/;
  */
 exports.index = function(req, res){
 	var db = process.h2r.db;
-	db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id order by t.name", function(err, rows) {
+	db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id order by t.created_at desc", function(err, rows) {
 		if(err){
 			console.log("Failed to query db: " + err);
 			throw err;
