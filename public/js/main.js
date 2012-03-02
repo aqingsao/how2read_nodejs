@@ -69,7 +69,7 @@ $(function(){
 		var voted = $("#challenge .score .voted").text();
 		var correct = $("#challenge .score .correct").text();
 		var rate = $("#challenge .score .rate").text();
-		jiathis_config.summary = "您答对了" + voted + "中的" + correct + "个，战胜了" + rate + "的人";
+		jiathis_config.summary = "我答对了" + voted + "中的" + correct + "个，战胜了" + rate + "的人";
 		jiathis_config.url = "http://how2read.me";
 	});
 	_updateScore();
