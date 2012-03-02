@@ -1,6 +1,6 @@
 insert into Terms(name, source, description) values('ubuntu', "http://www.ubuntu.com", "以桌面应用为主的GNU/Linux操作系统。");
-insert into readings(symbol, audio, is_correct, term) values("u:'bu:ntu:", 'ubuntu_wubantu.mp3', 'false', (select id from terms where name='ubuntu'));
-insert into readings(symbol, audio, is_correct, term) values("'ju:bu:ntu:", 'ubuntu_ubangtu.mp3', 'true', (select id from terms where name='ubuntu'));
+insert into readings(symbol, audio, is_correct, term) values("u:'bu:ntu:", 'ubuntu_wubantu.mp3', 'true', (select id from terms where name='ubuntu'));
+insert into readings(symbol, audio, is_correct, term) values("'ju:bu:ntu:", 'ubuntu_youbangtu.mp3', 'false', (select id from terms where name='ubuntu'));
 
 insert into Terms(name, source, description) values('GUI', "", "图形用户界面，是指采用图形方式显示的计算机操作用户界面。");
 insert into readings(symbol, audio, is_correct, term) values("'guˌi:", 'gui_guyi.mp3', 'true', (select id from terms where name='GUI'));
