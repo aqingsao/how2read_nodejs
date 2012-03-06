@@ -24,7 +24,7 @@ div#content
 			div.term(id='term' + term.id)
 				a(id= term.name, name= term.name)
 				div.statscontainer
-					img.stats(src='images/stats.png', wrong=term.wrong, right=term.right)
+					img.stats(src='/images/stats.png', wrong=term.wrong, right=term.right)
 					canvas(width=132, height=132, id='canvas' + term.id)
 				div.summary
 					h2.name
