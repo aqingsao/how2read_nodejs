@@ -21,6 +21,24 @@ exports.index = function(req, res){
 		res.render('index', { title: 'How to Read Me', terms: terms, cookies: utils.toCookies(req.headers.cookie)})
 	});
 };
+exports.term = function(req, res){
+	var name = req.params.name;
+	var db = process.h2r.db;
+	db.all("select t.id as tid, t.name as tname, t.source as tsource, t.description as tdesc, p.id as pid, p.symbol as psymbol, p.audio as paudio, p.count as pcount, p.is_correct as pcorrect from Readings p join Terms t on p.term = t.id where t.name=? COLLATE NOCASE", name, function(err, rows) {
+		if(err){
+			console.log("Failed to query db: " + err);
+			throw err;
+		}
+		
+		if(rows.length <= 0){
+			res.redirect("/");
+		}
+		else{
+			var terms = _toTerms(rows)[0];
+			res.render('term', { title: 'How to Read ' + name, term: terms, cookies: utils.toCookies(req.headers.cookie)});
+		}
+	});
+};
 
 /*
  * POST report term pronunciation
@@ -47,20 +65,6 @@ exports.reading = function(req, res){
 	db.serialize(function(){
 		_obtainUidAndVote(db, cookies, termId, readingId, ip, res);	
 	});
-};
-
-// GET term detail
-exports.termDetail = function(req, res){
-	var id = req.params.id;
-	var db = process.h2r.db;
-	db.get("SELECT * FROM Terms where id = ?", req.params.id, function(err, row){
-		if(err){
-			console.log("Failed to query term " + req.params.id + ": " + err);
-			throw err;
-		}
-			
-		res.send(row);
-	});	
 };
 
 // GET score 

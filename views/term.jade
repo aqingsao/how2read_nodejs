@@ -1,0 +1,78 @@
+div#header.true.clearfix
+	div.container.clearfix
+		div#logo
+			h2
+				a.site-logo(href="https://how2read.me/", title="Make pronunciation really universal")= "How to Read Me"
+			p 程序员最容易读错的单词
+		div#challenge
+			div.score
+				您答对了
+				span.voted= 0
+				个中的
+				span.correct= 0
+				个，战胜了
+				span.rate= '0%'
+				的人
+			div#ckepop.rateShare
+				a.jiathis_button_tsina 
+				a.jiathis_button_tqq 
+div#report				
+div#content
+	div.browser.warn
+	div.container.clearfix
+		div#mainbar
+			div.term(id='term' + term.id)
+				a(id= term.name, name= term.name)
+				div.statscontainer
+					img.stats(src='images/stats.png', wrong=term.wrong, right=term.right)
+					canvas(width=132, height=132, id='canvas' + term.id)
+				div.summary
+					h2.name= term.name 
+					div.description= term.description
+						-if(term.source)
+							a(href=term.source, target="_blank", rel="nofollow")
+								img(src="/images/external_link.png", title="去官方网站")
+					-var voted = cookies.hasKey(term.id)
+					-if(cookies.hasKey(term.id))
+						div.vote.voted
+							label.rate
+								span= '0%'
+								的人读错了，您呢？
+							-for(var j in term.readings)
+								-var selected = term.readings[j].id == cookies.getValue(term.id), right = term.readings[j].correct == 'true';
+								-var symbol = selected? (right? "您答对了" : "您答错了") : "[" + term.readings[j].symbol + "]";
+								-var clz = selected? (right? "votable selected right" : "votable selected wrong"): (right? "votable right" : "votable wrong");
+								a(class=clz, reading="#{term.readings[j].id}", symbol="#{term.readings[j].symbol}")
+									span= symbol
+									audio= "How to pronunce " + term.name
+										source(type="audio/mpeg", src="audio/"+term.readings[j].audio + ".mp3")
+										source(type="audio/ogg", src="audio/"+term.readings[j].audio + ".ogg")
+					-else							
+						div.vote.notVoted
+							label.rate
+								span= '0%'
+								的人读错了，您呢？
+							-for(var j in term.readings)
+								a.votable(reading="#{term.readings[j].id}")
+									span= '['+ term.readings[j].symbol + ']'
+									audio= "How to pronunce " + term.name
+										source(type="audio/mpeg", src="audio/"+term.readings[j].audio + ".mp3")
+										source(type="audio/ogg", src="audio/"+term.readings[j].audio + ".ogg")
+					div#ckepop.share
+						span.jiathis_txt 分享到
+						a.jiathis_button_tsina 
+						a.jiathis_button_tqq 
+							
+		div#sidebar
+div#footer
+	div.container.clearfix
+		div#legal
+			p Copyright © 2012 <a href="http://weibo.com/u/1566959347" target="_blank">@aqingsao</a>. All Rights Reserved.
+script(src="/js/jquery.min.js")			
+script(src="/js/rgraph/RGraph.common.core.js")
+script(src="/js/rgraph/RGraph.common.tooltips.js")
+script(src="/js/rgraph/RGraph.common.effects.js")
+script(src="/js/rgraph/RGraph.pie.js")
+script(src="/js/rgraph/RGraph.common.key.js")
+script(src="/js/main.js")
+script(src="http://v2.jiathis.com/code/jia.js", charset="utf-8")
