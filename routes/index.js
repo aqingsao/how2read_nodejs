@@ -18,7 +18,7 @@ exports.index = function(req, res){
 		}
 		
 		var terms = _toTerms(rows);
-		res.render('index', { title: 'How to Read Me', terms: terms, cookies: utils.toCookies(req.headers.cookie)})
+		res.render('index', { title: 'How to Pronounce', terms: terms, cookies: utils.toCookies(req.headers.cookie)})
 	});
 };
 exports.term = function(req, res){
@@ -35,7 +35,7 @@ exports.term = function(req, res){
 		}
 		else{
 			var terms = _toTerms(rows)[0];
-			res.render('term', { title: 'How to Read ' + name, term: terms, cookies: utils.toCookies(req.headers.cookie)});
+			res.render('term', { title: 'How to Pronounce ' + name, term: terms, cookies: utils.toCookies(req.headers.cookie)});
 		}
 	});
 };

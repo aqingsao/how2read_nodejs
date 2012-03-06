@@ -134,6 +134,11 @@ img{
 	display: inline-block;
 	width: 20%;
 }
+.term .name a, .term .name a:link, .term .name a:visited, .term .name a:hover, .term .name a:active{
+	text-decoration: none;
+	color: #3E6D8E;
+}
+
 .term .description{
 	font-size: 90%;
 	font-family: Arial;

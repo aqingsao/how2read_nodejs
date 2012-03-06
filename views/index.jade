@@ -2,7 +2,7 @@ div#header.true.clearfix
 	div.container.clearfix
 		div#logo
 			h2
-				a.site-logo(href="https://how2read.me/", title="Make pronunciation really universal")= title
+				a.site-logo(href="https://how2read.me/", title="Make pronunciation really universal")= "How to Read Me"
 			p 程序员最容易读错的单词
 		div#challenge
 			div.score
@@ -29,7 +29,8 @@ div#content
 						img.stats(src='images/stats.png', wrong=term.wrong, right=term.right)
 						canvas(width=132, height=132, id='canvas' + term.id)
 					div.summary
-						h2.name= term.name 
+						h2.name
+							a(href="/term/" + term.name)= term.name
 						div.description= term.description
 							-if(term.source)
 								a(href=term.source, target="_blank", rel="nofollow")
