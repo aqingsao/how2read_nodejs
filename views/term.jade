@@ -46,8 +46,8 @@ div#content
 								a(class=clz, reading="#{term.readings[j].id}", symbol="#{term.readings[j].symbol}")
 									span= symbol
 									audio= "How to pronunce " + term.name
-										source(type="audio/mpeg", src="audio/"+term.readings[j].audio + ".mp3")
-										source(type="audio/ogg", src="audio/"+term.readings[j].audio + ".ogg")
+										source(type="audio/mpeg", src="/audio/"+term.readings[j].audio + ".mp3")
+										source(type="audio/ogg", src="/audio/"+term.readings[j].audio + ".ogg")
 					-else							
 						div.vote.notVoted
 							label.rate
@@ -57,8 +57,8 @@ div#content
 								a.votable(reading="#{term.readings[j].id}")
 									span= '['+ term.readings[j].symbol + ']'
 									audio= "How to pronunce " + term.name
-										source(type="audio/mpeg", src="audio/"+term.readings[j].audio + ".mp3")
-										source(type="audio/ogg", src="audio/"+term.readings[j].audio + ".ogg")
+										source(type="audio/mpeg", src="/audio/"+term.readings[j].audio + ".mp3")
+										source(type="audio/ogg", src="/audio/"+term.readings[j].audio + ".ogg")
 					div#ckepop.share
 						span.jiathis_txt 分享到
 						a.jiathis_button_tsina 
