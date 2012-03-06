@@ -46,7 +46,7 @@ div#content
 									-var clz = selected? (right? "votable selected right" : "votable selected wrong"): (right? "votable right" : "votable wrong");
 									a(class=clz, reading="#{term.readings[j].id}", symbol="#{term.readings[j].symbol}")
 										span= symbol
-										audio
+										audio= "How to pronunce " + term.name
 											source(type="audio/mpeg", src="audio/"+term.readings[j].audio + ".mp3")
 											source(type="audio/ogg", src="audio/"+term.readings[j].audio + ".ogg")
 						-else							
@@ -57,7 +57,7 @@ div#content
 								-for(var j in term.readings)
 									a.votable(reading="#{term.readings[j].id}")
 										span= '['+ term.readings[j].symbol + ']'
-										audio
+										audio= "How to pronunce " + term.name
 											source(type="audio/mpeg", src="audio/"+term.readings[j].audio + ".mp3")
 											source(type="audio/ogg", src="audio/"+term.readings[j].audio + ".ogg")
 						div#ckepop.share
