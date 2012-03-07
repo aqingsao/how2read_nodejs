@@ -211,6 +211,11 @@ img{
 	color: red;
 }
 
+div.viewall{
+	font-size: 1.5em;
+	margin-top: 15px;
+	text-align: center;
+}
 div#ckepop span{
 	margin-right: 10px;
 }

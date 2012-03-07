@@ -63,7 +63,7 @@ $(function(){
 		var word = term.find(".summary h2").text();
 		var rate = term.find(".summary .rate span").text();
 		jiathis_config.summary = word + "，据统计，" + rate + "的人读错了这个单词，你呢？";
-		jiathis_config.url = "http://how2read.me#"+word;
+		jiathis_config.url = "http://how2read.me/term/"+word;
 	});
 	$(".rateShare a").click(function(){
 		var voted = $("#challenge .score .voted").text();
