@@ -162,18 +162,36 @@ exports.adminAddTerm = function(req, res){
 		var source = req.body.source;
 		var description = req.body.description;
 		console.log("Adding new term with " + name +", source " + source);
-		for(var reading in req.body.readings){
-			console.log("reading");
-			console.log(reading);
+		console.log(req.body);
+		console.log(req.files);
+		for(var i in req.body.symbols){
+			console.log("insert readings for term " + name);
+			var symbol = req.body.symbols[i];
+			var isCorrect = req.body.isCorrects[i];
+			var audio = req.files.audios[i][0];
+			console.log(audio);
+
+     		var tmp_path = audio.path;
+     		console.log(tmp_path);
+     		console.log(typeof(tmp_path));
+
+    		var target_path = './public/audio/' + audio.name;
+     		console.log(target_path);
+     		console.log(typeof(target_path));
+    		fs.rename(tmp_path, target_path, function(err) {
+      			if (err) 
+      				throw err;
+    		});
 		}
-		for(var file in req.body.files){
-			console.log("files: ");
-			console.log(file);
-		}
+	// var db = process.h2r.db;		
+		// insert into Terms(name, source, description) values('App', "", "应用程序application program的简称。");
+		// insert into readings(symbol, audio, is_correct, term) values("æp", 'app_aipu', 'true', (select id from terms where name='App'));
+
 		res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Term ' + name +" has been added successfully."});
 	}
 	catch(e){
-		console.log("failed to ");
+		console.log("failed to add term: ");
+		console.log(e);
 		res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Failed to add term ' + name});
 	}
 };
