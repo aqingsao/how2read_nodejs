@@ -165,7 +165,7 @@ function _drawPie(id, wrongCount, rightCount){
 };
 function _checkBrowser(){
 	if(!document.createElement('audio').canPlayType || !document.createElement('canvas').getContext){
-		$("#content .browser.warn").text("对不起，您的浏览器版本太旧，不支持HTML5！").show();
+		$("#content .warnMessage").removeClass("hidden");
 	}
 }
 

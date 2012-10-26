@@ -19,7 +19,7 @@ height: 0;
 clear: both;
 visibility: hidden;
 }
-.hide{
+.hidden{
 	display:none;
 }
 img{
@@ -101,12 +101,11 @@ img{
 	padding-top: 60px;
 }
 
-#content .browser.warn{
+#content .warnMessage{
 	color: red;
 	background-color: yellow;
 	font-weight: bold;
 	text-align: center;
-	display: none;
 }
 #content .term{
 	padding: 11px 0;

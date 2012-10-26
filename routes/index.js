@@ -1,9 +1,10 @@
 var util = require('util'), 
+fs = require('fs'),
 sqlite3 = require('sqlite3').verbose(), 
 config = require('../config'), 
 utils = require("../utils"),
 Term = require('../model/term.js').Term, 
-Reading = require('../model/reading.js').Reading;
+Reading = require('../model/reading.js').Reading ;
 
 var oneYear = 365 * 24 * 3600 * 1000, idPattern = /^\d+$/;
 /*
@@ -124,7 +125,58 @@ exports.score = function(req, res){
 			});	
 		}
 	});
-}
+};
+exports.adminLoginPage = function(req, res){
+	res.render('admin/login', {layout:'admin/layout.jade', title: 'How to Pronounce Admin Page'})
+};
+
+exports.adminLogin = function(req, res, env){
+	var name = req.body.name;
+	var passwd = req.body.passwd;
+	var passwords = require(config[env].passwd);
+	if(passwords[name] == name){
+		req.session.loggedIn = true;
+		res.redirect('/admin/term')
+	}
+	else{
+		console.log("Invalid user name " + name +" and password "+ passwd);
+		res.redirect("/");
+	}
+};
+exports.adminTerm = function(req, res){
+	if(req.session.loggedIn != true){
+		console.log("You are not logged in yet.");
+		res.redirect("/");
+		return;
+	}
+	res.render('admin/term', {layout:'admin/layout.jade', title: 'Add new term'})
+};
+exports.adminAddTerm = function(req, res){
+	if(req.session.loggedIn != true){
+		console.log("You are not logged in yet.");
+		res.redirect("/");
+		return;
+	}
+	try{
+		var name = req.body.name;
+		var source = req.body.source;
+		var description = req.body.description;
+		console.log("Adding new term with " + name +", source " + source);
+		for(var reading in req.body.readings){
+			console.log("reading");
+			console.log(reading);
+		}
+		for(var file in req.body.files){
+			console.log("files: ");
+			console.log(file);
+		}
+		res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Term ' + name +" has been added successfully."});
+	}
+	catch(e){
+		console.log("failed to ");
+		res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Failed to add term ' + name});
+	}
+};
 
 function _toTerms(rows){
 	var terms = [];

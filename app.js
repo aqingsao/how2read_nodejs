@@ -18,6 +18,7 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(express.cookieParser());
+  app.use(express.session({ secret: 'how2read.me' }));
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
@@ -39,6 +40,12 @@ app.get('/', routes.index);
 app.post('/term/:id/reading/:rid', routes.reading);
 app.get('/term/:name', routes.term);
 app.get('/score', routes.score);
+app.get('/admin/login', routes.adminLoginPage);
+app.post('/admin/login', function(req, res){
+  routes.adminLogin(req, res, app.settings.env);
+});
+app.get('/admin/term', routes.adminTerm);
+app.post('/admin/term', routes.adminAddTerm);
 
 var port = process.env.PORT || 3000;
 app.listen(port);

@@ -1,0 +1,10 @@
+div#content
+	div.container.clearfix
+		form(action="/admin/login", method="post")
+			label(for='name')= 'Name: '
+			input(name='name', id="name",value='', placeholder='Input your name')
+			br
+			label(for='Password')= 'Password:'
+			input(name='passwd', id='passwd',value='', placeholder='Input your name')
+			br
+			input(type='submit', value='登陆')

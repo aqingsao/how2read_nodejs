@@ -1,0 +1,38 @@
+div#content
+	- if(typeof(splash) != 'undefined')
+		div.warnMessage= splash
+	
+	div.container.clearfix
+		form(action="/admin/term", method="post", enctype="multipart/form-data")
+			label(for='name')= 'Name: '
+			input(name='name', id="name",value='', placeholder='Input your name')
+			br
+			label(for='source')= 'source url:'
+			input(name='source', id='source',value='', placeholder='Input source url')
+			br
+			label(for='description')= 'description:'
+			textarea(name='description', id='description',value='', placeholder='description')
+			
+			div
+				input.newReading(type='button', name='newReading', value='Add Readings')
+			div.readings
+
+			input(type='submit', value='登陆')
+	div.hidden
+
+
+div#readingsTemplate.hidden
+	div.reading
+		label= "Symbol:"
+		input(type='text',name='symbol')
+		br
+		label= "Audio:"
+		input(type='file',name='audio')
+		br
+		label= "Is Correct:"
+		input(type='checkbox',name='isCorrect')
+		br
+
+
+script(src="/js/jquery.min.js")			
+script(src="/js/admin.js")
