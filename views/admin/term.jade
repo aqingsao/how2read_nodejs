@@ -3,11 +3,11 @@ div#content
 		div.warnMessage= splash
 	
 	div.container.clearfix
-		form(action="/admin/term", method="post", enctype="multipart/form-data")
+		form.newTerm(action="/admin/term", method="post", enctype="multipart/form-data")
 			dl
 				dt= 'Name: '
 				dd
-					input(name='name', id="name",value='', placeholder='Input your name')
+					input(name='name', id="name",type='text', placeholder='Input your name')
 			dl
 				dt= 'source url:'
 				dd 
@@ -17,25 +17,27 @@ div#content
 				dd
 					textarea(name='description', id='description',value='', placeholder='description')
 			
-			div
-				input.newReading(type='button', name='newReading', value='Add Readings')
+			input.newReading(type='button', name='newReading', value='Add Readings')
 			div.readings
 
 			input(type='submit', value='登陆')
 	div.hidden
 
-
 div#readingsTemplate.hidden
 	div.reading
-		label= "Symbol:"
-		input(type='text',name='symbols[]')
-		br
-		label= "Audio:"
-		input(type='file',name='audios[]')
-		br
-		label= "Is Correct:"
-		input(type='checkbox',name='isCorrects[]')
-		br
+		dl
+			dt= "Symbol:"
+			dd
+				input(type='text',name='symbols')
+		dl
+			dt= "Audio:"
+			dd
+				input(type='file',name='audios')
+		dl
+			dt= "Is Correct:"
+			dd
+				input.isCorrect(type='checkbox',name='_isCorrect', value='true')
+				input.isCorrects(type='hidden', name='isCorrects', value='false')
 
 
 script(src="/js/jquery.min.js")			

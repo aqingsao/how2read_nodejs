@@ -157,42 +157,50 @@ exports.adminAddTerm = function(req, res){
 		res.redirect("/");
 		return;
 	}
+	var db = process.h2r.db;	
+	
 	try{
+		if(req.body.symbols.constructor != Array){
+			throw 'Should have least 2 readings for term ' + req.body.name;
+		}
+		if(req.body.symbols.length != req.files.audios.length){
+			throw 'there are ' + req.body.symbols.length + ' readings but ' + req.files.audios.length +' files are uploaded.';
+		}
+
+		console.log(req.body.isCorrects);
 		var name = req.body.name;
 		var source = req.body.source;
 		var description = req.body.description;
-		console.log("Adding new term with " + name +", source " + source);
-		console.log(req.body);
-		console.log(req.files);
 		for(var i in req.body.symbols){
-			console.log("insert readings for term " + name);
-			var symbol = req.body.symbols[i];
-			var isCorrect = req.body.isCorrects[i];
-			var audio = req.files.audios[i][0];
-			console.log(audio);
-
-     		var tmp_path = audio.path;
-     		console.log(tmp_path);
-     		console.log(typeof(tmp_path));
-
-    		var target_path = './public/audio/' + audio.name;
-     		console.log(target_path);
-     		console.log(typeof(target_path));
-    		fs.rename(tmp_path, target_path, function(err) {
+			var audio = req.files.audios[i];
+    		fs.rename(audio.path, './public/audio/' + audio.name, function(err) {
       			if (err) 
       				throw err;
     		});
-		}
-	// var db = process.h2r.db;		
-		// insert into Terms(name, source, description) values('App', "", "应用程序application program的简称。");
-		// insert into readings(symbol, audio, is_correct, term) values("æp", 'app_aipu', 'true', (select id from terms where name='App'));
+  		}
 
-		res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Term ' + name +" has been added successfully."});
-	}
-	catch(e){
+		db.all("select name from Terms where name=? COLLATE NOCASE", name, function(err, rows) {
+			if(rows.length > 0){
+				throw 'Term ' + name +" already exists."
+			}	
+			console.log("Adding new term with " + name +", source " + source);
+			db.serialize(function() {
+				db.run("insert into Terms(name, source, description) values(?, ?, ?)", [name, source, description]);
+  				var stmt = db.prepare("insert into readings(symbol, audio, is_correct, term) values(?, ?, ?, (select id from terms where name=?))");
+				for(var i in req.body.symbols){
+					var symbol = req.body.symbols[i];
+					var isCorrect = req.body.isCorrects[i];
+					var audio = req.files.audios[i];
+      				stmt.run(symbol, audio.name, isCorrect, name);
+  				}
+  				stmt.finalize();
+  			});
+			res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Term ' + name +" has been added successfully."});
+		});
+	} catch(e){
 		console.log("failed to add term: ");
 		console.log(e);
-		res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Failed to add term ' + name});
+		res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Failed to add term ' + name +": " + e});
 	}
 };
 
@@ -305,3 +313,4 @@ function _voting(db, termId, readingId, ip, uid, res){
 		});
 	});
 }
+	
