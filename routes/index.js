@@ -134,7 +134,7 @@ exports.adminLogin = function(req, res, env){
 	var name = req.body.name;
 	var passwd = req.body.passwd;
 	var passwords = require(config[env].passwd);
-	if(passwords[name] == name){
+	if(passwords[name] == passwd){
 		req.session.loggedIn = true;
 		res.redirect('/admin/term')
 	}
