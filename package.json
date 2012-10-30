@@ -8,5 +8,6 @@
     , "sqlite3": ">=2.0.0"
     , "reloader": ">= 1.0.2"
 	, "commander": ">=0.5.1"
+  , "optimist": "0.3.5"
   }
 }

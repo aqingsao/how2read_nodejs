@@ -8,7 +8,8 @@ var express = require('express')
   , util = require('util')
   , reloader = require('reloader')
   , migration = require('./db/migration')
-  , config = require('./config');
+  , config = require('./config')
+  , argv = require('optimist').default({p:8080}).argv
 
 var app = module.exports = express.createServer();
 
@@ -47,6 +48,5 @@ app.post('/admin/login', function(req, res){
 app.get('/admin/term', routes.adminTerm);
 app.post('/admin/term', routes.adminAddTerm);
 
-var port = process.env.PORT || 3000;
-app.listen(port);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+app.listen(argv.p);
+console.log("Express server listening on port %d in %s mode", argv.p, app.settings.env);
