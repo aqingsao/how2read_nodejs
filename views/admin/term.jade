@@ -20,7 +20,7 @@ div#content
 			input.newReading(type='button', name='newReading', value='Add Readings')
 			div.readings
 
-			input(type='submit', value='登陆')
+			input(type='submit', value='保存')
 	div.hidden
 
 div#readingsTemplate.hidden
@@ -30,7 +30,11 @@ div#readingsTemplate.hidden
 			dd
 				input(type='text',name='symbols')
 		dl
-			dt= "Audio:"
+			dt= "Audio(.MP3):"
+			dd
+				input(type='file',name='audios')
+		dl
+			dt= "Audio(.OGG):"
 			dd
 				input(type='file',name='audios')
 		dl

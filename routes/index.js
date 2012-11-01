@@ -163,26 +163,49 @@ exports.adminAddTerm = function(req, res){
 		if(req.body.symbols.constructor != Array){
 			throw 'Should have least 2 readings for term ' + req.body.name;
 		}
-		if(req.body.symbols.length != req.files.audios.length){
+		if(req.body.symbols.length * 2 != req.files.audios.length){
 			throw 'there are ' + req.body.symbols.length + ' readings but ' + req.files.audios.length +' files are uploaded.';
 		}
-
+		var correctReadingsCount = 0;
 		console.log(req.body.isCorrects);
+		for(var i in req.body.isCorrects){
+			if(req.body.isCorrects[i] == 'true'){
+				correctReadingsCount++;
+			}
+		}
+		if(correctReadingsCount != 1){
+			throw 'there should be only 1 but actually ' + correctReadingsCount + ' readings that are correct.';
+		}
+
 		var name = req.body.name;
 		var source = req.body.source;
 		var description = req.body.description;
-		for(var i in req.body.symbols){
+		var dir = __dirname + '/../public/audio/';
+		if(!fs.existsSync(dir)){
+			throw "Audio directory " + dir +" does not exist.";
+		}
+		for(var i in req.files.audios){
 			var audio = req.files.audios[i];
-    		fs.rename(audio.path, './public/audio/' + audio.name, function(err) {
-      			if (err) 
-      				throw err;
+			var newPath = dir + audio.name;
+
+      		console.log("Rename file " + audio.path +" to " + newPath);
+    		fs.rename(audio.path, newPath, function(err) {
+    			if(err){
+    				throw err;
+    			}
+      			fs.exists(newPath, function(exists){
+      				if(!exists){
+      					throw "File "+ newPath +" does not exsit";
+      				}
+      			});
     		});
   		}
 
 		db.all("select name from Terms where name=? COLLATE NOCASE", name, function(err, rows) {
 			if(rows.length > 0){
 				throw 'Term ' + name +" already exists."
-			}	
+			}
+
 			console.log("Adding new term with " + name +", source " + source);
 			db.serialize(function() {
 				db.run("insert into Terms(name, source, description) values(?, ?, ?)", [name, source, description]);
@@ -190,8 +213,10 @@ exports.adminAddTerm = function(req, res){
 				for(var i in req.body.symbols){
 					var symbol = req.body.symbols[i];
 					var isCorrect = req.body.isCorrects[i];
-					var audio = req.files.audios[i];
-      				stmt.run(symbol, audio.name, isCorrect, name);
+					var audio = req.files.audios[i * 2];
+					var audioName = audio.name.split(".")[0];
+					console.log("symbol: " + symbol +", isCorrect: " + isCorrect +", audio: " + audioName);
+      				stmt.run(symbol, audioName, isCorrect, name);
   				}
   				stmt.finalize();
   			});
@@ -200,7 +225,7 @@ exports.adminAddTerm = function(req, res){
 	} catch(e){
 		console.log("failed to add term: ");
 		console.log(e);
-		res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Failed to add term ' + name +": " + e});
+		res.render("admin/term", {layout: 'admin/layout.jade', title:'Add new term', splash: 'Failed to add ' + req.body.name +": " + e});
 	}
 };
 
