@@ -50,7 +50,7 @@ app.post('/admin/term', routes.adminAddTerm);
 app.get('*', function(req, res){
 res.render('404', {  
         status: 404,  
-        title: 'How2read-程序员最容易读错的单词',  
+        title: '程序员最容易读错的单词',  
         layout:'layout.jade'
     }); });
 
