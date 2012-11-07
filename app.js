@@ -21,8 +21,8 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'how2read.me' }));
   app.use(express.methodOverride());
-  app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.use(app.router);
 });
 
 app.configure('development', function(){
@@ -47,6 +47,12 @@ app.post('/admin/login', function(req, res){
 });
 app.get('/admin/term', routes.adminTerm);
 app.post('/admin/term', routes.adminAddTerm);
+app.get('*', function(req, res){
+res.render('404', {  
+        status: 404,  
+        title: 'How2read-程序员最容易读错的单词',  
+        layout:'layout.jade'
+    }); });
 
 app.listen(argv.p);
 console.log("Express server listening on port %d in %s mode", argv.p, app.settings.env);

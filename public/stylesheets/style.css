@@ -218,3 +218,7 @@ div.viewall{
 div#ckepop span{
 	margin-right: 10px;
 }
+
+div.notFound iframe{
+	margin: auto;
+}
